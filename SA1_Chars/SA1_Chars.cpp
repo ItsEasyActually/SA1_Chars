@@ -2,6 +2,7 @@
 #include "Sonic.h"
 #include "EV_Tornado1.h"
 #include "Tails.h"
+#include "OBJECT_SonicPointingFinger.h"
 //#include "SADXModLoader.h"
 
 extern "C" __declspec(dllexport) void __cdecl Init(const char *path, const HelperFunctions &helperFunctions)
@@ -409,27 +410,31 @@ extern "C" __declspec(dllexport) void __cdecl Init(const char *path, const Helpe
 	//___MILES_MODELS[12] = &attach_00447038;
 	//___MILES_MODELS[13] = &attach_004463D8;
 	//___MILES_MODELS[14] = &attach_0046DFE8;
-	WriteData((WeldInfo**)0x461890, TailsWeldInfo);
-	WriteData((WeldInfo**)0x7C6D87, TailsWeldInfo);
-	WriteData((void*)0x45BED3, 0x90u, 3);
-	WriteData((void*)0x45DAB1, 0x90u, 3);
-	WriteData((void*)0x461389, 0x90u, 3);
-	WriteData((void*)0x461325, 0x90u, 3);
-	WriteData((void*)0x45BEE7, 0x90u, 3);
-	WriteData((void*)0x45DACA, 0x90u, 3);
-	WriteData((void*)0x4613A1, 0x90u, 3);
-	WriteData((void*)0x461339, 0x90u, 3);
-	WriteData((void*)0x4622E4, 0x90u, 3);
-	WriteData((void*)0x4622B4, 0x90u, 3);
-	WriteData((void*)0x4622FB, 0x90u, 3);
-	WriteData((void*)0x4622CB, 0x90u, 3);
-	WriteData((void*)0x45BB60, 0x90u, 3);
-	WriteData((void*)0x45B821, 0x90u, 3);
-	WriteData((void*)0x45BB74, 0x90u, 3);
-	WriteData((void*)0x45B835, 0x90u, 3);
+	//WriteData((WeldInfo**)0x461890, TailsWeldInfo);
+	//WriteData((WeldInfo**)0x7C6D87, TailsWeldInfo);
+	//WriteData((void*)0x45BED3, 0x90u, 3);
+	//WriteData((void*)0x45DAB1, 0x90u, 3);
+	//WriteData((void*)0x461389, 0x90u, 3);
+	//WriteData((void*)0x461325, 0x90u, 3);
+	//WriteData((void*)0x45BEE7, 0x90u, 3);
+	//WriteData((void*)0x45DACA, 0x90u, 3);
+	//WriteData((void*)0x4613A1, 0x90u, 3);
+	//WriteData((void*)0x461339, 0x90u, 3);
+	//WriteData((void*)0x4622E4, 0x90u, 3);
+	//WriteData((void*)0x4622B4, 0x90u, 3);
+	//WriteData((void*)0x4622FB, 0x90u, 3);
+	//WriteData((void*)0x4622CB, 0x90u, 3);
+	//WriteData((void*)0x45BB60, 0x90u, 3);
+	//WriteData((void*)0x45B821, 0x90u, 3);
+	//WriteData((void*)0x45BB74, 0x90u, 3);
+	//WriteData((void*)0x45B835, 0x90u, 3);
 
 	//Event Data
-	WriteData((NJS_OBJECT**)0x3261BBC, &object_02E611F8);
+	WriteData((NJS_OBJECT**)0x03261BBC, &object_02E611F8);
+	WriteData((NJS_OBJECT**)0x00664C3E, &OBJECT_SonicPointingFinger);
+	WriteData((NJS_OBJECT**)0x0069E24B, &OBJECT_SonicPointingFinger);
+	WriteData((NJS_OBJECT**)0x006D010C, &OBJECT_SonicPointingFinger);
+	WriteData((NJS_OBJECT**)0x006D711E, &OBJECT_SonicPointingFinger);
 }
 
 extern "C" __declspec(dllexport) const ModInfo SADXModInfo = { ModLoaderVer };

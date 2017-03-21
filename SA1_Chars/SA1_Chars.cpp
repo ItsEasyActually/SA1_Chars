@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "Sonic.h"
-#include "EV_Tornado1.h"
+#include "EV_TR1.h"
 #include "Tails.h"
 #include "OBJECT_SonicPointingFinger.h"
 //#include "SADXModLoader.h"
@@ -222,7 +222,7 @@ extern "C" __declspec(dllexport) void __cdecl Init(const char *path, const Helpe
 	WriteData((WeldInfo**)0x49ACB6, SonicWeldInfo);
 
 	//Tails Model Data
-	ResizeTextureList((NJS_TEXLIST *)0x91A9C8, 24);
+	//ResizeTextureList((NJS_TEXLIST *)0x91A9C8, 24);
 	//NJS_OBJECT **___MILES_OBJECTS = (NJS_OBJECT **)GetProcAddress(handle, "___MILES_OBJECTS");
 	//NJS_ACTION **___MILES_ACTIONS = (NJS_ACTION **)GetProcAddress(handle, "___MILES_ACTIONS");
 	//NJS_MODEL_SADX **___MILES_MODELS = (NJS_MODEL_SADX **)GetProcAddress(handle, "___MILES_MODELS");
@@ -430,7 +430,20 @@ extern "C" __declspec(dllexport) void __cdecl Init(const char *path, const Helpe
 	//WriteData((void*)0x45B835, 0x90u, 3);
 
 	//Event Data
-	WriteData((NJS_OBJECT**)0x03261BBC, &object_02E611F8);
+	WriteData((NJS_ACTION**)0x006BF039, &EV_TR1_Action);
+	WriteData((NJS_ACTION**)0x006BF3AA, &EV_TR1_Action);
+	WriteData((NJS_ACTION**)0x006BF6B7, &EV_TR1_Action);
+	WriteData((NJS_ACTION**)0x006DF5F4, &EV_TR1_Action);
+	WriteData((NJS_ACTION**)0x006DFE45, &EV_TR1_Action);
+	WriteData((NJS_OBJECT***)0x006BEE81, &EV_TR1_Object.child);
+	WriteData((NJS_OBJECT***)0x006BEEA1, &EV_TR1_Object.child);
+	WriteData((NJS_OBJECT***)0x006BEEC1, &EV_TR1_Object.child);
+	WriteData((NJS_OBJECT***)0x006BEF11, &EV_TR1_Object.child);
+	WriteData((NJS_OBJECT***)0x006DF421, &EV_TR1_Object.child);
+	WriteData((NJS_OBJECT***)0x006DF441, &EV_TR1_Object.child);
+	WriteData((NJS_OBJECT***)0x007D7BE1, &EV_TR1_Object.child);
+	WriteData((NJS_OBJECT***)0x007D7C11, &EV_TR1_Object.child);
+	WriteData((NJS_OBJECT***)0x007D7D01, &EV_TR1_Object.child);
 	WriteData((NJS_OBJECT**)0x00664C3E, &OBJECT_SonicPointingFinger);
 	WriteData((NJS_OBJECT**)0x0069E24B, &OBJECT_SonicPointingFinger);
 	WriteData((NJS_OBJECT**)0x006D010C, &OBJECT_SonicPointingFinger);

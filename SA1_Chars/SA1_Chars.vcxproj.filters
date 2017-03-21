@@ -27,10 +27,16 @@
     <ClInclude Include="Sonic.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="EV_Tornado1.h">
+    <ClInclude Include="Tails.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Tails.h">
+    <ClInclude Include="OBJECT_SonicPointingFinger.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EV_TR1.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SADXModLoader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

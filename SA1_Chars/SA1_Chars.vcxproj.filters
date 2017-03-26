@@ -27,9 +27,6 @@
     <ClInclude Include="Sonic.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Tails.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="OBJECT_SonicPointingFinger.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -37,6 +34,18 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SADXModLoader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EV_TR2BEFORE.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EV_TR2CHANGE.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="d3d8types.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Tails.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

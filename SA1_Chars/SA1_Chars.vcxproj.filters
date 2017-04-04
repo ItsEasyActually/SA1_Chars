@@ -48,6 +48,12 @@
     <ClInclude Include="Tails.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="SkyChase.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EV_TailsIntro.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">

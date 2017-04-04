@@ -1,10 +1,12 @@
 #include "stdafx.h"
 #include "Sonic.h"
-#include "EV_TR1.h"
 #include "Tails.h"
+#include "EV_TR1.h"
 #include "OBJECT_SonicPointingFinger.h"
 #include "EV_TR2BEFORE.h"
 #include "EV_TR2CHANGE.h"
+#include "SkyChase.h"
+#include "EV_TailsIntro.h"
 
 extern "C" __declspec(dllexport) void __cdecl Init(const char *path, const HelperFunctions &helperFunctions)
 {
@@ -227,6 +229,7 @@ extern "C" __declspec(dllexport) void __cdecl Init(const char *path, const Helpe
 	NJS_OBJECT **___MILES_OBJECTS = (NJS_OBJECT **)GetProcAddress(handle, "___MILES_OBJECTS");
 	NJS_ACTION **___MILES_ACTIONS = (NJS_ACTION **)GetProcAddress(handle, "___MILES_ACTIONS");
 	NJS_MODEL_SADX **___MILES_MODELS = (NJS_MODEL_SADX **)GetProcAddress(handle, "___MILES_MODELS");
+	NJS_MOTION **___MILES_MOTIONS = (NJS_MOTION **)GetProcAddress(handle, "___MILES_MOTIONS");
 	___MILES_OBJECTS[0] = &object_0042AD54;
 	___MILES_OBJECTS[1] = &object_00437C44;
 	___MILES_OBJECTS[2] = &object_0043F4B4;
@@ -297,6 +300,7 @@ extern "C" __declspec(dllexport) void __cdecl Init(const char *path, const Helpe
 	___MILES_OBJECTS[67] = &object_0042ABE8;
 	___MILES_OBJECTS[68] = &object_00437B0C;
 	___MILES_OBJECTS[69] = &object_00437AD8;
+	___MILES_OBJECTS[70] = &object_0044C724;
 	___MILES_ACTIONS[0]->object = &object_00437C44;
 	___MILES_ACTIONS[1]->object = &object_00437C44;
 	___MILES_ACTIONS[2]->object = &object_00437C44;
@@ -411,7 +415,28 @@ extern "C" __declspec(dllexport) void __cdecl Init(const char *path, const Helpe
 	___MILES_MODELS[12] = &attach_00447038;
 	___MILES_MODELS[13] = &attach_004463D8;
 	___MILES_MODELS[14] = &attach_0046DFE8;
+	___MILES_MOTIONS[0] = &TailsCinematicHead;
 	WriteData((WeldInfo**)0x00461896, TailsWeldInfo);
+	//WriteData((void*)0x0045B821, 0x90u, 3);
+	//WriteData((void*)0x0045B835, 0x90u, 3);
+	WriteData((void*)0x0045BB60, 0x90u, 3);
+	WriteData((void*)0x0045BB74, 0x90u, 3);
+
+	//Sky Chase
+	WriteData((NJS_OBJECT**)0x0028B7A0C, &Tornado1_Object);
+	WriteData((NJS_OBJECT**)0x0028BA71C, &Tornado1_Object);
+	WriteData((NJS_OBJECT**)0x0028BDDBC, &Tornado1_Object);
+	WriteData((NJS_OBJECT**)0x0028C09FC, &Tornado1_Object);
+	WriteData((NJS_OBJECT**)0x002935DFC, &TornadoDestroyed_Object);
+	WriteData((NJS_OBJECT**)0x0027EFDDC, &Tornado2Before_Object);
+	WriteData((NJS_OBJECT**)0x0027F2AA4, &Tornado2Before_Object);
+	WriteData((NJS_OBJECT**)0x0027F612C, &Tornado2Before_Object);
+	WriteData((NJS_OBJECT**)0x0027F8974, &Tornado2Before_Object);
+	WriteData((NJS_OBJECT**)0x0028988FC, &Tornado2Transformation_Object);
+	WriteData((NJS_OBJECT**)0x00280F23C, &Tornado2Change_Object);
+	WriteData((NJS_OBJECT**)0x002811CE4, &Tornado2Change_Object);
+	WriteData((NJS_OBJECT**)0x002814D9C, &Tornado2Change_Object);
+	WriteData((NJS_OBJECT**)0x002817514, &Tornado2Change_Object);
 
 	//Event Data
 	WriteData((NJS_ACTION**)0x006BF039, &EV_TR1_Action);
@@ -454,6 +479,20 @@ extern "C" __declspec(dllexport) void __cdecl Init(const char *path, const Helpe
 	WriteData((NJS_ACTION**)0x006AF92D, &EV_TR2CHANGE_Action);
 	WriteData((NJS_ACTION**)0x006CDE0E, &EV_TR2CHANGE_Action);
 	WriteData((NJS_ACTION**)0x006CE10D, &EV_TR2CHANGE_Action);
+	ResizeTextureList((NJS_TEXLIST *)0x033315E4, 33);
+	WriteData((NJS_OBJECT**)0x03342074, &EV_TailsProtoPlane);
+	WriteData((NJS_OBJECT**)0x03344EAC, &EV_TailsProtoPlane);
+	WriteData((NJS_OBJECT**)0x03347734, &EV_TailsProtoPlane);
+	WriteData((NJS_OBJECT**)0x0334A8FC, &EV_TailsProtoPlane);
+	WriteData((NJS_OBJECT**)0x006F9483, &EV_TailsCineHead_DC);
+	WriteData((NJS_OBJECT**)0x0334A910, &EV_TailsCineHead_DC);
+	WriteData((NJS_OBJECT**)0x0334A924, &EV_TailsCineHead_DC);
+	WriteData((NJS_OBJECT**)0x0334A938, &EV_TailsCineHead_DC);
+	//WriteData((NJS_MOTION***)0x006F9475, &InitPointer);
+	WriteData((NJS_MOTION**)0x03375D88, &EV_Tails02);
+	WriteData((NJS_MOTION**)0x03375D88, &EV_Tails01);
+	WriteData((NJS_MOTION**)0x03375DA8, &EV_Tails01);
+	WriteData((NJS_MOTION**)0x03375DB8, &EV_Tails00);
 }
 
 extern "C" __declspec(dllexport) const ModInfo SADXModInfo = { ModLoaderVer };

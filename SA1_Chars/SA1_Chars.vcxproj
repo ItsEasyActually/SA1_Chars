@@ -146,9 +146,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="d3d8types.h" />
+    <ClInclude Include="EV_TailsIntro.h" />
     <ClInclude Include="EV_TR1.h" />
     <ClInclude Include="EV_TR2BEFORE.h" />
     <ClInclude Include="EV_TR2CHANGE.h" />
+    <ClInclude Include="SkyChase.h" />
     <ClInclude Include="OBJECT_SonicPointingFinger.h" />
     <ClInclude Include="SADXModLoader.h" />
     <ClInclude Include="Sonic.h" />

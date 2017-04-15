@@ -150,6 +150,11 @@
     <ClInclude Include="EV_TR1.h" />
     <ClInclude Include="EV_TR2BEFORE.h" />
     <ClInclude Include="EV_TR2CHANGE.h" />
+    <ClInclude Include="ModLoader\MemAccess.h" />
+    <ClInclude Include="SADXModLoader\SADXEnums.h" />
+    <ClInclude Include="SADXModLoader\SADXFunctions.h" />
+    <ClInclude Include="SADXModLoader\SADXStructs.h" />
+    <ClInclude Include="SADXModLoader\SADXVariables.h" />
     <ClInclude Include="SkyChase.h" />
     <ClInclude Include="OBJECT_SonicPointingFinger.h" />
     <ClInclude Include="SADXModLoader.h" />

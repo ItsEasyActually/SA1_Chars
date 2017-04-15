@@ -4452,15 +4452,15 @@ OffsetAnimData EV_Tails02Morph[] = {
 };
 
 AnimFrame_2 EV_Tails00Array[] = {
-	{ &EV_Tails00Morph, 0, LengthOfArray(EV_Tails00Morph), 0 }
+	{ &EV_Tails00Morph, nullptr, LengthOfArray(EV_Tails00Morph), 0 }
 };
 
 AnimFrame_2 EV_Tails01Array[] = {
-	{ &EV_Tails01Morph, 0, LengthOfArray(EV_Tails01Morph), 0 }
+	{ &EV_Tails01Morph, nullptr, LengthOfArray(EV_Tails01Morph), 0 }
 };
 
 AnimFrame_2 EV_Tails02Array[] = {
-	{ &EV_Tails02Morph, 0, LengthOfArray(EV_Tails02Morph), 0 }
+	{ &EV_Tails02Morph, nullptr, LengthOfArray(EV_Tails02Morph), 0 }
 };
 
 NJS_MOTION EV_Tails00{ &EV_Tails00Array, 0x2C, 0x30, 2 };
@@ -9448,5 +9448,3 @@ NJS_OBJECT object_02F3A068 = { NJD_EVAL_UNIT_POS | NJD_EVAL_UNIT_SCL, &attach_02
 NJS_OBJECT object_02F3A09C = { NJD_EVAL_UNIT_POS | NJD_EVAL_UNIT_ANG | NJD_EVAL_UNIT_SCL | NJD_EVAL_HIDE, NULL, 0, 0, 0, 0, 0, 0, 1, 1, 1, &object_02F3A068, NULL };
 
 NJS_OBJECT EV_TailsProtoPlane = { NJD_EVAL_UNIT_POS | NJD_EVAL_UNIT_ANG | NJD_EVAL_UNIT_SCL | NJD_EVAL_HIDE, NULL, 0, 0, 0, 0, 0, 0, 1, 1, 1, &object_02F3A09C, NULL };
-
-NJS_MOTION *InitPointer = &EV_Tails02;

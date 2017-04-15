@@ -419,8 +419,8 @@ extern "C" __declspec(dllexport) void __cdecl Init(const char *path, const Helpe
 	WriteData((WeldInfo**)0x00461896, TailsWeldInfo);
 	//WriteData((void*)0x0045B821, 0x90u, 3);
 	//WriteData((void*)0x0045B835, 0x90u, 3);
-	WriteData((void*)0x0045BB60, 0x90u, 3);
-	WriteData((void*)0x0045BB74, 0x90u, 3);
+	//WriteData((void*)0x0045BB60, 0x90u, 3);
+	//WriteData((void*)0x0045BB74, 0x90u, 3);
 
 	//Sky Chase
 	WriteData((NJS_OBJECT**)0x0028B7A0C, &Tornado1_Object);
@@ -488,9 +488,8 @@ extern "C" __declspec(dllexport) void __cdecl Init(const char *path, const Helpe
 	WriteData((NJS_OBJECT**)0x0334A910, &EV_TailsCineHead_DC);
 	WriteData((NJS_OBJECT**)0x0334A924, &EV_TailsCineHead_DC);
 	WriteData((NJS_OBJECT**)0x0334A938, &EV_TailsCineHead_DC);
-	//WriteData((NJS_MOTION***)0x006F9475, &InitPointer);
 	WriteData((NJS_MOTION**)0x03375D88, &EV_Tails02);
-	WriteData((NJS_MOTION**)0x03375D88, &EV_Tails01);
+	WriteData((NJS_MOTION**)0x03375D98, &EV_Tails01);
 	WriteData((NJS_MOTION**)0x03375DA8, &EV_Tails01);
 	WriteData((NJS_MOTION**)0x03375DB8, &EV_Tails00);
 }

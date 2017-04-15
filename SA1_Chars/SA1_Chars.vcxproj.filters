@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\ModLoader">
+      <UniqueIdentifier>{fb27f8b1-6421-4788-9f68-11fcd18a6401}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\SADXModLoader">
+      <UniqueIdentifier>{41d1729d-b176-4644-aa91-da514f7ff361}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -53,6 +59,21 @@
     </ClInclude>
     <ClInclude Include="EV_TailsIntro.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ModLoader\MemAccess.h">
+      <Filter>Header Files\ModLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="SADXModLoader\SADXEnums.h">
+      <Filter>Header Files\SADXModLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="SADXModLoader\SADXFunctions.h">
+      <Filter>Header Files\SADXModLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="SADXModLoader\SADXStructs.h">
+      <Filter>Header Files\SADXModLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="SADXModLoader\SADXVariables.h">
+      <Filter>Header Files\SADXModLoader</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

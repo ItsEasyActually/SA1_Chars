@@ -8,6 +8,213 @@
 #include "SkyChase.h"
 #include "EV_TailsIntro.h"
 
+
+FunctionPointer(void, MorphPoints, (NJS_MODEL_SADX *a, NJS_MODEL_SADX *b, NJS_MODEL_SADX *destination, float factor), 0x00439F20);
+HMODULE handle = GetModuleHandle(L"CHRMODELS_orig");
+NJS_OBJECT **___SONIC_OBJECTS = (NJS_OBJECT **)GetProcAddress(handle, "___SONIC_OBJECTS");
+NJS_MODEL_SADX **___SONIC_MODELS = (NJS_MODEL_SADX **)GetProcAddress(handle, "___SONIC_MODELS");
+
+//void __cdecl Sonic_MorphStretchyFeet_c(CharObj2* a1)
+//{
+//	float a4; // ST10_4@3
+//	float v2; // ST10_4@5
+//	NJS_MODEL_SADX *v3; // ecx@5
+//	float v4; // ST10_4@10
+//	float v5; // ST10_4@13
+//
+//	if (a1->AnimationThing.Index == 13)
+//	{
+//		if (a1->AnimationThing.Frame >= 16.0)
+//		{
+//			if (a1->AnimationThing.Frame <= 24.0)
+//			{
+//				a1->SomeFrameNumberThing = 0;
+//				v3 = &attach_0057464C;
+//			}
+//			else
+//			{
+//				v2 = (a1->AnimationThing.Frame - 24.0) * 0.125;
+//				a1->SomeFrameNumberThing = v2;
+//				MorphPoints(&attach_0057464C, &attach_00573DFC, &attach_005735AC, v2);
+//				v3 = &attach_005735AC;
+//			}
+//			object_0055F330.model = v3;
+//		}
+//		else
+//		{
+//			a4 = (16.0 - a1->AnimationThing.Frame) * 0.0625;
+//			a1->SomeFrameNumberThing = a4;
+//			MorphPoints(&attach_0057464C, &attach_00573DFC, &attach_005735AC, a4);
+//			object_0055F330.model = &attach_005735AC;
+//		}
+//		if (a1->AnimationThing.Frame < 8.0 || a1->AnimationThing.Frame > 16.0)
+//		{
+//			if (a1->AnimationThing.Frame <= 16.0 || a1->AnimationThing.Frame > 32.0)
+//			{
+//				a1->TailsFlightTime = 0;
+//				object_00560DD0.model = &attach_00575AB4;
+//			}
+//			else
+//			{
+//				v5 = (32.0 - a1->AnimationThing.Frame) * 0.0625;
+//				a1->TailsFlightTime = v5;
+//				MorphPoints(&attach_00575AB4, &attach_0057630C, &attach_0057525C, v5);
+//				object_00560DD0.model = &attach_0057525C;
+//			}
+//		}
+//		else
+//		{
+//			v4 = (a1->AnimationThing.Frame - 8.0) * 0.125;
+//			a1->TailsFlightTime = v4;
+//			MorphPoints(&attach_00575AB4, &attach_0057630C, &attach_0057525C, v4);
+//			object_00560DD0.model = &attach_0057525C;
+//		}
+//	}
+//	else
+//	{
+//		a1->SomeFrameNumberThing = 0;
+//		a1->TailsFlightTime = 0;
+//		object_0055F330.model = &attach_0055F304;
+//		object_00560DD0.model = &attach_00560DA4;
+//	}
+//}
+
+void __cdecl Sonic_MorphStretchyFeet_c(CharObj2* a1)
+{
+	float a4; // ST10_4@3
+	float v2; // ST10_4@5
+	NJS_MODEL_SADX *v3; // ecx@5
+	float v4; // ST10_4@10
+	float v5; // ST10_4@13
+
+	if (a1->Upgrades & Upgrades_LightShoes)
+	{
+		if (a1->AnimationThing.Index == 13)
+		{
+			if (a1->AnimationThing.Frame >= 16.0)
+			{
+				if (a1->AnimationThing.Frame <= 24.0)
+				{
+					a1->SomeFrameNumberThing = 0;
+					v3 = &LSDashMorph_Left3;
+				}
+				else
+				{
+					v2 = (a1->AnimationThing.Frame - 24.0) * 0.125;
+					a1->SomeFrameNumberThing = v2;
+					MorphPoints(&LSDashMorph_Left3, &LSDashMorph_Left2, &LSDashMorph_Left1, v2);
+					v3 = &LSDashMorph_Left1;
+				}
+				object_005818AC.model = v3;
+			}
+			else
+			{
+				a4 = (16.0 - a1->AnimationThing.Frame) * 0.0625;
+				a1->SomeFrameNumberThing = a4;
+				MorphPoints(&LSDashMorph_Left3, &LSDashMorph_Left2, &LSDashMorph_Left1, a4);
+				object_005818AC.model = &LSDashMorph_Left1;
+			}
+			if (a1->AnimationThing.Frame < 8.0 || a1->AnimationThing.Frame > 16.0)
+			{
+				if (a1->AnimationThing.Frame <= 16.0 || a1->AnimationThing.Frame > 32.0)
+				{
+					a1->TailsFlightTime = 0;
+					object_005825A4.model = &LSDashMorph_Right2;
+				}
+				else
+				{
+					v5 = (32.0 - a1->AnimationThing.Frame) * 0.0625;
+					a1->TailsFlightTime = v5;
+					MorphPoints(&LSDashMorph_Right2, &LSDashMorph_Right3, &LSDashMorph_Right1, v5);
+					object_005825A4.model = &LSDashMorph_Right1;
+				}
+			}
+			else
+			{
+				v4 = (a1->AnimationThing.Frame - 8.0) * 0.125;
+				a1->TailsFlightTime = v4;
+				MorphPoints(&LSDashMorph_Right2, &LSDashMorph_Right3, &LSDashMorph_Right1, v4);
+				object_005825A4.model = &LSDashMorph_Right1;
+			}
+		}
+		else
+		{
+			a1->SomeFrameNumberThing = 0;
+			a1->TailsFlightTime = 0;
+			object_005818AC.model = &attach_00581880;
+			object_005825A4.model = &attach_00582578;
+		}
+	}
+	else
+	{
+		if (a1->AnimationThing.Index == 13)
+		{
+			if (a1->AnimationThing.Frame >= 16.0)
+			{
+				if (a1->AnimationThing.Frame <= 24.0)
+				{
+					a1->SomeFrameNumberThing = 0;
+					v3 = &attach_0057464C;
+				}
+				else
+				{
+					v2 = (a1->AnimationThing.Frame - 24.0) * 0.125;
+					a1->SomeFrameNumberThing = v2;
+					MorphPoints(&attach_0057464C, &attach_00573DFC, &attach_005735AC, v2);
+					v3 = &attach_005735AC;
+				}
+				object_0055F330.model = v3;
+			}
+			else
+			{
+				a4 = (16.0 - a1->AnimationThing.Frame) * 0.0625;
+				a1->SomeFrameNumberThing = a4;
+				MorphPoints(&attach_0057464C, &attach_00573DFC, &attach_005735AC, a4);
+				object_0055F330.model = &attach_005735AC;
+			}
+			if (a1->AnimationThing.Frame < 8.0 || a1->AnimationThing.Frame > 16.0)
+			{
+				if (a1->AnimationThing.Frame <= 16.0 || a1->AnimationThing.Frame > 32.0)
+				{
+					a1->TailsFlightTime = 0;
+					object_00560DD0.model = &attach_00575AB4;
+				}
+				else
+				{
+					v5 = (32.0 - a1->AnimationThing.Frame) * 0.0625;
+					a1->TailsFlightTime = v5;
+					MorphPoints(&attach_00575AB4, &attach_0057630C, &attach_0057525C, v5);
+					object_00560DD0.model = &attach_0057525C;
+				}
+			}
+			else
+			{
+				v4 = (a1->AnimationThing.Frame - 8.0) * 0.125;
+				a1->TailsFlightTime = v4;
+				MorphPoints(&attach_00575AB4, &attach_0057630C, &attach_0057525C, v4);
+				object_00560DD0.model = &attach_0057525C;
+			}
+		}
+		else
+		{
+			a1->SomeFrameNumberThing = 0;
+			a1->TailsFlightTime = 0;
+			object_0055F330.model = &attach_0055F304;
+			object_00560DD0.model = &attach_00560DA4;
+		}
+	}
+}
+static void __declspec(naked) Sonic_MorphStretchyFeet_asm()
+{
+	__asm
+	{
+		push esi // a1
+		call Sonic_MorphStretchyFeet_c
+		pop esi // a1
+		retn
+	}
+}
+
 extern "C" __declspec(dllexport) void __cdecl Init(const char *path, const HelperFunctions &helperFunctions)
 {
 	HMODULE handle = GetModuleHandle(L"CHRMODELS_orig");
@@ -492,6 +699,8 @@ extern "C" __declspec(dllexport) void __cdecl Init(const char *path, const Helpe
 	WriteData((NJS_MOTION**)0x03375D98, &EV_Tails01);
 	WriteData((NJS_MOTION**)0x03375DA8, &EV_Tails01);
 	WriteData((NJS_MOTION**)0x03375DB8, &EV_Tails00);
+
+	WriteJump((void*)0x00493500, Sonic_MorphStretchyFeet_asm);
 }
 
 extern "C" __declspec(dllexport) const ModInfo SADXModInfo = { ModLoaderVer };

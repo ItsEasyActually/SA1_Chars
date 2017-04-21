@@ -25721,7 +25721,7 @@ OffsetAnimData Tails_HeadMorph[] = {
 
 AnimFrame_2 TailsCineHeadArray[] = {
 	{ &Tails_HeadMorph, 0, 20, 0 },
-	{ nullptr, 0, 0, 0 }
+	{ 0, 0, 0, 0 }
 };
 
 NJS_MOTION TailsCinematicHead = { &TailsCineHeadArray, 0x14, 0x30, 2 };

@@ -7,77 +7,20 @@
 #include "EV_TR2CHANGE.h"
 #include "SkyChase.h"
 #include "EV_TailsIntro.h"
+#include <cmath>
 
+static NJS_OBJECT **SONIC_OBJECTS = nullptr;
+static NJS_MODEL_SADX **SONIC_MODELS = nullptr;
 
+static NJS_OBJECT **MILES_OBJECTS = nullptr;
+static NJS_MODEL_SADX **MILES_MODELS = nullptr;
+
+DataPointer(int, MissedFrames, 0x3B1117C);
+
+ObjectFunc(Tails_Jiggle_Delete, 0x0045B810);
+DataArray(EntityData2*, EntityData2Ptrs, 0x03B36DD0, 8);
 FunctionPointer(void, MorphPoints, (NJS_MODEL_SADX *a, NJS_MODEL_SADX *b, NJS_MODEL_SADX *destination, float factor), 0x00439F20);
-HMODULE handle = GetModuleHandle(L"CHRMODELS_orig");
-NJS_OBJECT **___SONIC_OBJECTS = (NJS_OBJECT **)GetProcAddress(handle, "___SONIC_OBJECTS");
-NJS_MODEL_SADX **___SONIC_MODELS = (NJS_MODEL_SADX **)GetProcAddress(handle, "___SONIC_MODELS");
-
-//void __cdecl Sonic_MorphStretchyFeet_c(CharObj2* a1)
-//{
-//	float a4; // ST10_4@3
-//	float v2; // ST10_4@5
-//	NJS_MODEL_SADX *v3; // ecx@5
-//	float v4; // ST10_4@10
-//	float v5; // ST10_4@13
-//
-//	if (a1->AnimationThing.Index == 13)
-//	{
-//		if (a1->AnimationThing.Frame >= 16.0)
-//		{
-//			if (a1->AnimationThing.Frame <= 24.0)
-//			{
-//				a1->SomeFrameNumberThing = 0;
-//				v3 = &attach_0057464C;
-//			}
-//			else
-//			{
-//				v2 = (a1->AnimationThing.Frame - 24.0) * 0.125;
-//				a1->SomeFrameNumberThing = v2;
-//				MorphPoints(&attach_0057464C, &attach_00573DFC, &attach_005735AC, v2);
-//				v3 = &attach_005735AC;
-//			}
-//			object_0055F330.model = v3;
-//		}
-//		else
-//		{
-//			a4 = (16.0 - a1->AnimationThing.Frame) * 0.0625;
-//			a1->SomeFrameNumberThing = a4;
-//			MorphPoints(&attach_0057464C, &attach_00573DFC, &attach_005735AC, a4);
-//			object_0055F330.model = &attach_005735AC;
-//		}
-//		if (a1->AnimationThing.Frame < 8.0 || a1->AnimationThing.Frame > 16.0)
-//		{
-//			if (a1->AnimationThing.Frame <= 16.0 || a1->AnimationThing.Frame > 32.0)
-//			{
-//				a1->TailsFlightTime = 0;
-//				object_00560DD0.model = &attach_00575AB4;
-//			}
-//			else
-//			{
-//				v5 = (32.0 - a1->AnimationThing.Frame) * 0.0625;
-//				a1->TailsFlightTime = v5;
-//				MorphPoints(&attach_00575AB4, &attach_0057630C, &attach_0057525C, v5);
-//				object_00560DD0.model = &attach_0057525C;
-//			}
-//		}
-//		else
-//		{
-//			v4 = (a1->AnimationThing.Frame - 8.0) * 0.125;
-//			a1->TailsFlightTime = v4;
-//			MorphPoints(&attach_00575AB4, &attach_0057630C, &attach_0057525C, v4);
-//			object_00560DD0.model = &attach_0057525C;
-//		}
-//	}
-//	else
-//	{
-//		a1->SomeFrameNumberThing = 0;
-//		a1->TailsFlightTime = 0;
-//		object_0055F330.model = &attach_0055F304;
-//		object_00560DD0.model = &attach_00560DA4;
-//	}
-//}
+FunctionPointer(void, sub_4083D0, (NJS_ACTION *a1, float a2, int a3), 0x004083D0);
 
 void __cdecl Sonic_MorphStretchyFeet_c(CharObj2* a1)
 {
@@ -204,6 +147,7 @@ void __cdecl Sonic_MorphStretchyFeet_c(CharObj2* a1)
 		}
 	}
 }
+
 static void __declspec(naked) Sonic_MorphStretchyFeet_asm()
 {
 	__asm
@@ -215,6 +159,230 @@ static void __declspec(naked) Sonic_MorphStretchyFeet_asm()
 	}
 }
 
+const Sint16 MorphVertsT[] = {
+	// right ear
+	28, 188, 56, 200,
+	// left ear
+	99, 228, 127, 193,
+	// hair (top, middle, bottom)
+	169, 176, 162,
+	// right whiskers
+	9, 1, 3, 7,
+	// left whiskers
+	80, 72, 74, 78
+};
+
+static void __cdecl Tails_Jiggle_Main(ObjectMaster *_this)
+{
+	NJS_POINT3 *_src_points; // esi@4
+	float v21; // st7@32
+	Sint32 nbPoint; // [sp+14h] [bp-14h]@4
+	NJS_VECTOR a2; // [sp+1Ch] [bp-Ch]@29
+
+	EntityData2* v1 = (EntityData2*)_this->Data2;
+	EntityData1* v2 = _this->Data1;
+	int v3 = v2->CharIndex;
+
+	if (!CharObj1Ptrs[v3])
+	{
+		CheckThingButThenDeleteObject(_this);
+		return;
+	}
+
+	EntityData2 *v25 = EntityData2Ptrs[v3];
+	CharObj2 *v4 = GetCharObj2(v2->CharIndex);
+	NJS_POINT3 *_dst_points = MILES_MODELS[4]->points;
+	NJS_OBJECT *v6 = TailsAnimData[v4->AnimationThing.Index].Animation->object;
+
+	if (v6 == *MILES_OBJECTS)
+	{
+		NJS_MODEL_SADX *v7 = MILES_MODELS[2];
+		_src_points = v7->points;
+		nbPoint = v7->nbPoint;
+	}
+	else
+	{
+		if (v6 != MILES_OBJECTS[1])
+		{
+			return;
+		}
+
+		NJS_MODEL_SADX *v9 = MILES_MODELS[3];
+		_src_points = v9->points;
+		nbPoint = v9->nbPoint;
+	}
+
+	if (!v2->Action)
+	{
+		v2->Action = 1;
+		_this->DeleteSub = Tails_Jiggle_Delete;
+	}
+	else if (v2->Action == 1)
+	{
+		float v10 = v25->VelocityDirection.x * v25->VelocityDirection.x
+			+ v25->VelocityDirection.y * v25->VelocityDirection.y
+			+ v25->VelocityDirection.z * v25->VelocityDirection.z;
+		float v11 = squareroot(v10);
+		float v12 = v11 + v11;
+
+		if (fabs(v1->VelocityDirection.y) < v12)
+		{
+			if (v12 < 0.0f)
+			{
+				v12 = -v12;
+			}
+			if (v12 > 4.0f)
+			{
+				v12 = 4.0f;
+			}
+			v1->VelocityDirection.y = v12;
+		}
+
+		if (v1->VelocityDirection.y >= 0.2f || v1->VelocityDirection.y <= -0.2f)
+		{
+			v1->VelocityDirection.y = v1->VelocityDirection.y * 0.99000001f;
+		}
+		else
+		{
+			v1->VelocityDirection.y = 0.0f;
+		}
+
+		signed int v13 = (int)fabs(v1->VelocityDirection.y * 512.0f) + 2048;
+		if (v13 > 3072)
+		{
+			v13 = 3072;
+		}
+
+		Angle v14 = v13 + v1->field_30;
+		v1->field_30 = v14;
+		v2->Rotation.z = (int)(v1->VelocityDirection.y * 0.2f * njCos(v14) * 4096.0f);
+
+		njUnitMatrix(TailsMatrix1);
+		Angle v15 = v2->Rotation.z;
+		if (v15)
+		{
+			njRotateZ(TailsMatrix1, (unsigned __int16)v15);
+		}
+
+		njUnitMatrix(TailsMatrix2);
+		Angle v16 = v2->Rotation.z >> 1;
+		if (v16)
+		{
+			njRotateZ(TailsMatrix2, (unsigned __int16)v16);
+		}
+
+		if (nbPoint)
+		{
+			for (auto i : MorphVertsT)
+			{
+				auto src_points = &_src_points[i - 1];
+				auto dst_points = &_dst_points[i - 1];
+
+				if (src_points->y >= -2.9000001f)
+				{
+					if (src_points->y <= -1.65f || fabs(src_points->z) <= 1.15f)
+					{
+						if (src_points->y >= -2.0999999f || src_points->x <= 1.3f)
+						{
+							continue;
+						}
+
+						float v22 = src_points->x + 0.25f;
+						float v23 = src_points->y;
+						a2.z = src_points->z;
+						a2.x = v22;
+						a2.y = v23;
+						njCalcVector(TailsMatrix2, &a2, dst_points);
+						v21 = dst_points->x - 0.25f;
+					}
+					else
+					{
+						float v19 = src_points->z;
+						float v20 = src_points->x + 1.5f;
+						a2.y = src_points->y;
+						a2.z = v19;
+						a2.x = v20;
+						njCalcVector(TailsMatrix1, &a2, dst_points);
+						v21 = dst_points->x - 1.5f;
+					}
+					dst_points->x = v21;
+				}
+				else
+				{
+					float v18 = src_points->z;
+					a2.x = src_points->x + 0.5f;
+					a2.z = v18;
+					a2.y = src_points->y + 1.5f;
+					njCalcVector(TailsMatrix1, &a2, dst_points);
+					dst_points->x = dst_points->x - 0.5f;
+					dst_points->y = dst_points->y - 1.5f;
+				}
+			}
+		}
+	}
+	else
+	{
+		DeleteObjectMaster(_this);
+	}
+
+	MILES_OBJECTS[4]->model = MILES_MODELS[4];
+	MILES_OBJECTS[5]->model = MILES_MODELS[4];
+}
+
+static int __cdecl sub_4A1630(EntityData1 *data1, CharObj2 **data2_pp, CharObj2 *data2)
+{
+	int result; // eax@1
+	int v4; // eax@2
+	__int16 v5; // t1@3
+	double v6; // st7@4
+	float v7; // ST28_4@6
+	double v8; // st7@6
+	NJS_ACTION v9; // [sp+4h] [bp-18h]@2
+	NJS_MOTION *v10; // [sp+8h] [bp-14h]@3
+	NJS_ARGB a1; // [sp+Ch] [bp-10h]@6
+
+	result = MissedFrames;
+	if (!MissedFrames)
+	{
+		v4 = data2->AnimationThing.Index;
+		v9.object = SONIC_OBJECTS[54];
+		if (data2->AnimationThing.State == 2)
+		{
+			v5 = data2->AnimationThing.LastIndex;
+			v10 = data2->AnimationThing.action->motion;
+		}
+		else
+		{
+			v10 = data2->AnimationThing.AnimData[v4].Animation->motion;
+		}
+		v6 = (double)(LevelFrameCount & 0x7F);
+		if (v6 >= 64.0)
+		{
+			v6 = 128.0 - v6;
+		}
+		v7 = v6 * 0.015625;
+		njPushMatrixEx();
+		njControl3D(NJD_CONTROL_3D_CONSTANT_MATERIAL | NJD_CONTROL_3D_ENABLE_ALPHA | NJD_CONTROL_3D_CONSTANT_ATTR);
+		njColorBlendingMode(0, NJD_COLOR_BLENDING_SRCALPHA);
+		njColorBlendingMode(NJD_DESTINATION_COLOR, NJD_COLOR_BLENDING_ONE);
+		v8 = v7 * 0.1;
+		(a1.r) = 0;
+		(a1.a) = 0x3F4CCCCD;
+		a1.g = 0.2 - v8;
+		a1.b = 0.69999999 - v8;
+		SetMaterialAndSpriteColor(&a1);
+		sub_4083D0(&v9, data2->AnimationThing.Frame, 0);
+		njScale(0, 1.05, 1.05, 1.05);
+		sub_4083D0(&v9, data2->AnimationThing.Frame, 0);
+		njScale(0, 1.05, 1.05, 1.05);
+		sub_4083D0(&v9, data2->AnimationThing.Frame, 0);
+		njColorBlendingMode(0, NJD_COLOR_BLENDING_SRCALPHA);
+		njColorBlendingMode(NJD_DESTINATION_COLOR, NJD_COLOR_BLENDING_INVSRCALPHA);
+		njPopMatrixEx();
+	}
+	return result;
+}
+
 extern "C" __declspec(dllexport) void __cdecl Init(const char *path, const HelperFunctions &helperFunctions)
 {
 	HMODULE handle = GetModuleHandle(L"CHRMODELS_orig");
@@ -222,6 +390,7 @@ extern "C" __declspec(dllexport) void __cdecl Init(const char *path, const Helpe
 	//Sonic Data for DLL Export
 	ResizeTextureList((NJS_TEXLIST *)0x91CB58, 28);
 	NJS_OBJECT **___SONIC_OBJECTS = (NJS_OBJECT **)GetProcAddress(handle, "___SONIC_OBJECTS");
+	SONIC_OBJECTS = ___SONIC_OBJECTS;
 	NJS_ACTION **___SONIC_ACTIONS = (NJS_ACTION **)GetProcAddress(handle, "___SONIC_ACTIONS");
 	NJS_MODEL_SADX **___SONIC_MODELS = (NJS_MODEL_SADX **)GetProcAddress(handle, "___SONIC_MODELS");
 	NJS_MOTION **___SONIC_MOTIONS = (NJS_MOTION **)GetProcAddress(handle, "___SONIC_MOTIONS");
@@ -241,12 +410,12 @@ extern "C" __declspec(dllexport) void __cdecl Init(const char *path, const Helpe
 	___SONIC_OBJECTS[13] = &object_005605DC;
 	___SONIC_OBJECTS[14] = &object_00561C68;
 	___SONIC_OBJECTS[15] = &object_005613F8;
-	___SONIC_OBJECTS[16] = &object_00560DD0;
+	___SONIC_OBJECTS[16] = &object_00560DD0; // Right Shoe Toe
 	___SONIC_OBJECTS[17] = &object_0055E99C;
 	___SONIC_OBJECTS[18] = &object_0055EB2C;
 	___SONIC_OBJECTS[19] = &object_005601B8;
 	___SONIC_OBJECTS[20] = &object_0055F948;
-	___SONIC_OBJECTS[21] = &object_0055F330;
+	___SONIC_OBJECTS[21] = &object_0055F330; // Left Shoe Toe
 	___SONIC_OBJECTS[22] = &object_0062DE88;
 	___SONIC_OBJECTS[23] = &object_00626AB4;
 	___SONIC_OBJECTS[24] = &object_00626C44;
@@ -278,9 +447,9 @@ extern "C" __declspec(dllexport) void __cdecl Init(const char *path, const Helpe
 	___SONIC_OBJECTS[51] = &object_00569CE8;
 	___SONIC_OBJECTS[52] = &object_005698F0;
 	___SONIC_OBJECTS[58] = &object_00581FB8;
-	___SONIC_OBJECTS[59] = &object_005818AC;
+	___SONIC_OBJECTS[59] = &object_005818AC; // Left LSDash Toe
 	___SONIC_OBJECTS[60] = &object_00582CC0;
-	___SONIC_OBJECTS[61] = &object_005825A4;
+	___SONIC_OBJECTS[61] = &object_005825A4; // Right LSDash Toe
 	___SONIC_OBJECTS[62] = &object_00565520;
 	___SONIC_OBJECTS[63] = &object_00583284;
 	___SONIC_OBJECTS[64] = &object_00583904;
@@ -415,14 +584,14 @@ extern "C" __declspec(dllexport) void __cdecl Init(const char *path, const Helpe
 	___SONIC_ACTIONS[146]->object = &object_0056AF50;
 	___SONIC_ACTIONS[147]->object = &object_0056AF50;
 	___SONIC_ACTIONS[148]->object = &object_0056AF50;
-	___SONIC_MODELS[0] = &attach_0055F304;
-	___SONIC_MODELS[1] = &attach_00560DA4;
-	___SONIC_MODELS[2] = &attach_005735AC;
-	___SONIC_MODELS[3] = &attach_00573DFC;
-	___SONIC_MODELS[4] = &attach_0057464C;
-	___SONIC_MODELS[5] = &attach_0057525C;
-	___SONIC_MODELS[6] = &attach_00575AB4;
-	___SONIC_MODELS[7] = &attach_0057630C;
+	___SONIC_MODELS[0] = &attach_0055F304; // Left Shoe
+	___SONIC_MODELS[1] = &attach_00560DA4; // Right Shoe
+	___SONIC_MODELS[2] = &attach_005735AC; // Left Shoe Morph 1
+	___SONIC_MODELS[3] = &attach_00573DFC; // Left Shoe Morph 2
+	___SONIC_MODELS[4] = &attach_0057464C; // Left Shoe Morph 3
+	___SONIC_MODELS[5] = &attach_0057525C; // Right Shoe Morph 1
+	___SONIC_MODELS[6] = &attach_00575AB4; // Right Shoe Morph 2
+	___SONIC_MODELS[7] = &attach_0057630C; // Right Shoe Morph 3
 	___SONIC_MODELS[8] = &attach_00569568;
 	___SONIC_MODELS[9] = &attach_00579C68;
 	___SONIC_MOTIONS[0] = &CinematicHead;
@@ -434,8 +603,10 @@ extern "C" __declspec(dllexport) void __cdecl Init(const char *path, const Helpe
 	//Tails Model Data
 	ResizeTextureList((NJS_TEXLIST *)0x91A9C8, 24);
 	NJS_OBJECT **___MILES_OBJECTS = (NJS_OBJECT **)GetProcAddress(handle, "___MILES_OBJECTS");
+	MILES_OBJECTS = ___MILES_OBJECTS;
 	NJS_ACTION **___MILES_ACTIONS = (NJS_ACTION **)GetProcAddress(handle, "___MILES_ACTIONS");
 	NJS_MODEL_SADX **___MILES_MODELS = (NJS_MODEL_SADX **)GetProcAddress(handle, "___MILES_MODELS");
+	MILES_MODELS = ___MILES_MODELS;
 	NJS_MOTION **___MILES_MOTIONS = (NJS_MOTION **)GetProcAddress(handle, "___MILES_MOTIONS");
 	___MILES_OBJECTS[0] = &object_0042AD54;
 	___MILES_OBJECTS[1] = &object_00437C44;
@@ -624,10 +795,6 @@ extern "C" __declspec(dllexport) void __cdecl Init(const char *path, const Helpe
 	___MILES_MODELS[14] = &attach_0046DFE8;
 	___MILES_MOTIONS[0] = &TailsCinematicHead;
 	WriteData((WeldInfo**)0x00461896, TailsWeldInfo);
-	//WriteData((void*)0x0045B821, 0x90u, 3);
-	//WriteData((void*)0x0045B835, 0x90u, 3);
-	//WriteData((void*)0x0045BB60, 0x90u, 3);
-	//WriteData((void*)0x0045BB74, 0x90u, 3);
 
 	//Sky Chase
 	WriteData((NJS_OBJECT**)0x0028B7A0C, &Tornado1_Object);
@@ -700,7 +867,10 @@ extern "C" __declspec(dllexport) void __cdecl Init(const char *path, const Helpe
 	WriteData((NJS_MOTION**)0x03375DA8, &EV_Tails01);
 	WriteData((NJS_MOTION**)0x03375DB8, &EV_Tails00);
 
+	//Functions
 	WriteJump((void*)0x00493500, Sonic_MorphStretchyFeet_asm);
+	WriteJump((void*)0x0045B840, Tails_Jiggle_Main);
+	//WriteJump((void*)0x004A1630, sub_4A1630);
 }
 
 extern "C" __declspec(dllexport) const ModInfo SADXModInfo = { ModLoaderVer };

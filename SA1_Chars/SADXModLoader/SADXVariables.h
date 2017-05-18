@@ -10,6 +10,8 @@
 #include "../d3d8types.h"
 #include "SADXStructs.h"
 
+DataArray(HMODULE, ModuleHandles, 0x03CA6E60, 4);
+
 DataArray(TrialLevelList, TrialLevels, 0x7EF5EC, 7);
 DataArray(TrialLevelList, TrialSubgames, 0x7EF624, 7);
 DataArray(SoundTestCategory, SoundtestData, 0x7EFEB8, 6);
@@ -49,6 +51,9 @@ DataPointer(RestartData, RestartLevel, 0x3B42F80);
 DataArray(ObjectMaster*, PlayerPtrs, 0x03B42E30, 8);
 DataArray(EntityData1*, CharObj1Ptrs, 0x03B42E10, 8);
 DataArray(CharObj2*, CharObj2Ptrs, 0x03B3CDF0, 8);
+DataArray(float, TailsMatrix1, 0x03C49CF8, 16);
+DataArray(float, TailsMatrix2, 0x03C49C60, 16);
+DataArray(AnimData, TailsAnimData, 0x03C49D90, 136);
 DataPointer(short, Rings, 0x03B0F0E4);
 DataPointer(int, MarketRings, 0x03B2C3FC);
 DataPointer(int, CasinoRings, 0x03C74880);
@@ -110,6 +115,12 @@ DataPointer(int, SegaLogo_Frames, 0x3B29D68);
 DataPointer(ObjectMaster*, SoundManager_ptr, 0x03B29D00);
 DataPointer(int, VoiceLanguage, 0x03B0EF38);
 DataPointer(ObjectMaster*, TailsAI_ptr, 0x03B2B358);
-DataPointer(int, IsChaoStage, 0x3B22E80);
+DataPointer(Bool, IsChaoStage, 0x3B22E80);
+DataPointer(Bool, IsWindowed, 0x38A5DC4);
+
+DataPointer(Uint32, _nj_constant_attr_and_, 0x03D0F840);
+DataPointer(Uint32, _nj_constant_attr_or_, 0x03D0F9C4);
+DataPointer(Uint32, _nj_control_3d_flag_, 0x03D0F9C8);
+DataPointer(EntityData1*, Camera_Data1, 0x03B2CBB0);
 
 #endif /* SADXMODLOADER_SADXVARS_H */

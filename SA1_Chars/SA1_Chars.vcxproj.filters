@@ -78,6 +78,9 @@
     <ClInclude Include="Functions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Knuckles.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">

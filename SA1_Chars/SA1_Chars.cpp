@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Sonic.h"
 #include "Tails.h"
+#include "Knuckles.h"
 #include "EV_TR1.h"
 #include "OBJECT_SonicPointingFinger.h"
 #include "EV_TR2BEFORE.h"
@@ -10,12 +11,26 @@
 #include <cmath>
 
 static NJS_OBJECT **SONIC_OBJECTS = nullptr;
+static NJS_ACTION **SONIC_ACTIONS = nullptr;
 static NJS_MODEL_SADX **SONIC_MODELS = nullptr;
+static NJS_MOTION **SONIC_MOTIONS = nullptr;
 
 static NJS_OBJECT **MILES_OBJECTS = nullptr;
+static NJS_ACTION **MILES_ACTIONS = nullptr;
 static NJS_MODEL_SADX **MILES_MODELS = nullptr;
+static NJS_MOTION **MILES_MOTIONS = nullptr;
 
-DataPointer(int, MissedFrames, 0x3B1117C);
+static NJS_OBJECT **KNUCKLES_OBJECTS = nullptr;
+static NJS_ACTION **KNUCKLES_ACTIONS = nullptr;
+static NJS_MODEL_SADX **KNUCKLES_MODELS = nullptr;
+static NJS_MOTION **KNUCKLES_MOTIONS = nullptr;
+
+DataPointer(int, dword_3C53274, 0x03C53274);
+DataPointer(int, dword_3C5325C, 0x03C5325C);
+DataPointer(int, dword_3C53154, 0x03C53254);
+DataPointer(int, dword_3C5313C, 0x03C5313C);
+
+DataArray(WeldInfo, KnucklesWeldInfo, 0x03C52D68, 30);
 
 ObjectFunc(Tails_Jiggle_Delete, 0x0045B810);
 DataArray(EntityData2*, EntityData2Ptrs, 0x03B36DD0, 8);
@@ -329,58 +344,370 @@ static void __cdecl Tails_Jiggle_Main(ObjectMaster *_this)
 	MILES_OBJECTS[5]->model = MILES_MODELS[4];
 }
 
-static int __cdecl sub_4A1630(EntityData1 *data1, CharObj2 **data2_pp, CharObj2 *data2)
+NJS_OBJECT *__cdecl InitKnucklesWeldInfo_fix()
 {
-	int result; // eax@1
-	int v4; // eax@2
-	__int16 v5; // t1@3
-	double v6; // st7@4
-	float v7; // ST28_4@6
-	double v8; // st7@6
-	NJS_ACTION v9; // [sp+4h] [bp-18h]@2
-	NJS_MOTION *v10; // [sp+8h] [bp-14h]@3
-	NJS_ARGB a1; // [sp+Ch] [bp-10h]@6
+	NJS_OBJECT *v0; // ebp@1
+	NJS_OBJECT *v1; // ebp@1
+	NJS_OBJECT *v2; // ebp@1
+	NJS_OBJECT *v3; // edx@1
+	NJS_OBJECT *v4; // edx@1
+	NJS_OBJECT *result; // eax@1
 
-	result = MissedFrames;
-	if (!MissedFrames)
-	{
-		v4 = data2->AnimationThing.Index;
-		v9.object = SONIC_OBJECTS[54];
-		if (data2->AnimationThing.State == 2)
-		{
-			v5 = data2->AnimationThing.LastIndex;
-			v10 = data2->AnimationThing.action->motion;
-		}
-		else
-		{
-			v10 = data2->AnimationThing.AnimData[v4].Animation->motion;
-		}
-		v6 = (double)(LevelFrameCount & 0x7F);
-		if (v6 >= 64.0)
-		{
-			v6 = 128.0 - v6;
-		}
-		v7 = v6 * 0.015625;
-		njPushMatrixEx();
-		njControl3D(NJD_CONTROL_3D_CONSTANT_MATERIAL | NJD_CONTROL_3D_ENABLE_ALPHA | NJD_CONTROL_3D_CONSTANT_ATTR);
-		njColorBlendingMode(0, NJD_COLOR_BLENDING_SRCALPHA);
-		njColorBlendingMode(NJD_DESTINATION_COLOR, NJD_COLOR_BLENDING_ONE);
-		v8 = v7 * 0.1;
-		(a1.r) = 0;
-		(a1.a) = 0x3F4CCCCD;
-		a1.g = 0.2 - v8;
-		a1.b = 0.69999999 - v8;
-		SetMaterialAndSpriteColor(&a1);
-		sub_4083D0(&v9, data2->AnimationThing.Frame, 0);
-		njScale(0, 1.05, 1.05, 1.05);
-		sub_4083D0(&v9, data2->AnimationThing.Frame, 0);
-		njScale(0, 1.05, 1.05, 1.05);
-		sub_4083D0(&v9, data2->AnimationThing.Frame, 0);
-		njColorBlendingMode(0, NJD_COLOR_BLENDING_SRCALPHA);
-		njColorBlendingMode(NJD_DESTINATION_COLOR, NJD_COLOR_BLENDING_INVSRCALPHA);
-		njPopMatrixEx();
-	}
+	KnucklesWeldInfo[0].BaseModel = *KNUCKLES_OBJECTS;
+	KnucklesWeldInfo[0].ModelA = KNUCKLES_OBJECTS[2];
+	KnucklesWeldInfo[0].ModelB = KNUCKLES_OBJECTS[3];
+	KnucklesWeldInfo[0].anonymous_5 = 0;
+	KnucklesWeldInfo[0].VertexBuffer = 0;
+	KnucklesWeldInfo[0].VertexPairCount = (uint8_t)(LengthOfArray(K_UpperArms) / 2);
+	KnucklesWeldInfo[0].WeldType = 2;
+	KnucklesWeldInfo[0].VertIndexes = (unsigned __int16 *)&K_UpperArms;
+	KnucklesWeldInfo[1].BaseModel = *KNUCKLES_OBJECTS;
+	KnucklesWeldInfo[1].ModelA = KNUCKLES_OBJECTS[3];
+	KnucklesWeldInfo[1].ModelB = KNUCKLES_OBJECTS[4];
+	KnucklesWeldInfo[1].VertexPairCount = (uint8_t)(LengthOfArray(K_LowerArms) / 2);
+	KnucklesWeldInfo[1].WeldType = 2;
+	KnucklesWeldInfo[1].anonymous_5 = 0;
+	KnucklesWeldInfo[1].VertexBuffer = 0;
+	KnucklesWeldInfo[1].VertIndexes = (unsigned __int16 *)&K_LowerArms;
+	KnucklesWeldInfo[2].BaseModel = *KNUCKLES_OBJECTS;
+	KnucklesWeldInfo[2].ModelA = KNUCKLES_OBJECTS[6];
+	v0 = KNUCKLES_OBJECTS[7];
+	KnucklesWeldInfo[2].VertIndexes = (unsigned __int16 *)&K_UpperArms;
+	KnucklesWeldInfo[2].ModelB = v0;
+	KnucklesWeldInfo[2].VertexPairCount = (uint8_t)(LengthOfArray(K_UpperArms) / 2);
+	KnucklesWeldInfo[2].WeldType = 2;
+	KnucklesWeldInfo[2].anonymous_5 = 0;
+	KnucklesWeldInfo[2].VertexBuffer = 0;
+	KnucklesWeldInfo[3].BaseModel = *KNUCKLES_OBJECTS;
+	KnucklesWeldInfo[3].ModelA = KNUCKLES_OBJECTS[7];
+	KnucklesWeldInfo[3].ModelB = KNUCKLES_OBJECTS[8];
+	KnucklesWeldInfo[3].VertexPairCount = (uint8_t)(LengthOfArray(K_LowerArms) / 2);
+	KnucklesWeldInfo[3].WeldType = 2;
+	KnucklesWeldInfo[3].anonymous_5 = 0;
+	KnucklesWeldInfo[3].VertexBuffer = 0;
+	KnucklesWeldInfo[3].VertIndexes = (unsigned __int16 *)&K_LowerArms;
+	KnucklesWeldInfo[4].BaseModel = *KNUCKLES_OBJECTS;
+	KnucklesWeldInfo[4].ModelA = KNUCKLES_OBJECTS[10];
+	KnucklesWeldInfo[4].ModelB = KNUCKLES_OBJECTS[11];
+	KnucklesWeldInfo[4].VertexPairCount = (uint8_t)(LengthOfArray(K_Legs) / 2);
+	KnucklesWeldInfo[4].WeldType = 2;
+	KnucklesWeldInfo[4].anonymous_5 = 0;
+	KnucklesWeldInfo[4].VertexBuffer = 0;
+	KnucklesWeldInfo[4].VertIndexes = (unsigned __int16 *)&K_Legs;
+	KnucklesWeldInfo[5].BaseModel = *KNUCKLES_OBJECTS;
+	KnucklesWeldInfo[5].ModelA = KNUCKLES_OBJECTS[11];
+	KnucklesWeldInfo[5].ModelB = KNUCKLES_OBJECTS[12];
+	KnucklesWeldInfo[5].VertexPairCount = (uint8_t)(LengthOfArray(K_Legs) / 2);
+	KnucklesWeldInfo[5].WeldType = 2;
+	KnucklesWeldInfo[5].anonymous_5 = 0;
+	KnucklesWeldInfo[5].VertexBuffer = 0;
+	KnucklesWeldInfo[5].VertIndexes = (unsigned __int16 *)&K_Legs;
+	KnucklesWeldInfo[6].BaseModel = *KNUCKLES_OBJECTS;
+	KnucklesWeldInfo[6].ModelA = KNUCKLES_OBJECTS[13];
+	KnucklesWeldInfo[6].ModelB = KNUCKLES_OBJECTS[14];
+	KnucklesWeldInfo[6].VertexPairCount = (uint8_t)(LengthOfArray(K_Legs) / 2);
+	KnucklesWeldInfo[6].WeldType = 2;
+	KnucklesWeldInfo[6].anonymous_5 = 0;
+	KnucklesWeldInfo[6].VertexBuffer = 0;
+	KnucklesWeldInfo[6].VertIndexes = (unsigned __int16 *)&K_Legs;
+	KnucklesWeldInfo[7].BaseModel = *KNUCKLES_OBJECTS;
+	KnucklesWeldInfo[7].ModelA = KNUCKLES_OBJECTS[14];
+	KnucklesWeldInfo[7].ModelB = KNUCKLES_OBJECTS[15];
+	KnucklesWeldInfo[7].VertexPairCount = (uint8_t)(LengthOfArray(K_Legs) / 2);
+	KnucklesWeldInfo[7].WeldType = 2;
+	KnucklesWeldInfo[7].anonymous_5 = 0;
+	KnucklesWeldInfo[7].VertexBuffer = 0;
+	KnucklesWeldInfo[7].VertIndexes = (unsigned __int16 *)&K_Legs;
+	KnucklesWeldInfo[8].BaseModel = *KNUCKLES_OBJECTS;
+	KnucklesWeldInfo[8].ModelA = KNUCKLES_OBJECTS[16];
+	KnucklesWeldInfo[8].ModelB = KNUCKLES_OBJECTS[17];
+	KnucklesWeldInfo[8].VertexPairCount = (uint8_t)(LengthOfArray(K_Feet) / 2);
+	KnucklesWeldInfo[8].WeldType = 2;
+	KnucklesWeldInfo[8].anonymous_5 = 0;
+	KnucklesWeldInfo[8].VertexBuffer = 0;
+	KnucklesWeldInfo[8].VertIndexes = (unsigned __int16 *)&K_Feet;
+	KnucklesWeldInfo[9].BaseModel = *KNUCKLES_OBJECTS;
+	KnucklesWeldInfo[9].ModelA = KNUCKLES_OBJECTS[18];
+	v1 = KNUCKLES_OBJECTS[19];
+	KnucklesWeldInfo[9].VertIndexes = (unsigned __int16 *)&K_Feet;
+	KnucklesWeldInfo[9].ModelB = v1;
+	KnucklesWeldInfo[9].VertexPairCount = (uint8_t)(LengthOfArray(K_Feet) / 2);
+	KnucklesWeldInfo[9].WeldType = 2;
+	KnucklesWeldInfo[9].anonymous_5 = 0;
+	KnucklesWeldInfo[9].VertexBuffer = 0;
+	KnucklesWeldInfo[10].BaseModel = *KNUCKLES_OBJECTS;
+	KnucklesWeldInfo[10].ModelA = KNUCKLES_OBJECTS[20];
+	KnucklesWeldInfo[10].ModelB = KNUCKLES_OBJECTS[5];
+	KnucklesWeldInfo[10].VertexPairCount = (uint8_t)(LengthOfArray(K_Hands) / 2);
+	KnucklesWeldInfo[10].WeldType = 2;
+	KnucklesWeldInfo[10].anonymous_5 = 0;
+	KnucklesWeldInfo[10].VertexBuffer = 0;
+	KnucklesWeldInfo[10].VertIndexes = (unsigned __int16 *)&K_Hands;
+	KnucklesWeldInfo[11].BaseModel = *KNUCKLES_OBJECTS;
+	KnucklesWeldInfo[11].ModelA = KNUCKLES_OBJECTS[22];
+	KnucklesWeldInfo[11].ModelB = KNUCKLES_OBJECTS[9];
+	KnucklesWeldInfo[11].VertexPairCount = (uint8_t)(LengthOfArray(K_Hands) / 2);
+	KnucklesWeldInfo[11].WeldType = 2;
+	KnucklesWeldInfo[11].anonymous_5 = 0;
+	KnucklesWeldInfo[11].VertexBuffer = 0;
+	KnucklesWeldInfo[11].VertIndexes = (unsigned __int16 *)&K_Hands;
+	KnucklesWeldInfo[12].BaseModel = KNUCKLES_OBJECTS[1];
+	KnucklesWeldInfo[12].ModelA = KNUCKLES_OBJECTS[24];
+	KnucklesWeldInfo[12].ModelB = KNUCKLES_OBJECTS[25];
+	KnucklesWeldInfo[12].VertexPairCount = (uint8_t)(LengthOfArray(K_UpperArms) / 2);
+	KnucklesWeldInfo[12].WeldType = 2;
+	KnucklesWeldInfo[12].anonymous_5 = 0;
+	KnucklesWeldInfo[12].VertexBuffer = 0;
+	KnucklesWeldInfo[12].VertIndexes = (unsigned __int16 *)&K_UpperArms;
+	KnucklesWeldInfo[13].BaseModel = KNUCKLES_OBJECTS[1];
+	KnucklesWeldInfo[13].ModelA = KNUCKLES_OBJECTS[25];
+	KnucklesWeldInfo[13].ModelB = KNUCKLES_OBJECTS[26];
+	KnucklesWeldInfo[13].VertexPairCount = (uint8_t)(LengthOfArray(K_LowerArms) / 2);
+	KnucklesWeldInfo[13].WeldType = 2;
+	KnucklesWeldInfo[13].anonymous_5 = 0;
+	KnucklesWeldInfo[13].VertexBuffer = 0;
+	KnucklesWeldInfo[13].VertIndexes = (unsigned __int16 *)&K_LowerArms;
+	KnucklesWeldInfo[14].BaseModel = KNUCKLES_OBJECTS[1];
+	KnucklesWeldInfo[14].ModelA = KNUCKLES_OBJECTS[28];
+	KnucklesWeldInfo[14].ModelB = KNUCKLES_OBJECTS[29];
+	KnucklesWeldInfo[14].VertexPairCount = (uint8_t)(LengthOfArray(K_UpperArms) / 2);
+	KnucklesWeldInfo[14].WeldType = 2;
+	KnucklesWeldInfo[14].anonymous_5 = 0;
+	KnucklesWeldInfo[14].VertexBuffer = 0;
+	KnucklesWeldInfo[14].VertIndexes = (unsigned __int16 *)&K_UpperArms;
+	KnucklesWeldInfo[15].BaseModel = KNUCKLES_OBJECTS[1];
+	KnucklesWeldInfo[15].ModelA = KNUCKLES_OBJECTS[29];
+	KnucklesWeldInfo[15].ModelB = KNUCKLES_OBJECTS[30];
+	KnucklesWeldInfo[15].VertexPairCount = (uint8_t)(LengthOfArray(K_LowerArms) / 2);
+	KnucklesWeldInfo[15].WeldType = 2;
+	KnucklesWeldInfo[15].anonymous_5 = 0;
+	KnucklesWeldInfo[15].VertexBuffer = 0;
+	KnucklesWeldInfo[15].VertIndexes = (unsigned __int16 *)&K_LowerArms;
+	KnucklesWeldInfo[16].BaseModel = KNUCKLES_OBJECTS[1];
+	KnucklesWeldInfo[16].ModelA = KNUCKLES_OBJECTS[32];
+	KnucklesWeldInfo[16].ModelB = KNUCKLES_OBJECTS[33];
+	KnucklesWeldInfo[16].VertexPairCount = (uint8_t)(LengthOfArray(K_Legs) / 2);
+	KnucklesWeldInfo[16].WeldType = 2;
+	KnucklesWeldInfo[16].anonymous_5 = 0;
+	KnucklesWeldInfo[16].VertexBuffer = 0;
+	KnucklesWeldInfo[16].VertIndexes = (unsigned __int16 *)&K_Legs;
+	KnucklesWeldInfo[17].BaseModel = KNUCKLES_OBJECTS[1];
+	KnucklesWeldInfo[17].ModelA = KNUCKLES_OBJECTS[33];
+	KnucklesWeldInfo[17].ModelB = KNUCKLES_OBJECTS[34];
+	KnucklesWeldInfo[17].VertexPairCount = (uint8_t)(LengthOfArray(K_Legs) / 2);
+	KnucklesWeldInfo[17].WeldType = 2;
+	KnucklesWeldInfo[17].anonymous_5 = 0;
+	KnucklesWeldInfo[17].VertexBuffer = 0;
+	KnucklesWeldInfo[17].VertIndexes = (unsigned __int16 *)&K_Legs;
+	KnucklesWeldInfo[18].BaseModel = KNUCKLES_OBJECTS[1];
+	KnucklesWeldInfo[18].ModelA = KNUCKLES_OBJECTS[35];
+	KnucklesWeldInfo[18].ModelB = KNUCKLES_OBJECTS[36];
+	KnucklesWeldInfo[18].VertexPairCount = (uint8_t)(LengthOfArray(K_Legs) / 2);
+	KnucklesWeldInfo[18].WeldType = 2;
+	KnucklesWeldInfo[18].anonymous_5 = 0;
+	KnucklesWeldInfo[18].VertexBuffer = 0;
+	KnucklesWeldInfo[18].VertIndexes = (unsigned __int16 *)&K_Legs;
+	KnucklesWeldInfo[19].BaseModel = KNUCKLES_OBJECTS[1];
+	KnucklesWeldInfo[19].ModelA = KNUCKLES_OBJECTS[36];
+	v2 = KNUCKLES_OBJECTS[37];
+	KnucklesWeldInfo[19].VertIndexes = (unsigned __int16 *)&K_Legs;
+	KnucklesWeldInfo[19].ModelB = v2;
+	KnucklesWeldInfo[19].VertexPairCount = (uint8_t)(LengthOfArray(K_Legs) / 2);
+	KnucklesWeldInfo[19].WeldType = 2;
+	KnucklesWeldInfo[19].anonymous_5 = 0;
+	KnucklesWeldInfo[19].VertexBuffer = 0;
+	KnucklesWeldInfo[20].BaseModel = KNUCKLES_OBJECTS[1];
+	KnucklesWeldInfo[20].ModelA = KNUCKLES_OBJECTS[38];
+	KnucklesWeldInfo[20].ModelB = KNUCKLES_OBJECTS[39];
+	KnucklesWeldInfo[20].VertexPairCount = (uint8_t)(LengthOfArray(K_Feet) / 2);
+	KnucklesWeldInfo[20].WeldType = 2;
+	KnucklesWeldInfo[20].anonymous_5 = 0;
+	KnucklesWeldInfo[20].VertexBuffer = 0;
+	KnucklesWeldInfo[20].VertIndexes = (unsigned __int16 *)&K_Feet;
+	KnucklesWeldInfo[21].BaseModel = KNUCKLES_OBJECTS[1];
+	KnucklesWeldInfo[21].ModelA = KNUCKLES_OBJECTS[40];
+	KnucklesWeldInfo[21].ModelB = KNUCKLES_OBJECTS[41];
+	KnucklesWeldInfo[21].VertexPairCount = (uint8_t)(LengthOfArray(K_Feet) / 2);
+	KnucklesWeldInfo[21].WeldType = 2;
+	KnucklesWeldInfo[21].anonymous_5 = 0;
+	KnucklesWeldInfo[21].VertexBuffer = 0;
+	KnucklesWeldInfo[21].VertIndexes = (unsigned __int16 *)&K_Feet;
+	KnucklesWeldInfo[22].BaseModel = KNUCKLES_OBJECTS[1];
+	KnucklesWeldInfo[22].ModelA = KNUCKLES_OBJECTS[42];
+	KnucklesWeldInfo[22].ModelB = KNUCKLES_OBJECTS[27];
+	KnucklesWeldInfo[22].VertexPairCount = (uint8_t)(LengthOfArray(K_Hands) / 2);
+	KnucklesWeldInfo[22].WeldType = 2;
+	KnucklesWeldInfo[22].anonymous_5 = 0;
+	KnucklesWeldInfo[22].VertexBuffer = 0;
+	KnucklesWeldInfo[22].VertIndexes = (unsigned __int16 *)&K_Hands;
+	KnucklesWeldInfo[23].BaseModel = KNUCKLES_OBJECTS[1];
+	KnucklesWeldInfo[23].ModelA = KNUCKLES_OBJECTS[44];
+	KnucklesWeldInfo[23].ModelB = KNUCKLES_OBJECTS[31];
+	KnucklesWeldInfo[23].VertexPairCount = (uint8_t)(LengthOfArray(K_Hands) / 2);
+	KnucklesWeldInfo[23].WeldType = 2;
+	KnucklesWeldInfo[23].anonymous_5 = 0;
+	KnucklesWeldInfo[23].VertexBuffer = 0;
+	KnucklesWeldInfo[23].VertIndexes = (unsigned __int16 *)&K_Hands;
+	KnucklesWeldInfo[24].BaseModel = *KNUCKLES_OBJECTS;
+	KnucklesWeldInfo[24].ModelA = KNUCKLES_OBJECTS[5];
+	KnucklesWeldInfo[24].ModelB = 0;
+	KnucklesWeldInfo[24].VertexPairCount = 2;
+	KnucklesWeldInfo[24].WeldType = 4;
+	KnucklesWeldInfo[24].anonymous_5 = 0;
+	KnucklesWeldInfo[24].VertexBuffer = 0;
+	KnucklesWeldInfo[24].VertIndexes = 0;
+	KnucklesWeldInfo[25].BaseModel = *KNUCKLES_OBJECTS;
+	KnucklesWeldInfo[25].ModelA = KNUCKLES_OBJECTS[9];
+	KnucklesWeldInfo[25].ModelB = 0;
+	KnucklesWeldInfo[25].VertexPairCount = 2;
+	KnucklesWeldInfo[25].WeldType = 5;
+	KnucklesWeldInfo[25].anonymous_5 = 0;
+	KnucklesWeldInfo[25].VertexBuffer = 0;
+	KnucklesWeldInfo[25].VertIndexes = 0;
+	KnucklesWeldInfo[26].BaseModel = *KNUCKLES_OBJECTS;
+	v3 = KNUCKLES_OBJECTS[17];
+	KnucklesWeldInfo[26].ModelB = 0;
+	KnucklesWeldInfo[26].VertexPairCount = 0;
+	KnucklesWeldInfo[26].anonymous_5 = 0;
+	KnucklesWeldInfo[26].VertexBuffer = 0;
+	KnucklesWeldInfo[26].VertIndexes = 0;
+	KnucklesWeldInfo[26].ModelA = v3;
+	KnucklesWeldInfo[26].WeldType = 6;
+	KnucklesWeldInfo[27].BaseModel = *KNUCKLES_OBJECTS;
+	v4 = KNUCKLES_OBJECTS[19];
+	KnucklesWeldInfo[27].ModelB = 0;
+	KnucklesWeldInfo[27].VertexPairCount = 0;
+	KnucklesWeldInfo[27].anonymous_5 = 0;
+	KnucklesWeldInfo[27].VertexBuffer = 0;
+	KnucklesWeldInfo[27].VertIndexes = 0;
+	KnucklesWeldInfo[27].ModelA = v4;
+	KnucklesWeldInfo[27].WeldType = 7;
+	KnucklesWeldInfo[28].BaseModel = *KNUCKLES_OBJECTS;
+	result = KNUCKLES_OBJECTS[54];
+	KnucklesWeldInfo[28].ModelB = 0;
+	KnucklesWeldInfo[28].VertexPairCount = 0;
+	KnucklesWeldInfo[28].anonymous_5 = 0;
+	KnucklesWeldInfo[28].VertexBuffer = 0;
+	KnucklesWeldInfo[28].VertIndexes = 0;
+	KnucklesWeldInfo[29].BaseModel = 0;
+	KnucklesWeldInfo[29].ModelA = 0;
+	KnucklesWeldInfo[29].ModelB = 0;
+	KnucklesWeldInfo[29].VertexPairCount = 0;
+	KnucklesWeldInfo[29].VertexBuffer = 0;
+	KnucklesWeldInfo[28].ModelA = result;
+	KnucklesWeldInfo[28].WeldType = 8;
+	KnucklesWeldInfo[29].VertIndexes = 0;
 	return result;
+}
+
+void __cdecl Knuckles_Upgrades_c(CharObj2 *a1)
+{
+	unsigned __int16 *v1; // eax@2
+
+	switch (a1->Upgrades & 0x60)
+	{
+	case 0:
+		KNUCKLES_OBJECTS[58]->model = (NJS_MODEL_SADX *)KNUCKLES_MODELS[7];
+		KNUCKLES_OBJECTS[59]->model = (NJS_MODEL_SADX *)KNUCKLES_MODELS[8];
+		KNUCKLES_OBJECTS[60]->model = (NJS_MODEL_SADX *)KNUCKLES_MODELS[9];
+		KNUCKLES_OBJECTS[61]->model = (NJS_MODEL_SADX *)KNUCKLES_MODELS[10];
+		KNUCKLES_OBJECTS[62]->model = (NJS_MODEL_SADX *)KNUCKLES_MODELS[11];
+		KNUCKLES_OBJECTS[63]->model = (NJS_MODEL_SADX *)KNUCKLES_MODELS[12];
+		KNUCKLES_OBJECTS[64]->model = (NJS_MODEL_SADX *)KNUCKLES_MODELS[13];
+		KNUCKLES_OBJECTS[65]->model = (NJS_MODEL_SADX *)KNUCKLES_MODELS[14];
+		KNUCKLES_OBJECTS[66]->model = (NJS_MODEL_SADX *)KNUCKLES_MODELS[7];
+		KNUCKLES_OBJECTS[67]->model = (NJS_MODEL_SADX *)KNUCKLES_MODELS[8];
+		KNUCKLES_OBJECTS[68]->model = (NJS_MODEL_SADX *)KNUCKLES_MODELS[9];
+		KNUCKLES_OBJECTS[69]->model = (NJS_MODEL_SADX *)KNUCKLES_MODELS[10];
+		KNUCKLES_OBJECTS[70]->model = (NJS_MODEL_SADX *)KNUCKLES_MODELS[11];
+		KNUCKLES_OBJECTS[71]->model = (NJS_MODEL_SADX *)KNUCKLES_MODELS[12];
+		KNUCKLES_OBJECTS[72]->model = (NJS_MODEL_SADX *)KNUCKLES_MODELS[13];
+		KNUCKLES_OBJECTS[73]->model = (NJS_MODEL_SADX *)KNUCKLES_MODELS[14];
+		v1 = (unsigned __int16 *)&K_Hands;
+		goto LABEL_7;
+	case 0x40:
+		KNUCKLES_OBJECTS[58]->model = (NJS_MODEL_SADX *)KNUCKLES_MODELS[7];
+		KNUCKLES_OBJECTS[59]->model = (NJS_MODEL_SADX *)KNUCKLES_MODELS[8];
+		KNUCKLES_OBJECTS[60]->model = (NJS_MODEL_SADX *)*KNUCKLES_MODELS;
+		KNUCKLES_OBJECTS[61]->model = (NJS_MODEL_SADX *)KNUCKLES_MODELS[10];
+		KNUCKLES_OBJECTS[62]->model = (NJS_MODEL_SADX *)KNUCKLES_MODELS[11];
+		KNUCKLES_OBJECTS[63]->model = (NJS_MODEL_SADX *)KNUCKLES_MODELS[12];
+		KNUCKLES_OBJECTS[64]->model = (NJS_MODEL_SADX *)KNUCKLES_MODELS[2];
+		KNUCKLES_OBJECTS[65]->model = (NJS_MODEL_SADX *)KNUCKLES_MODELS[14];
+		KNUCKLES_OBJECTS[66]->model = (NJS_MODEL_SADX *)KNUCKLES_MODELS[7];
+		KNUCKLES_OBJECTS[67]->model = (NJS_MODEL_SADX *)KNUCKLES_MODELS[8];
+		KNUCKLES_OBJECTS[68]->model = (NJS_MODEL_SADX *)*KNUCKLES_MODELS;
+		KNUCKLES_OBJECTS[69]->model = (NJS_MODEL_SADX *)KNUCKLES_MODELS[10];
+		KNUCKLES_OBJECTS[70]->model = (NJS_MODEL_SADX *)KNUCKLES_MODELS[11];
+		KNUCKLES_OBJECTS[71]->model = (NJS_MODEL_SADX *)KNUCKLES_MODELS[12];
+		KNUCKLES_OBJECTS[72]->model = (NJS_MODEL_SADX *)KNUCKLES_MODELS[2];
+		KNUCKLES_OBJECTS[73]->model = (NJS_MODEL_SADX *)KNUCKLES_MODELS[14];
+		goto LABEL_6;
+	case 0x20:
+		KNUCKLES_OBJECTS[58]->model = (NJS_MODEL_SADX *)KNUCKLES_MODELS[15];
+		KNUCKLES_OBJECTS[59]->model = (NJS_MODEL_SADX *)KNUCKLES_MODELS[16];
+		KNUCKLES_OBJECTS[60]->model = (NJS_MODEL_SADX *)KNUCKLES_MODELS[17];
+		KNUCKLES_OBJECTS[61]->model = (NJS_MODEL_SADX *)KNUCKLES_MODELS[18];
+		KNUCKLES_OBJECTS[62]->model = (NJS_MODEL_SADX *)KNUCKLES_MODELS[19];
+		KNUCKLES_OBJECTS[63]->model = (NJS_MODEL_SADX *)KNUCKLES_MODELS[20];
+		KNUCKLES_OBJECTS[64]->model = (NJS_MODEL_SADX *)KNUCKLES_MODELS[21];
+		KNUCKLES_OBJECTS[65]->model = (NJS_MODEL_SADX *)KNUCKLES_MODELS[22];
+		KNUCKLES_OBJECTS[66]->model = (NJS_MODEL_SADX *)KNUCKLES_MODELS[15];
+		KNUCKLES_OBJECTS[67]->model = (NJS_MODEL_SADX *)KNUCKLES_MODELS[16];
+		KNUCKLES_OBJECTS[68]->model = (NJS_MODEL_SADX *)KNUCKLES_MODELS[17];
+		KNUCKLES_OBJECTS[69]->model = (NJS_MODEL_SADX *)KNUCKLES_MODELS[18];
+		KNUCKLES_OBJECTS[70]->model = (NJS_MODEL_SADX *)KNUCKLES_MODELS[19];
+		KNUCKLES_OBJECTS[71]->model = (NJS_MODEL_SADX *)KNUCKLES_MODELS[20];
+		KNUCKLES_OBJECTS[72]->model = (NJS_MODEL_SADX *)KNUCKLES_MODELS[21];
+		KNUCKLES_OBJECTS[73]->model = (NJS_MODEL_SADX *)KNUCKLES_MODELS[22];
+		v1 = (unsigned __int16 *)&K_Hands;
+		goto LABEL_7;
+	case 0x60:
+		KNUCKLES_OBJECTS[58]->model = (NJS_MODEL_SADX *)KNUCKLES_MODELS[15];
+		KNUCKLES_OBJECTS[59]->model = (NJS_MODEL_SADX *)KNUCKLES_MODELS[16];
+		KNUCKLES_OBJECTS[60]->model = (NJS_MODEL_SADX *)KNUCKLES_MODELS[1];
+		KNUCKLES_OBJECTS[61]->model = (NJS_MODEL_SADX *)KNUCKLES_MODELS[18];
+		KNUCKLES_OBJECTS[62]->model = (NJS_MODEL_SADX *)KNUCKLES_MODELS[19];
+		KNUCKLES_OBJECTS[63]->model = (NJS_MODEL_SADX *)KNUCKLES_MODELS[20];
+		KNUCKLES_OBJECTS[64]->model = (NJS_MODEL_SADX *)KNUCKLES_MODELS[3];
+		KNUCKLES_OBJECTS[65]->model = (NJS_MODEL_SADX *)KNUCKLES_MODELS[22];
+		KNUCKLES_OBJECTS[66]->model = (NJS_MODEL_SADX *)KNUCKLES_MODELS[15];
+		KNUCKLES_OBJECTS[67]->model = (NJS_MODEL_SADX *)KNUCKLES_MODELS[16];
+		KNUCKLES_OBJECTS[68]->model = (NJS_MODEL_SADX *)KNUCKLES_MODELS[1];
+		KNUCKLES_OBJECTS[69]->model = (NJS_MODEL_SADX *)KNUCKLES_MODELS[18];
+		KNUCKLES_OBJECTS[70]->model = (NJS_MODEL_SADX *)KNUCKLES_MODELS[19];
+		KNUCKLES_OBJECTS[71]->model = (NJS_MODEL_SADX *)KNUCKLES_MODELS[20];
+		KNUCKLES_OBJECTS[72]->model = (NJS_MODEL_SADX *)KNUCKLES_MODELS[3];
+		KNUCKLES_OBJECTS[73]->model = (NJS_MODEL_SADX *)KNUCKLES_MODELS[22];
+	LABEL_6:
+		v1 = (unsigned __int16 *)&K_ShovelClaw;
+	LABEL_7:
+		KnucklesWeldInfo[23].VertIndexes = v1;
+		KnucklesWeldInfo[22].VertIndexes = v1;
+		KnucklesWeldInfo[11].VertIndexes = v1;
+		KnucklesWeldInfo[10].VertIndexes = v1;
+		dword_3C53274 = (int)v1;
+		dword_3C5325C = (int)v1;
+		dword_3C53154 = (int)v1;
+		dword_3C5313C = (int)v1;
+		break;
+	default:
+		return;
+	}
+}
+
+static void __declspec(naked) Knuckles_Upgrades_fix()
+{
+	__asm
+	{
+		push eax // a1
+
+				 // Call your __cdecl function here:
+				 call Knuckles_Upgrades_c
+
+				 pop eax // a1
+				 retn
+	}
 }
 
 extern "C" __declspec(dllexport) void __cdecl Init(const char *path, const HelperFunctions &helperFunctions)
@@ -392,8 +719,11 @@ extern "C" __declspec(dllexport) void __cdecl Init(const char *path, const Helpe
 	NJS_OBJECT **___SONIC_OBJECTS = (NJS_OBJECT **)GetProcAddress(handle, "___SONIC_OBJECTS");
 	SONIC_OBJECTS = ___SONIC_OBJECTS;
 	NJS_ACTION **___SONIC_ACTIONS = (NJS_ACTION **)GetProcAddress(handle, "___SONIC_ACTIONS");
+	SONIC_ACTIONS = ___SONIC_ACTIONS;
 	NJS_MODEL_SADX **___SONIC_MODELS = (NJS_MODEL_SADX **)GetProcAddress(handle, "___SONIC_MODELS");
+	SONIC_MODELS = ___SONIC_MODELS;
 	NJS_MOTION **___SONIC_MOTIONS = (NJS_MOTION **)GetProcAddress(handle, "___SONIC_MOTIONS");
+	SONIC_MOTIONS = ___SONIC_MOTIONS;
 	___SONIC_OBJECTS[0] = &object_0056AF50;
 	___SONIC_OBJECTS[1] = &object_00563B7C;
 	___SONIC_OBJECTS[2] = &object_00563D0C;
@@ -410,12 +740,12 @@ extern "C" __declspec(dllexport) void __cdecl Init(const char *path, const Helpe
 	___SONIC_OBJECTS[13] = &object_005605DC;
 	___SONIC_OBJECTS[14] = &object_00561C68;
 	___SONIC_OBJECTS[15] = &object_005613F8;
-	___SONIC_OBJECTS[16] = &object_00560DD0; // Right Shoe Toe
+	___SONIC_OBJECTS[16] = &object_00560DD0;
 	___SONIC_OBJECTS[17] = &object_0055E99C;
 	___SONIC_OBJECTS[18] = &object_0055EB2C;
 	___SONIC_OBJECTS[19] = &object_005601B8;
 	___SONIC_OBJECTS[20] = &object_0055F948;
-	___SONIC_OBJECTS[21] = &object_0055F330; // Left Shoe Toe
+	___SONIC_OBJECTS[21] = &object_0055F330;
 	___SONIC_OBJECTS[22] = &object_0062DE88;
 	___SONIC_OBJECTS[23] = &object_00626AB4;
 	___SONIC_OBJECTS[24] = &object_00626C44;
@@ -446,10 +776,12 @@ extern "C" __declspec(dllexport) void __cdecl Init(const char *path, const Helpe
 	___SONIC_OBJECTS[50] = &object_00569E20;
 	___SONIC_OBJECTS[51] = &object_00569CE8;
 	___SONIC_OBJECTS[52] = &object_005698F0;
+	___SONIC_OBJECTS[54] = &object_006837E8;
+	___SONIC_OBJECTS[55] = &object_00682EF4;
 	___SONIC_OBJECTS[58] = &object_00581FB8;
-	___SONIC_OBJECTS[59] = &object_005818AC; // Left LSDash Toe
+	___SONIC_OBJECTS[59] = &object_005818AC;
 	___SONIC_OBJECTS[60] = &object_00582CC0;
-	___SONIC_OBJECTS[61] = &object_005825A4; // Right LSDash Toe
+	___SONIC_OBJECTS[61] = &object_005825A4;
 	___SONIC_OBJECTS[62] = &object_00565520;
 	___SONIC_OBJECTS[63] = &object_00583284;
 	___SONIC_OBJECTS[64] = &object_00583904;
@@ -584,14 +916,14 @@ extern "C" __declspec(dllexport) void __cdecl Init(const char *path, const Helpe
 	___SONIC_ACTIONS[146]->object = &object_0056AF50;
 	___SONIC_ACTIONS[147]->object = &object_0056AF50;
 	___SONIC_ACTIONS[148]->object = &object_0056AF50;
-	___SONIC_MODELS[0] = &attach_0055F304; // Left Shoe
-	___SONIC_MODELS[1] = &attach_00560DA4; // Right Shoe
-	___SONIC_MODELS[2] = &attach_005735AC; // Left Shoe Morph 1
-	___SONIC_MODELS[3] = &attach_00573DFC; // Left Shoe Morph 2
-	___SONIC_MODELS[4] = &attach_0057464C; // Left Shoe Morph 3
-	___SONIC_MODELS[5] = &attach_0057525C; // Right Shoe Morph 1
-	___SONIC_MODELS[6] = &attach_00575AB4; // Right Shoe Morph 2
-	___SONIC_MODELS[7] = &attach_0057630C; // Right Shoe Morph 3
+	___SONIC_MODELS[0] = &attach_0055F304;
+	___SONIC_MODELS[1] = &attach_00560DA4;
+	___SONIC_MODELS[2] = &attach_005735AC;
+	___SONIC_MODELS[3] = &attach_00573DFC;
+	___SONIC_MODELS[4] = &attach_0057464C;
+	___SONIC_MODELS[5] = &attach_0057525C;
+	___SONIC_MODELS[6] = &attach_00575AB4;
+	___SONIC_MODELS[7] = &attach_0057630C;
 	___SONIC_MODELS[8] = &attach_00569568;
 	___SONIC_MODELS[9] = &attach_00579C68;
 	___SONIC_MOTIONS[0] = &CinematicHead;
@@ -605,9 +937,11 @@ extern "C" __declspec(dllexport) void __cdecl Init(const char *path, const Helpe
 	NJS_OBJECT **___MILES_OBJECTS = (NJS_OBJECT **)GetProcAddress(handle, "___MILES_OBJECTS");
 	MILES_OBJECTS = ___MILES_OBJECTS;
 	NJS_ACTION **___MILES_ACTIONS = (NJS_ACTION **)GetProcAddress(handle, "___MILES_ACTIONS");
+	MILES_ACTIONS = ___MILES_ACTIONS;
 	NJS_MODEL_SADX **___MILES_MODELS = (NJS_MODEL_SADX **)GetProcAddress(handle, "___MILES_MODELS");
 	MILES_MODELS = ___MILES_MODELS;
 	NJS_MOTION **___MILES_MOTIONS = (NJS_MOTION **)GetProcAddress(handle, "___MILES_MOTIONS");
+	MILES_MOTIONS = ___MILES_MOTIONS;
 	___MILES_OBJECTS[0] = &object_0042AD54;
 	___MILES_OBJECTS[1] = &object_00437C44;
 	___MILES_OBJECTS[2] = &object_0043F4B4;
@@ -796,6 +1130,203 @@ extern "C" __declspec(dllexport) void __cdecl Init(const char *path, const Helpe
 	___MILES_MOTIONS[0] = &TailsCinematicHead;
 	WriteData((WeldInfo**)0x00461896, TailsWeldInfo);
 
+	//Knuckles
+	ResizeTextureList((NJS_TEXLIST *)0x0091BD20, 22);
+	NJS_OBJECT **___KNUCKLES_OBJECTS = (NJS_OBJECT **)GetProcAddress(handle, "___KNUCKLES_OBJECTS");
+	KNUCKLES_OBJECTS = ___KNUCKLES_OBJECTS;
+	NJS_ACTION **___KNUCKLES_ACTIONS = (NJS_ACTION **)GetProcAddress(handle, "___KNUCKLES_ACTIONS");
+	KNUCKLES_ACTIONS = ___KNUCKLES_ACTIONS;
+	NJS_MODEL_SADX **___KNUCKLES_MODELS = (NJS_MODEL_SADX **)GetProcAddress(handle, "___KNUCKLES_MODELS");
+	KNUCKLES_MODELS = ___KNUCKLES_MODELS;
+	NJS_MOTION **___KNUCKLES_MOTIONS = (NJS_MOTION **)GetProcAddress(handle, "___KNUCKLES_MOTIONS");
+	KNUCKLES_MOTIONS = ___KNUCKLES_MOTIONS;
+	___KNUCKLES_OBJECTS[0] = &object_002E23B0;
+	___KNUCKLES_OBJECTS[1] = &object_002EEE50;
+	___KNUCKLES_OBJECTS[2] = &object_002DB8A4;
+	___KNUCKLES_OBJECTS[3] = &object_002DBA34;
+	___KNUCKLES_OBJECTS[4] = &object_002DD0AC;
+	___KNUCKLES_OBJECTS[5] = &object_002DC244;
+	___KNUCKLES_OBJECTS[6] = &object_002D9E5C;
+	___KNUCKLES_OBJECTS[7] = &object_002D9FEC;
+	___KNUCKLES_OBJECTS[8] = &object_002DB5F4;
+	___KNUCKLES_OBJECTS[9] = &object_002DAB34;
+	___KNUCKLES_OBJECTS[10] = &object_002D876C;
+	___KNUCKLES_OBJECTS[11] = &object_002D88FC;
+	___KNUCKLES_OBJECTS[12] = &object_002D9BB0;
+	___KNUCKLES_OBJECTS[13] = &object_002D6FE4;
+	___KNUCKLES_OBJECTS[14] = &object_002D7174;
+	___KNUCKLES_OBJECTS[15] = &object_002D8438;
+	___KNUCKLES_OBJECTS[16] = &object_002D9754;
+	___KNUCKLES_OBJECTS[17] = &object_002D9088;
+	___KNUCKLES_OBJECTS[18] = &object_002D7FDC;
+	___KNUCKLES_OBJECTS[19] = &object_002D7900;
+	___KNUCKLES_OBJECTS[20] = &object_002DC94C;
+	___KNUCKLES_OBJECTS[21] = &object_002DC244;
+	___KNUCKLES_OBJECTS[22] = &object_002DAEE4;
+	___KNUCKLES_OBJECTS[23] = &object_002DAB34;
+	___KNUCKLES_OBJECTS[24] = &object_002E8324;
+	___KNUCKLES_OBJECTS[25] = &object_002E84B4;
+	___KNUCKLES_OBJECTS[26] = &object_002E9B2C;
+	___KNUCKLES_OBJECTS[27] = &object_002E8CC4;
+	___KNUCKLES_OBJECTS[28] = &object_002E68DC;
+	___KNUCKLES_OBJECTS[29] = &object_002E6A6C;
+	___KNUCKLES_OBJECTS[30] = &object_002E8074;
+	___KNUCKLES_OBJECTS[31] = &object_002E75B4;
+	___KNUCKLES_OBJECTS[32] = &object_002E51EC;
+	___KNUCKLES_OBJECTS[33] = &object_002E537C;
+	___KNUCKLES_OBJECTS[34] = &object_002E6630;
+	___KNUCKLES_OBJECTS[35] = &object_002E3A64;
+	___KNUCKLES_OBJECTS[36] = &object_002E3BF4;
+	___KNUCKLES_OBJECTS[37] = &object_002E4EB8;
+	___KNUCKLES_OBJECTS[38] = &object_002E61D4;
+	___KNUCKLES_OBJECTS[39] = &object_002E5B08;
+	___KNUCKLES_OBJECTS[40] = &object_002E4A5C;
+	___KNUCKLES_OBJECTS[41] = &object_002E4380;
+	___KNUCKLES_OBJECTS[42] = &object_002E93CC;
+	___KNUCKLES_OBJECTS[43] = &object_002E8CC4;
+	___KNUCKLES_OBJECTS[44] = &object_002E7964;
+	___KNUCKLES_OBJECTS[45] = &object_002E75B4;
+	___KNUCKLES_OBJECTS[46] = &object_00328878;
+	___KNUCKLES_OBJECTS[47] = &object_003291C4;
+	___KNUCKLES_OBJECTS[49] = &object_002E191C;
+	___KNUCKLES_OBJECTS[50] = &object_002EE3BC;
+	___KNUCKLES_OBJECTS[51] = &object_002E21A8;
+	___KNUCKLES_OBJECTS[52] = &object_002E2070;
+	___KNUCKLES_OBJECTS[53] = &object_002E1C78;
+	___KNUCKLES_OBJECTS[54] = &object_002E1D14;
+	___KNUCKLES_OBJECTS[55] = &object_002E191C;
+	___KNUCKLES_OBJECTS[56] = &object_0030257C;
+	___KNUCKLES_OBJECTS[58] = &object_002DB5F4;
+	___KNUCKLES_OBJECTS[59] = &object_002DAEE4;
+	___KNUCKLES_OBJECTS[60] = &object_002DAB34;
+	___KNUCKLES_OBJECTS[61] = &object_002DA324;
+	___KNUCKLES_OBJECTS[62] = &object_002DD0AC;
+	___KNUCKLES_OBJECTS[63] = &object_002DC94C;
+	___KNUCKLES_OBJECTS[64] = &object_002DC244;
+	___KNUCKLES_OBJECTS[65] = &object_002DC59C;
+	___KNUCKLES_OBJECTS[66] = &object_002E8074;
+	___KNUCKLES_OBJECTS[67] = &object_002E7964;
+	___KNUCKLES_OBJECTS[68] = &object_002E75B4;
+	___KNUCKLES_OBJECTS[69] = &object_002E6DA4;
+	___KNUCKLES_OBJECTS[70] = &object_002E9B2C;
+	___KNUCKLES_OBJECTS[71] = &object_002E93CC;
+	___KNUCKLES_OBJECTS[72] = &object_002E8CC4;
+	___KNUCKLES_OBJECTS[73] = &object_002E901C;
+	___KNUCKLES_ACTIONS[0]->object = &object_002E23B0;
+	___KNUCKLES_ACTIONS[1]->object = &object_002E23B0;
+	___KNUCKLES_ACTIONS[2]->object = &object_002EEE50;
+	___KNUCKLES_ACTIONS[3]->object = &object_002EEE50;
+	___KNUCKLES_ACTIONS[4]->object = &object_002EEE50;
+	___KNUCKLES_ACTIONS[5]->object = &object_002EEE50;
+	___KNUCKLES_ACTIONS[6]->object = &object_002E23B0;
+	___KNUCKLES_ACTIONS[7]->object = &object_002EEE50;
+	___KNUCKLES_ACTIONS[9]->object = &object_002E23B0;
+	___KNUCKLES_ACTIONS[10]->object = &object_002E23B0;
+	___KNUCKLES_ACTIONS[11]->object = &object_002E23B0;
+	___KNUCKLES_ACTIONS[12]->object = &object_002E23B0;
+	___KNUCKLES_ACTIONS[13]->object = &object_002E23B0;
+	___KNUCKLES_ACTIONS[14]->object = &object_002E23B0;
+	___KNUCKLES_ACTIONS[15]->object = &object_002EEE50;
+	___KNUCKLES_ACTIONS[16]->object = &object_002EEE50;
+	___KNUCKLES_ACTIONS[17]->object = &object_002EEE50;
+	___KNUCKLES_ACTIONS[18]->object = &object_002EEE50;
+	___KNUCKLES_ACTIONS[19]->object = &object_002EEE50;
+	___KNUCKLES_ACTIONS[20]->object = &object_002EEE50;
+	___KNUCKLES_ACTIONS[21]->object = &object_002EEE50;
+	___KNUCKLES_ACTIONS[22]->object = &object_002E23B0;
+	___KNUCKLES_ACTIONS[23]->object = &object_002E23B0;
+	___KNUCKLES_ACTIONS[24]->object = &object_002E23B0;
+	___KNUCKLES_ACTIONS[25]->object = &object_002E23B0;
+	___KNUCKLES_ACTIONS[26]->object = &object_002E23B0;
+	___KNUCKLES_ACTIONS[27]->object = &object_002E23B0;
+	___KNUCKLES_ACTIONS[28]->object = &object_002E23B0;
+	___KNUCKLES_ACTIONS[29]->object = &object_002E23B0;
+	___KNUCKLES_ACTIONS[30]->object = &object_002E23B0;
+	___KNUCKLES_ACTIONS[31]->object = &object_002E23B0;
+	___KNUCKLES_ACTIONS[32]->object = &object_002E23B0;
+	___KNUCKLES_ACTIONS[33]->object = &object_002E23B0;
+	___KNUCKLES_ACTIONS[34]->object = &object_002E23B0;
+	___KNUCKLES_ACTIONS[35]->object = &object_002EEE50;
+	___KNUCKLES_ACTIONS[36]->object = &object_002EEE50;
+	___KNUCKLES_ACTIONS[37]->object = &object_002EEE50;
+	___KNUCKLES_ACTIONS[38]->object = &object_002E23B0;
+	___KNUCKLES_ACTIONS[39]->object = &object_002EEE50;
+	___KNUCKLES_ACTIONS[40]->object = &object_002E23B0;
+	___KNUCKLES_ACTIONS[41]->object = &object_002E23B0;
+	___KNUCKLES_ACTIONS[42]->object = &object_002EEE50;
+	___KNUCKLES_ACTIONS[43]->object = &object_002E23B0;
+	___KNUCKLES_ACTIONS[44]->object = &object_002E23B0;
+	___KNUCKLES_ACTIONS[45]->object = &object_002E23B0;
+	___KNUCKLES_ACTIONS[46]->object = &object_002E23B0;
+	___KNUCKLES_ACTIONS[47]->object = &object_002E23B0;
+	___KNUCKLES_ACTIONS[48]->object = &object_002E23B0;
+	___KNUCKLES_ACTIONS[49]->object = &object_002E23B0;
+	___KNUCKLES_ACTIONS[50]->object = &object_002E23B0;
+	___KNUCKLES_ACTIONS[51]->object = &object_002E23B0;
+	___KNUCKLES_ACTIONS[52]->object = &object_002EEE50;
+	___KNUCKLES_ACTIONS[53]->object = &object_002E23B0;
+	___KNUCKLES_ACTIONS[54]->object = &object_002E23B0;
+	___KNUCKLES_ACTIONS[55]->object = &object_002E23B0;
+	___KNUCKLES_ACTIONS[56]->object = &object_002E23B0;
+	___KNUCKLES_ACTIONS[57]->object = &object_002EEE50;
+	___KNUCKLES_ACTIONS[58]->object = &object_002E23B0;
+	___KNUCKLES_ACTIONS[59]->object = &object_002E23B0;
+	___KNUCKLES_ACTIONS[60]->object = &object_002E23B0;
+	___KNUCKLES_ACTIONS[61]->object = &object_002F8530;
+	___KNUCKLES_ACTIONS[62]->object = &object_002F0E24;
+	___KNUCKLES_ACTIONS[63]->object = &object_002E23B0;
+	___KNUCKLES_ACTIONS[64]->object = &object_002E23B0;
+	___KNUCKLES_ACTIONS[65]->object = &object_002E23B0;
+	___KNUCKLES_ACTIONS[66]->object = &object_002E23B0;
+	___KNUCKLES_ACTIONS[67]->object = &object_002E23B0;
+	___KNUCKLES_ACTIONS[68]->object = &object_002E23B0;
+	___KNUCKLES_ACTIONS[69]->object = &object_002E23B0;
+	___KNUCKLES_ACTIONS[70]->object = &object_002E23B0;
+	___KNUCKLES_ACTIONS[71]->object = &object_002E23B0;
+	___KNUCKLES_ACTIONS[72]->object = &object_002E23B0;
+	___KNUCKLES_ACTIONS[73]->object = &object_002E23B0;
+	___KNUCKLES_ACTIONS[74]->object = &object_002E23B0;
+	___KNUCKLES_ACTIONS[75]->object = &object_002E23B0;
+	___KNUCKLES_ACTIONS[76]->object = &object_002E23B0;
+	___KNUCKLES_ACTIONS[77]->object = &object_002E23B0;
+	___KNUCKLES_ACTIONS[78]->object = &object_002E23B0;
+	___KNUCKLES_ACTIONS[79]->object = &object_002E23B0;
+	___KNUCKLES_ACTIONS[80]->object = &object_002E23B0;
+	___KNUCKLES_ACTIONS[81]->object = &object_002E23B0;
+	___KNUCKLES_ACTIONS[82]->object = &object_002E23B0;
+	___KNUCKLES_ACTIONS[83]->object = &object_002E23B0;
+	___KNUCKLES_ACTIONS[84]->object = &object_002E23B0;
+	___KNUCKLES_ACTIONS[85]->object = &object_002EEE50;
+	___KNUCKLES_ACTIONS[86]->object = &object_002E23B0;
+	___KNUCKLES_ACTIONS[87]->object = &object_002E23B0;
+	___KNUCKLES_ACTIONS[88]->object = &object_002E23B0;
+	___KNUCKLES_ACTIONS[89]->object = &object_002E23B0;
+	___KNUCKLES_MODELS[0] = &attach_003298C8;
+	___KNUCKLES_MODELS[1] = &attach_00329FF8;
+	___KNUCKLES_MODELS[2] = &attach_0032A6F0;
+	___KNUCKLES_MODELS[3] = &attach_0032ADF8;
+	___KNUCKLES_MODELS[4] = &attach_002E18F0;
+	___KNUCKLES_MODELS[5] = &attach_002EE390;
+	___KNUCKLES_MODELS[6] = &attach_002FC558;
+	___KNUCKLES_MODELS[7] = &attach_002DB5C8;
+	___KNUCKLES_MODELS[8] = &attach_002DAEB8;
+	___KNUCKLES_MODELS[9] = &attach_002DAB08;
+	___KNUCKLES_MODELS[10] = &attach_002DA2F8;
+	___KNUCKLES_MODELS[11] = &attach_002DD080;
+	___KNUCKLES_MODELS[12] = &attach_002DC920;
+	___KNUCKLES_MODELS[13] = &attach_002DC218;
+	___KNUCKLES_MODELS[14] = &attach_002DC570;
+	___KNUCKLES_MODELS[15] = &attach_0032B488;
+	___KNUCKLES_MODELS[16] = &attach_0032C2F8;
+	___KNUCKLES_MODELS[17] = &attach_0032BF48;
+	___KNUCKLES_MODELS[18] = &attach_0032B7C0;
+	___KNUCKLES_MODELS[19] = &attach_0032C950;
+	___KNUCKLES_MODELS[20] = &attach_0032D7E0;
+	___KNUCKLES_MODELS[21] = &attach_0032D430;
+	___KNUCKLES_MODELS[22] = &attach_0032CCA8;
+	___KNUCKLES_MOTIONS[0] = &KnucklesEV;
+	//WriteData((WeldInfo**)0x0047A89E, (WeldInfo*)KnucklesWeldList);
+
 	//Sky Chase
 	WriteData((NJS_OBJECT**)0x0028B7A0C, &Tornado1_Object);
 	WriteData((NJS_OBJECT**)0x0028BA71C, &Tornado1_Object);
@@ -871,6 +1402,8 @@ extern "C" __declspec(dllexport) void __cdecl Init(const char *path, const Helpe
 	WriteJump((void*)0x00493500, Sonic_MorphStretchyFeet_asm);
 	WriteJump((void*)0x0045B840, Tails_Jiggle_Main);
 	//WriteJump((void*)0x004A1630, sub_4A1630);
+	WriteJump((void*)0x007C94D0, InitKnucklesWeldInfo_fix);
+	WriteJump((void*)0x004726A0, Knuckles_Upgrades_fix);
 }
 
 extern "C" __declspec(dllexport) const ModInfo SADXModInfo = { ModLoaderVer };

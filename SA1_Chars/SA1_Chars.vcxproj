@@ -145,7 +145,10 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Amy.h" />
+    <ClInclude Include="Big.h" />
     <ClInclude Include="d3d8types.h" />
+    <ClInclude Include="e102.h" />
     <ClInclude Include="EV_TailsIntro.h" />
     <ClInclude Include="EV_TR1.h" />
     <ClInclude Include="EV_TR2BEFORE.h" />

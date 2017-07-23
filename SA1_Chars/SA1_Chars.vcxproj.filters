@@ -90,6 +90,12 @@
     <ClInclude Include="e102.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Eggman.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Tikal.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">

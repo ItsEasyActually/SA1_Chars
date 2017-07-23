@@ -11,7 +11,8 @@
 #include "Big.h"
 #include "Amy.h"
 #include "e102.h"
-#include "MetalSonic.h"
+#include "Tikal.h"
+#include "Eggman.h"
 #include <cmath>
 
 static NJS_OBJECT **SONIC_OBJECTS = nullptr;
@@ -1999,6 +2000,76 @@ extern "C" __declspec(dllexport) void __cdecl Init(const char *path, const Helpe
 	___E102_ACTIONS[75]->object = &object_00207290;
 	___E102_ACTIONS[76]->object = &object_00207290;
 	___E102_ACTIONS[77]->object = &object_00207290;
+
+	//Tikal
+	WriteData((NJS_OBJECT**)0x008F46BC, &Tikal_Object);
+	WriteData((NJS_OBJECT**)0x008F83F4, &Tikal_Object);
+	WriteData((NJS_OBJECT**)0x008FC8DC, &Tikal_Object);
+	WriteData((NJS_OBJECT**)0x00900814, &Tikal_Object);
+	WriteData((NJS_OBJECT**)0x02C81AA4, &Tikal_Object);
+	WriteData((NJS_OBJECT**)0x02C8B13C, &Tikal_Object);
+	WriteData((NJS_OBJECT**)0x02D4B2DC, &Tikal_Object);
+	WriteData((NJS_OBJECT**)0x02D53284, &Tikal_Object);
+	WriteData((NJS_OBJECT**)0x02D5C1FC, &Tikal_Object);
+	WriteData((NJS_OBJECT**)0x02D61174, &Tikal_Object);
+	WriteData((NJS_OBJECT**)0x02EAF60C, &Tikal_Object);
+	WriteData((NJS_OBJECT**)0x02EB25F4, &Tikal_Object);
+	WriteData((NJS_OBJECT**)0x02EBACB4, &Tikal_Object);
+	WriteData((NJS_OBJECT**)0x02EBF89C, &Tikal_Object);
+	WriteData((NJS_OBJECT**)0x02EC2524, &Tikal_Object);
+	WriteData((NJS_OBJECT**)0x02ECD67C, &Tikal_Object);
+	WriteData((NJS_OBJECT**)0x02ED7EA4, &Tikal_Object);
+	WriteData((NJS_OBJECT**)0x02EDBE6C, &Tikal_Object);
+	WriteData((NJS_OBJECT**)0x02EE08F4, &Tikal_Object);
+	WriteData((NJS_OBJECT**)0x02F12A34, &Tikal_Object);
+	WriteData((NJS_OBJECT**)0x02F1694C, &Tikal_Object);
+	WriteData((NJS_OBJECT**)0x02F180B4, &Tikal_Object);
+	WriteData((NJS_OBJECT**)0x02F1CBB4, &Tikal_Object);
+	WriteData((NJS_OBJECT**)0x02F21B8C, &Tikal_Object);
+	WriteData((NJS_OBJECT**)0x02F2D344, &Tikal_Object);
+	WriteData((NJS_OBJECT**)0x02F33DFC, &Tikal_Object);
+	WriteData((NJS_OBJECT**)0x02F3E204, &Tikal_Object);
+	WriteData((NJS_OBJECT**)0x02FA7544, &Tikal_Object);
+	WriteData((NJS_OBJECT**)0x02FAA58C, &Tikal_Object);
+	WriteData((NJS_OBJECT**)0x02FAB794, &Tikal_Object);
+	WriteData((NJS_OBJECT**)0x02FB1F1C, &Tikal_Object);
+	WriteData((NJS_OBJECT**)0x02FBFAA4, &Tikal_Object);
+	WriteData((NJS_OBJECT**)0x030DF19C, &Tikal_Object);
+	WriteData((NJS_OBJECT**)0x030E6944, &Tikal_Object);
+	WriteData((NJS_OBJECT**)0x030EE53C, &Tikal_Object);
+	WriteData((NJS_OBJECT**)0x030F6004, &Tikal_Object);
+	WriteData((NJS_OBJECT**)0x030F854C, &Tikal_Object);
+	WriteData((NJS_OBJECT**)0x03100084, &Tikal_Object);
+	WriteData((NJS_OBJECT**)0x03103DCC, &Tikal_Object);
+	WriteData((WeldInfo**)0x007B41AB, TikalWeldInfo);
+
+	//Eggman
+	WriteData((NJS_OBJECT**)0x0089E254, &Eggman_Object);
+	WriteData((NJS_OBJECT**)0x008A094C, &Eggman_Object);
+	WriteData((NJS_OBJECT**)0x008A3564, &Eggman_Object);
+	WriteData((NJS_OBJECT**)0x008A513C, &Eggman_Object);
+	WriteData((NJS_OBJECT**)0x008A6BF4, &Eggman_Object);
+	WriteData((NJS_OBJECT**)0x008A8A9C, &Eggman_Object);
+	WriteData((NJS_OBJECT**)0x008AC3F4, &Eggman_Object);
+	WriteData((NJS_OBJECT**)0x008B1CCC, &Eggman_Object);
+	WriteData((NJS_OBJECT**)0x0111B72C, &Eggman_Object);
+	WriteData((NJS_OBJECT**)0x02D00DF4, &Eggman_Object);
+	WriteData((NJS_OBJECT**)0x02D027EC, &Eggman_Object);
+	WriteData((NJS_OBJECT**)0x02D06F6C, &Eggman_Object);
+	WriteData((NJS_OBJECT**)0x02D08DF4, &Eggman_Object);
+	WriteData((NJS_OBJECT**)0x02D0AC0C, &Eggman_Object);
+	WriteData((NJS_OBJECT**)0x02F9470C, &Eggman_Object);
+	WriteData((NJS_OBJECT**)0x0303D284, &Eggman_Object);
+	WriteData((NJS_OBJECT**)0x0303EE9C, &Eggman_Object);
+	WriteData((NJS_OBJECT**)0x03041A44, &Eggman_Object);
+	WriteData((NJS_OBJECT**)0x0304E9AC, &Eggman_Object);
+	WriteData((NJS_OBJECT**)0x030C62BC, &Eggman_Object);
+	WriteData((NJS_OBJECT**)0x030C7E34, &Eggman_Object);
+	WriteData((NJS_OBJECT**)0x03136234, &Eggman_Object);
+	WriteData((NJS_OBJECT**)0x0313EB3C, &Eggman_Object);
+	WriteData((NJS_OBJECT**)0x03141254, &Eggman_Object);
+	WriteData((NJS_OBJECT**)0x03142C4C, &Eggman_Object);
+	WriteData((WeldInfo**)0x007B4FBF, EggmanWeldList);
 
 	//Sky Chase
 	WriteData((NJS_OBJECT**)0x0028B7A0C, &Tornado1_Object);

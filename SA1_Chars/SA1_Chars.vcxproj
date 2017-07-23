@@ -149,6 +149,7 @@
     <ClInclude Include="Big.h" />
     <ClInclude Include="d3d8types.h" />
     <ClInclude Include="e102.h" />
+    <ClInclude Include="Eggman.h" />
     <ClInclude Include="EV_TailsIntro.h" />
     <ClInclude Include="EV_TR1.h" />
     <ClInclude Include="EV_TR2BEFORE.h" />
@@ -167,6 +168,7 @@
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Tails.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="Tikal.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">

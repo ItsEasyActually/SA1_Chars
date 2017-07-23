@@ -25726,28 +25726,28 @@ AnimFrame_2 TailsCineHeadArray[] = {
 
 NJS_MOTION TailsCinematicHead = { &TailsCineHeadArray, 0x14, 0x30, 2 };
 
-uint16_t Arm_01[] = {
+uint16_t Tails_UpperArmIndices[] = {
 	0, 2,
 	1, 3,
 	4, 6,
 	5, 7,
 };
 
-uint16_t Arm_02[] = {
+uint16_t Tails_LowerArmIndices[] = {
 	0, 10,
 	1, 11,
 	4, 14,
 	5, 15,
 };
 
-uint16_t Leg[] = {
+uint16_t Tails_LegIndices[] = {
 	0, 2,
 	1, 3,
 	4, 6,
 	5, 7,
 };
 
-uint16_t Foot[] = {
+uint16_t Tails_ShoeIndices[] = {
 	2, 3,
 	12, 8,
 	0, 1,
@@ -25756,42 +25756,9 @@ uint16_t Foot[] = {
 	3, 2,
 };
 
-uint16_t Hands[] = {
+uint16_t Tails_HandIndices[] = {
 	4, 14,
 	0, 15,
 	1, 13,
 	5, 12,
-};
-
-WeldInfo TailsWeldInfo[] = {
-	{ &object_0042AD54, &object_00424D00, &object_00424E94, (uint8_t)(LengthOfArray(Arm_01) / 2), 2, 0, nullptr, Arm_01 },
-	{ &object_0042AD54, &object_00424E94, &object_0042674C, (uint8_t)(LengthOfArray(Arm_02) / 2), 2, 0, nullptr, Arm_02 },
-	{ &object_0042AD54, &object_00422FD8, &object_0042316C, (uint8_t)(LengthOfArray(Arm_01) / 2), 2, 0, nullptr, Arm_01 },
-	{ &object_0042AD54, &object_0042316C, &object_00424A14, (uint8_t)(LengthOfArray(Arm_02) / 2), 2, 0, nullptr, Arm_02 },
-	{ &object_0042AD54, &object_0042182C, &object_004219BC, (uint8_t)(LengthOfArray(Leg) / 2), 2, 0, nullptr, Leg },
-	{ &object_0042AD54, &object_004219BC, &object_00422CF0, (uint8_t)(LengthOfArray(Leg) / 2), 2, 0, nullptr, Leg },
-	{ &object_0042AD54, &object_004200CC, &object_0042025C, (uint8_t)(LengthOfArray(Leg) / 2), 2, 0, nullptr, Leg },
-	{ &object_0042AD54, &object_0042025C, &object_00421598, (uint8_t)(LengthOfArray(Leg) / 2), 2, 0, nullptr, Leg },
-	{ &object_0042AD54, &object_004225C8, &object_00421FE4, (uint8_t)(LengthOfArray(Foot) / 2), 2, 0, nullptr, Foot },
-	{ &object_0042AD54, &object_00420E70, &object_00420884, (uint8_t)(LengthOfArray(Foot) / 2), 2, 0, nullptr, Foot },
-	{ &object_0042AD54, &object_00425E88, &object_00425C40, (uint8_t)(LengthOfArray(Hands) / 2), 2, 0, nullptr, Hands },
-	{ &object_0042AD54, &object_00424158, &object_00423F10, (uint8_t)(LengthOfArray(Hands) / 2), 2, 0, nullptr, Hands },
-	{ &object_00437C44, &object_00431BF0, &object_00431D84, (uint8_t)(LengthOfArray(Arm_01) / 2), 2, 0, nullptr, Arm_01 },
-	{ &object_00437C44, &object_00431D84, &object_0043363C, (uint8_t)(LengthOfArray(Arm_02) / 2), 2, 0, nullptr, Arm_02 },
-	{ &object_00437C44, &object_0042FEC8, &object_0043005C, (uint8_t)(LengthOfArray(Arm_01) / 2), 2, 0, nullptr, Arm_01 },
-	{ &object_00437C44, &object_0043005C, &object_00431904, (uint8_t)(LengthOfArray(Arm_02) / 2), 2, 0, nullptr, Arm_02 },
-	{ &object_00437C44, &object_0042E71C, &object_0042E8AC, (uint8_t)(LengthOfArray(Leg) / 2), 2, 0, nullptr, Leg },
-	{ &object_00437C44, &object_0042E8AC, &object_0042FBE0, (uint8_t)(LengthOfArray(Leg) / 2), 2, 0, nullptr, Leg },
-	{ &object_00437C44, &object_0042CFBC, &object_0042D14C, (uint8_t)(LengthOfArray(Leg) / 2), 2, 0, nullptr, Leg },
-	{ &object_00437C44, &object_0042D14C, &object_0042E488, (uint8_t)(LengthOfArray(Leg) / 2), 2, 0, nullptr, Leg },
-	{ &object_00437C44, &object_0042F4B8, &object_0042EED4, (uint8_t)(LengthOfArray(Foot) / 2), 2, 0, nullptr, Foot },
-	{ &object_00437C44, &object_0042DD60, &object_0042D774, (uint8_t)(LengthOfArray(Foot) / 2), 2, 0, nullptr, Foot },
-	{ &object_00437C44, &object_00432D78, &object_00432B30, (uint8_t)(LengthOfArray(Hands) / 2), 2, 0, nullptr, Hands },
-	{ &object_00437C44, &object_00431048, &object_00430E00, (uint8_t)(LengthOfArray(Hands) / 2), 2, 0, nullptr, Hands },
-	{ &object_0042AD54, &object_00425C40, nullptr, 0, 4, 0, nullptr, nullptr },
-	{ &object_0042AD54, &object_00423F10, nullptr, 0, 5, 0, nullptr, nullptr },
-	{ &object_0042AD54, &object_00421FE4, nullptr, 0, 6, 0, nullptr, nullptr },
-	{ &object_0042AD54, &object_00420884, nullptr, 0, 7, 0, nullptr, nullptr },
-	{ &object_0042AD54, &object_0042ABE8, nullptr, 0, 8, 0, nullptr, nullptr },
-	{ 0 }
 };

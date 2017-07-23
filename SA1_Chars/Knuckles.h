@@ -17722,28 +17722,28 @@ NJS_MODEL_SADX attach_0032CCA8 = { vertex_8D49E323BBD0E7F9DF4, normal_8D49E323BB
 
 NJS_OBJECT object_8D43F2494AF872C2AD9 = { NJD_EVAL_UNIT_POS | NJD_EVAL_UNIT_ANG | NJD_EVAL_UNIT_SCL | NJD_EVAL_BREAK | NJD_EVAL_SKIP | NJD_EVAL_SHAPE_SKIP, &attach_0032CCA8, 0, 0, 0, 0, 0, 0, 1, 1, 1, NULL, NULL };
 
-uint16_t K_UpperArms[] = {
+uint16_t Knuckles_UpperArmIndices[] = {
 	0, 2,
 	1, 3,
 	4, 6,
 	5, 7,
 };
 
-uint16_t K_LowerArms[] = {
+uint16_t Knuckles_LowerArmIndices[] = {
 	0, 10,
 	1, 11,
 	4, 14,
 	5, 15,
 };
 
-uint16_t K_Legs[] = {
+uint16_t Knuckles_LegIndices[] = {
 	0, 2,
 	1, 3,
 	4, 6,
 	5, 7,
 };
 
-uint16_t K_Feet[] = {
+uint16_t Knuckles_ShoeIndices[] = {
 	2, 3,
 	12, 8,
 	0, 1,
@@ -17752,7 +17752,7 @@ uint16_t K_Feet[] = {
 	3, 2,
 };
 
-uint16_t K_Hands[] = {
+uint16_t Knuckles_HandIndices[] = {
 	8, 24,
 	0, 11,
 	1, 13,
@@ -17760,45 +17760,12 @@ uint16_t K_Hands[] = {
 	4, 10,
 };
 
-uint16_t K_ShovelClaw[] = {
+uint16_t Knuckles_ShovelClawIndices[] = {
 	8, 14,
 	0, 1,
 	1, 3,
 	5, 5,
 	4, 0,
-};
-
-WeldInfo KnucklesWeldList[] = {
-	{ &object_002E23B0, &object_002DB8A4, &object_002DBA34, (uint8_t)(LengthOfArray(K_UpperArms) / 2), 2, 0, nullptr, K_UpperArms },
-	{ &object_002E23B0, &object_002DBA34, &object_002DD0AC, (uint8_t)(LengthOfArray(K_LowerArms) / 2), 2, 0, nullptr, K_LowerArms },
-	{ &object_002E23B0, &object_002D9E5C, &object_002D9FEC, (uint8_t)(LengthOfArray(K_UpperArms) / 2), 2, 0, nullptr, K_UpperArms },
-	{ &object_002E23B0, &object_002D9FEC, &object_002DB5F4, (uint8_t)(LengthOfArray(K_LowerArms) / 2), 2, 0, nullptr, K_LowerArms },
-	{ &object_002E23B0, &object_002D876C, &object_002D88FC, (uint8_t)(LengthOfArray(K_Legs) / 2), 2, 0, nullptr, K_Legs },
-	{ &object_002E23B0, &object_002D88FC, &object_002D9BB0, (uint8_t)(LengthOfArray(K_Legs) / 2), 2, 0, nullptr, K_Legs },
-	{ &object_002E23B0, &object_002D6FE4, &object_002D7174, (uint8_t)(LengthOfArray(K_Legs) / 2), 2, 0, nullptr, K_Legs },
-	{ &object_002E23B0, &object_002D7174, &object_002D8438, (uint8_t)(LengthOfArray(K_Legs) / 2), 2, 0, nullptr, K_Legs },
-	{ &object_002E23B0, &object_002D9754, &object_002D9088, (uint8_t)(LengthOfArray(K_Feet) / 2), 2, 0, nullptr, K_Feet },
-	{ &object_002E23B0, &object_002D7FDC, &object_002D7900, (uint8_t)(LengthOfArray(K_Feet) / 2), 2, 0, nullptr, K_Feet },
-	{ &object_002E23B0, &object_002DC94C, &object_002DC244, (uint8_t)(LengthOfArray(K_Hands) / 2), 2, 0, nullptr, K_Hands },
-	{ &object_002E23B0, &object_002DAEE4, &object_002DAB34, (uint8_t)(LengthOfArray(K_Hands) / 2), 2, 0, nullptr, K_Hands },
-	{ &object_002EEE50, &object_002E8324, &object_002E84B4, (uint8_t)(LengthOfArray(K_UpperArms) / 2), 2, 0, nullptr, K_UpperArms },
-	{ &object_002EEE50, &object_002E84B4, &object_002E9B2C, (uint8_t)(LengthOfArray(K_LowerArms) / 2), 2, 0, nullptr, K_LowerArms },
-	{ &object_002EEE50, &object_002E68DC, &object_002E6A6C, (uint8_t)(LengthOfArray(K_UpperArms) / 2), 2, 0, nullptr, K_UpperArms },
-	{ &object_002EEE50, &object_002E6A6C, &object_002E8074, (uint8_t)(LengthOfArray(K_LowerArms) / 2), 2, 0, nullptr, K_LowerArms },
-	{ &object_002EEE50, &object_002E51EC, &object_002E537C, (uint8_t)(LengthOfArray(K_Legs) / 2), 2, 0, nullptr, K_Legs },
-	{ &object_002EEE50, &object_002E537C, &object_002E6630, (uint8_t)(LengthOfArray(K_Legs) / 2), 2, 0, nullptr, K_Legs },
-	{ &object_002EEE50, &object_002E3A64, &object_002E3BF4, (uint8_t)(LengthOfArray(K_Legs) / 2), 2, 0, nullptr, K_Legs },
-	{ &object_002EEE50, &object_002E3BF4, &object_002E4EB8, (uint8_t)(LengthOfArray(K_Legs) / 2), 2, 0, nullptr, K_Legs },
-	{ &object_002EEE50, &object_002E93CC, &object_002E8CC4, (uint8_t)(LengthOfArray(K_Feet) / 2), 2, 0, nullptr, K_Hands },
-	{ &object_002EEE50, &object_002E7964, &object_002E75B4, (uint8_t)(LengthOfArray(K_Feet) / 2), 2, 0, nullptr, K_Hands },
-	{ &object_002EEE50, &object_002E61D4, &object_002E5B08, (uint8_t)(LengthOfArray(K_Hands) / 2), 2, 0, nullptr, K_Feet },
-	{ &object_002EEE50, &object_002E4A5C, &object_002E4380, (uint8_t)(LengthOfArray(K_Hands) / 2), 2, 0, nullptr, K_Feet },
-	{ &object_002E23B0, &object_002DC244, nullptr, 0, 4, 0, nullptr, nullptr },
-	{ &object_002E23B0, &object_002DAB34, nullptr, 0, 5, 0, nullptr, nullptr },
-	{ &object_002E23B0, &object_002D9088, nullptr, 0, 6, 0, nullptr, nullptr },
-	{ &object_002E23B0, &object_002D7900, nullptr, 0, 7, 0, nullptr, nullptr },
-	{ &object_002E23B0, &object_002E1D14, nullptr, 0, 8, 0, nullptr, nullptr },
-	{ 0 }
 };
 
 NJS_VECTOR K_Head_00[] = {

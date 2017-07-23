@@ -16101,60 +16101,39 @@ AnimFrame_2 AmyEVHeadArray[] = {
 
 NJS_MOTION AmyEVHead_Motion = { &AmyEVHeadArray, 20, 0x30, 2 };
 
-uint16_t vi_004AF59C[] = {
+uint16_t Amy_UpperArmIndices[] = {
 	0, 2,
 	1, 3,
 	4, 6,
 	5, 7,
 };
 
-uint16_t vi_004AF5AC[] = {
+uint16_t Amy_LowerArmIndices[] = {
 	0, 10,
 	1, 11,
 	4, 14,
 	5, 15,
 };
 
-uint16_t vi_004AF5BC[] = {
+uint16_t Amy_LegIndices[] = {
 	0, 2,
 	1, 3,
 	4, 6,
 	5, 7,
 };
 
-uint16_t vi_004AF5CC[] = {
+uint16_t Amy_ShoeIndices[] = {
 	3, 2,
 	1, 0,
 	0, 1,
 	2, 3,
 };
 
-uint16_t vi_004AF5DC[] = {
+uint16_t Amy_HandIndices[] = {
 	4, 12,
 	0, 13,
 	1, 1,
 	5, 3,
-};
-
-WeldInfo AmyWeldList[] = {
-	{ &object_00016460, &object_0000EA74, &object_0000EC04, (uint8_t)(LengthOfArray(vi_004AF59C) / 2), 2, 0, nullptr, vi_004AF59C },
-	{ &object_00016460, &object_0000EC04, &object_000112C4, (uint8_t)(LengthOfArray(vi_004AF5AC) / 2), 2, 0, nullptr, vi_004AF5AC },
-	{ &object_00016460, &object_0000CE6C, &object_0000CFFC, (uint8_t)(LengthOfArray(vi_004AF59C) / 2), 2, 0, nullptr, vi_004AF59C },
-	{ &object_00016460, &object_0000CFFC, &object_0000D7B4, (uint8_t)(LengthOfArray(vi_004AF5AC) / 2), 2, 0, nullptr, vi_004AF5AC },
-	{ &object_00016460, &object_0000B7D4, &object_0000B994, (uint8_t)(LengthOfArray(vi_004AF5BC) / 2), 2, 0, nullptr, vi_004AF5BC },
-	{ &object_00016460, &object_0000B994, &object_0000CBC0, (uint8_t)(LengthOfArray(vi_004AF5BC) / 2), 2, 0, nullptr, vi_004AF5BC },
-	{ &object_00016460, &object_0000A114, &object_0000A2D4, (uint8_t)(LengthOfArray(vi_004AF5BC) / 2), 2, 0, nullptr, vi_004AF5BC },
-	{ &object_00016460, &object_0000A2D4, &object_0000B510, (uint8_t)(LengthOfArray(vi_004AF5BC) / 2), 2, 0, nullptr, vi_004AF5BC },
-	{ &object_00016460, &object_0000C508, &object_0000BE90, (uint8_t)(LengthOfArray(vi_004AF5CC) / 2), 2, 0, nullptr, vi_004AF5CC },
-	{ &object_00016460, &object_0000AE48, &object_0000A7D0, (uint8_t)(LengthOfArray(vi_004AF5CC) / 2), 2, 0, nullptr, vi_004AF5CC },
-	{ &object_00016460, &object_00010AF8, &object_000108A0, (uint8_t)(LengthOfArray(vi_004AF5DC) / 2), 2, 0, nullptr, vi_004AF5DC },
-	{ &object_00016460, &object_0000E7C8, &object_0000E570, (uint8_t)(LengthOfArray(vi_004AF5DC) / 2), 2, 0, nullptr, vi_004AF5DC },
-	{ &object_00016460, &object_000108A0, nullptr, 0, 4, 0, nullptr, },
-	{ &object_00016460, &object_0000E570, nullptr, 0, 5, 0, nullptr, },
-	{ &object_00016460, &object_0000BE90, nullptr, 0, 6, 0, nullptr, },
-	{ &object_00016460, &object_0000A7D0, nullptr, 0, 7, 0, nullptr, },
-	{ &object_00016460, &object_00015DC4, nullptr, 0, 8, 0, nullptr, },
-	{ 0 }
 };
 
 NJS_MATERIAL material_8D4CAF2DF0647AE1D44[] = {

@@ -27057,35 +27057,35 @@ AnimFrame_2 CinematicHeadArray[] = {
 
 NJS_MOTION CinematicHead = { &CinematicHeadArray, 20, 0x30, 2 };
 
-uint16_t vi_001B9C5C[] = {
+uint16_t Sonic_UpperArmIndices[] = {
 	0, 2,
 	1, 3,
 	4, 6,
 	5, 7,
 };
 
-uint16_t vi_001B9C6C[] = {
+uint16_t Sonic_LowerArmIndices[] = {
 	0, 10,
 	1, 11,
 	4, 14,
 	5, 15,
 };
 
-uint16_t vi_001B9C7C[] = {
+uint16_t Sonic_UpperLegIndices[] = {
 	0, 2,
 	1, 3,
 	4, 6,
 	5, 7,
 };
 
-uint16_t vi_001B9C8C[] = {
+uint16_t Sonic_LowerLegIndices[] = {
 	0, 2,
 	1, 3,
 	4, 6,
 	5, 7,
 };
 
-uint16_t vi_001B9C9C[] = {
+uint16_t Sonic_ShoeIndices[] = {
 	2, 3,
 	12, 8,
 	0, 1,
@@ -27094,51 +27094,11 @@ uint16_t vi_001B9C9C[] = {
 	3, 2,
 };
 
-uint16_t Hand_Welds[] = {
+uint16_t Sonic_HandIndices[] = {
 	4, 15,
 	0, 14,
 	1, 13,
 	5, 12
-};
-
-WeldInfo SonicWeldInfo[] = {
-	{ &object_0056AF50, &object_00563B7C, &object_00563D0C, (uint8_t)(LengthOfArray(vi_001B9C5C) / 2), 2, 0, nullptr, vi_001B9C5C },
-	{ &object_0056AF50, &object_00563D0C, &object_005654EC, (uint8_t)(LengthOfArray(vi_001B9C6C) / 2), 2, 0, nullptr, vi_001B9C6C },
-	{ &object_0056AF50, &object_00561F14, &object_005620A4, (uint8_t)(LengthOfArray(vi_001B9C5C) / 2), 2, 0, nullptr, vi_001B9C5C },
-	{ &object_0056AF50, &object_005620A4, &object_005638CC, (uint8_t)(LengthOfArray(vi_001B9C6C) / 2), 2, 0, nullptr, vi_001B9C6C },
-	{ &object_0056AF50, &object_0056044C, &object_005605DC, (uint8_t)(LengthOfArray(vi_001B9C7C) / 2), 2, 0, nullptr, vi_001B9C7C },
-	{ &object_0056AF50, &object_005605DC, &object_00561C68, (uint8_t)(LengthOfArray(vi_001B9C8C) / 2), 2, 0, nullptr, vi_001B9C8C },
-	{ &object_0056AF50, &object_0055E99C, &object_0055EB2C, (uint8_t)(LengthOfArray(vi_001B9C7C) / 2), 2, 0, nullptr, vi_001B9C7C },
-	{ &object_0056AF50, &object_0055EB2C, &object_005601B8, (uint8_t)(LengthOfArray(vi_001B9C8C) / 2), 2, 0, nullptr, vi_001B9C8C },
-	{ &object_0056AF50, &object_005613F8, &object_00560DD0, (uint8_t)(LengthOfArray(vi_001B9C9C) / 2), 2, 0, nullptr, vi_001B9C9C },
-	{ &object_0056AF50, &object_0055F948, &object_0055F330, (uint8_t)(LengthOfArray(vi_001B9C9C) / 2), 2, 0, nullptr, vi_001B9C9C },
-	{ &object_0056AF50, &object_005630B0, &object_00562B80, (uint8_t)(LengthOfArray(Hand_Welds) / 2), 2, 0, nullptr, Hand_Welds },
-	{ &object_0056AF50, &object_00564CD0, &object_005647B8, (uint8_t)(LengthOfArray(Hand_Welds) / 2), 2, 0, nullptr, Hand_Welds },
-	{ &object_0056AF50, &object_00581FB8, &object_005818AC, (uint8_t)(LengthOfArray(vi_001B9C9C) / 2), 2, 0, nullptr, vi_001B9C9C },
-	{ &object_0056AF50, &object_00582CC0, &object_005825A4, (uint8_t)(LengthOfArray(vi_001B9C9C) / 2), 2, 0, nullptr, vi_001B9C9C },
-	{ &object_0056AF50, &object_00563D0C, &object_00583284, (uint8_t)(LengthOfArray(vi_001B9C6C) / 2), 2, 0, nullptr, vi_001B9C6C },
-	{ &object_0062DE88, &object_00626AB4, &object_00626C44, (uint8_t)(LengthOfArray(vi_001B9C5C) / 2), 2, 0, nullptr, vi_001B9C5C },
-	{ &object_0062DE88, &object_00626C44, &object_0062840C, (uint8_t)(LengthOfArray(vi_001B9C6C) / 2), 2, 0, nullptr, vi_001B9C6C },
-	{ &object_0062DE88, &object_00624E3C, &object_00624FCC, (uint8_t)(LengthOfArray(vi_001B9C5C) / 2), 2, 0, nullptr, vi_001B9C5C },
-	{ &object_0062DE88, &object_00624FCC, &object_006267F4, (uint8_t)(LengthOfArray(vi_001B9C6C) / 2), 2, 0, nullptr, vi_001B9C6C },
-	{ &object_0062DE88, &object_00623474, &object_00623604, (uint8_t)(LengthOfArray(vi_001B9C7C) / 2), 2, 0, nullptr, vi_001B9C7C },
-	{ &object_0062DE88, &object_00623604, &object_00624B78, (uint8_t)(LengthOfArray(vi_001B9C8C) / 2), 2, 0, nullptr, vi_001B9C8C },
-	{ &object_0062DE88, &object_00621AC4, &object_00621C54, (uint8_t)(LengthOfArray(vi_001B9C7C) / 2), 2, 0, nullptr, vi_001B9C7C },
-	{ &object_0062DE88, &object_00621C54, &object_006231E0, (uint8_t)(LengthOfArray(vi_001B9C8C) / 2), 2, 0, nullptr, vi_001B9C8C },
-	{ &object_0062DE88, &object_00624308, &object_00623C14, (uint8_t)(LengthOfArray(vi_001B9C9C) / 2), 2, 0, nullptr, vi_001B9C9C },
-	{ &object_0062DE88, &object_00622970, &object_00622254, (uint8_t)(LengthOfArray(vi_001B9C9C) / 2), 2, 0, nullptr, vi_001B9C9C },
-	{ &object_0062DE88, &object_00627BF0, &object_006276D8, (uint8_t)(LengthOfArray(Hand_Welds) / 2), 2, 0, nullptr, Hand_Welds },
-	{ &object_0062DE88, &object_00625FD8, &object_00625AA8, (uint8_t)(LengthOfArray(Hand_Welds) / 2), 2, 0, nullptr, Hand_Welds },
-	{ &object_0056AF50, &object_005647B8, nullptr, 0, 4, 0, nullptr, nullptr },
-	{ &object_0056AF50, &object_00562B80, nullptr, 0, 5, 0, nullptr, nullptr },
-	{ &object_0056AF50, &object_005818AC, nullptr, 0, 7, 0, nullptr, nullptr },
-	{ &object_0056AF50, &object_005825A4, nullptr, 0, 6, 0, nullptr, nullptr },
-	{ &object_0056AF50, &object_00560DD0, nullptr, 0, 6, 0, nullptr, nullptr },
-	{ &object_0056AF50, &object_0055F330, nullptr, 0, 7, 0, nullptr, nullptr },
-	{ &object_0056AF50, &object_0056998C, nullptr, 0, 8, 0, nullptr, nullptr },
-	{ 0 },
-	{ 0 },
-	{ 0 }
 };
 
 NJS_MATERIAL matlist_8D4880E2371FA5675C2[] = {

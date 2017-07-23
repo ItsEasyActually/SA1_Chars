@@ -4195,8 +4195,8 @@ uint16_t TikalHands_R[] = {
 };
 
 WeldInfo TikalWeldInfo[] = {
-	{ &Tikal_Object, &object_004CE058, &object_004CEAF8, 7, 2, 0, 0, TikalHands_L },
-	{ &Tikal_Object, &object_004CC658, &object_004CD110, 7, 2, 0, 0, TikalHands_R },
+	{ &Tikal_Object, &object_004CE058, &object_004CEAF8, 4, 2, 0, 0, TikalHands_L },
+	{ &Tikal_Object, &object_004CC658, &object_004CD110, 4, 2, 0, 0, TikalHands_R },
 	{ &Tikal_Object, &object_004CBAE0, &object_004CBCD4, 4, 2, 0, 0, word_38F39E4 },
 	{ &Tikal_Object, &object_004CBCD4, &object_004CC124, 4, 2, 0, 0, word_38F39F4 },
 	{ &Tikal_Object, &object_004CD4C0, &object_004CD6B4, 4, 2, 0, 0, word_38F39E4 },

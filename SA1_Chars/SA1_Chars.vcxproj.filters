@@ -75,9 +75,6 @@
     <ClInclude Include="SADXModLoader\SADXVariables.h">
       <Filter>Header Files\SADXModLoader</Filter>
     </ClInclude>
-    <ClInclude Include="Functions.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Knuckles.h">
       <Filter>Header Files</Filter>
     </ClInclude>

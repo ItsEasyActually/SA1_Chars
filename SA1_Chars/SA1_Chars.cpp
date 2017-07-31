@@ -495,11 +495,11 @@ void __cdecl InitSonicWeldInfo_mod()
 	SonicWeldInfo[14].BaseModel = SONIC_OBJECTS[0];
 	SonicWeldInfo[14].ModelA = SONIC_OBJECTS[2];
 	SonicWeldInfo[14].ModelB = SONIC_OBJECTS[63];
-	SonicWeldInfo[14].VertexPairCount = (uint8_t)(LengthOfArray(Sonic_UpperArmIndices) / 2);
+	SonicWeldInfo[14].VertexPairCount = (uint8_t)(LengthOfArray(Sonic_LowerArmIndices) / 2);
 	SonicWeldInfo[14].WeldType = 2;
 	SonicWeldInfo[14].anonymous_5 = 0;
 	SonicWeldInfo[14].VertexBuffer = 0;
-	SonicWeldInfo[14].VertIndexes = Sonic_UpperArmIndices;
+	SonicWeldInfo[14].VertIndexes = Sonic_LowerArmIndices;
 	SonicWeldInfo[15].BaseModel = SONIC_OBJECTS[0];
 	SonicWeldInfo[15].ModelA = SONIC_OBJECTS[5];
 	SonicWeldInfo[15].ModelB = 0;

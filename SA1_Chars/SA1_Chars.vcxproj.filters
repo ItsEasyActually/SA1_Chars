@@ -93,6 +93,12 @@
     <ClInclude Include="Tikal.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="lanternapi.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ninja.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">

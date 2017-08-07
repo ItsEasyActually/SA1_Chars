@@ -122,6 +122,8 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>sadx-dc-lighting.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <DelayLoadDLLs>sadx-dc-lighting.dll</DelayLoadDLLs>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -155,7 +157,9 @@
     <ClInclude Include="EV_TR2BEFORE.h" />
     <ClInclude Include="EV_TR2CHANGE.h" />
     <ClInclude Include="Knuckles.h" />
+    <ClInclude Include="lanternapi.h" />
     <ClInclude Include="ModLoader\MemAccess.h" />
+    <ClInclude Include="ninja.h" />
     <ClInclude Include="SADXModLoader\SADXEnums.h" />
     <ClInclude Include="SADXModLoader\SADXFunctions.h" />
     <ClInclude Include="SADXModLoader\SADXStructs.h" />

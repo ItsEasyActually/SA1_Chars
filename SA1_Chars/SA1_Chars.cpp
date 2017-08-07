@@ -13,6 +13,7 @@
 #include "e102.h"
 #include "Tikal.h"
 #include "Eggman.h"
+#include "lanternapi.h"
 #include <cmath>
 
 static NJS_OBJECT **SONIC_OBJECTS = nullptr;
@@ -60,6 +61,7 @@ DataArray(EntityData2*, EntityData2Ptrs, 0x03B36DD0, 8);
 FunctionPointer(void, MorphPoints, (NJS_MODEL_SADX *a, NJS_MODEL_SADX *b, NJS_MODEL_SADX *destination, float factor), 0x00439F20);
 FunctionPointer(void, sub_4083D0, (NJS_ACTION *a1, float a2, int a3), 0x004083D0);
 
+//Replacement Functions
 void __cdecl Sonic_MorphStretchyFeet_c(CharObj2* a1)
 {
 	float a4; // ST10_4@3
@@ -2303,12 +2305,350 @@ void __cdecl InitBigWeldInfo_mod()
 	BigWeldInfo[16].VertIndexes = 0;
 }
 
+//Lantern API Fixes
+NJS_MATERIAL* Specular0[] = {
+	//Gamma Material Fixes
+	materials_0020B9B8[0],
+	materials_0020B9B8[1],
+	materials_0020B9B8[2],
+	materials_0020B9B8[3],
+	materials_0020B9B8[4],
+
+	//Birdie Material Fixes
+	&material_8D4CAF2CC2D2CC7B1B5[0],
+	&material_8D4CAF2CC2D2CC7B1B5[1],
+	&material_8D4CAF2CC2D2CC7B1B5[2],
+	&material_8D4CAF2CC2D2CC7B1B5[3],
+	&material_8D4CAF2CC2D2CC7B1B5[4],
+	&material_8D4CAF2D05C4026A461[0],
+	&material_8D4CAF2CE87C76A3764[0],
+	&material_8D4CAF2E1113A8693BD[0],
+	&material_8D4CAF2E1113A8693BD[1],
+	&material_8D4CAF2E1113A8693BD[2],
+	&material_8D4CAF2E1113A8693BD[3],
+	&material_8D4CAF2E1113A8693BD[4],
+	&material_8D4CAF2D47978F26D49[0],
+	&material_8D4CAF2D65D34274B2D[0],
+	&material_8D4CAF2D8C00C49DCD9[0],
+	&material_8D4CAF2DCEC878E36AD[0],
+	&material_8D4CAF2DF0647AE1D44[0],
+};
+
+NJS_MATERIAL* Specular1[] = {
+	//Gamma Material Fixes
+	materials_0020ABF0[0],
+	materials_0020ABF0[1],
+	materials_0020ABF0[2],
+	materials_0020ABF0[3],
+	materials_0020ABF0[4],
+	materials_0020ABF0[5],
+	materials_0020ABF0[6],
+	materials_0020B70C[0],
+	materials_0020B70C[1],
+	materials_0020B70C[2],
+	materials_0020B1D0[0],
+	materials_0020B1D0[1],
+	materials_0020B1D0[2],
+	materials_0020B1D0[3],
+	materials_0020B1D0[4],
+};
+
+NJS_MATERIAL* Specular2[] = {
+	//Sonic Material Fixes
+	&material_8D45386FE2A37524DDB[0],
+	&material_8D45386FE2A37524DDB[1],
+	&material_8D45386FE2A37524DDB[2],
+	&material_8D45386FE2A37524DDB[3],
+	&material_8D45386FE2A37524DDB[4],
+	&material_8D4538706DFFCF0F5E6[0],
+	&material_8D453744DFBDA704FB5[0],
+	&material_8D453744DFBDA704FB5[1],
+	&material_8D453744DFBDA704FB5[2],
+	&material_8D453744DFBDA704FB5[3],
+	&material_8D453744DFBDA704FB5[4],
+	&material_8D453744F8AE4B8D0AD[0],
+	&material_8D453744F8AE4B8D0AD[1],
+	&material_8D453744F8AE4B8D0AD[2],
+	&material_8D45374EFDCAB6B4D4F[0],
+	&material_8D45374EFDCAB6B4D4F[1],
+	&material_8D45374EFDCAB6B4D4F[2],
+	&material_8D45374EFDCAB6B4D4F[3],
+	&material_8D45374EFDCAB6B4D4F[4],
+	&material_8D45374F130F5C79FF7[0],
+	&material_8D45374F130F5C79FF7[1],
+	&material_8D45374F130F5C79FF7[2],
+	&material_8D4580D5179AF3054F4[0],
+	&material_8D4580D5179AF3054F4[1],
+	&material_8D4580D5179AF3054F4[2],
+	&material_8D4580D5179AF3054F4[3],
+	&material_8D4580D54DD3234F8AA[3],
+	&material_8D4580D54DD3234F8AA[4],
+	&material_8D4580D54DD3234F8AA[5],
+	&material_8D45387725BB21BF7C9[0],
+	&material_8D45387725BB21BF7C9[1],
+	&material_8D45387725BB21BF7C9[2],
+	&material_8D45387725BB21BF7C9[3],
+	&material_8D45387725BB21BF7C9[4],
+	&material_8D4538948C5CFF76174[1],
+	&material_8D4536C0BCBD3B5E700[0],
+	&material_8D4536C0BCBD3B5E700[1],
+	&material_8D4536C0BCBD3B5E700[2],
+	&material_8D4536C0BCBD3B5E700[3],
+	&material_8D4536C0E90CA767828[0],
+	&material_8D4536C0E90CA767828[1],
+	&material_8D4536BFD8E4B341B74[0],
+	&material_8D4536BFD8E4B341B74[1],
+	&material_8D4536BFD8E4B341B74[2],
+	&material_8D4536BFD8E4B341B74[3],
+	&material_8D4536C0D1E494A5641[0],
+	&material_8D4536C0D1E494A5641[1],
+	&material_8D445DBA48B46544BCC[0],
+	&material_8D445DBA1E34DE0325F[0],
+	&material_8D445DEFEB3C0F9D274[0],
+	&material_8D445DEFEB3C0F9D274[1],
+	&material_8D445DF7F10AC32787C[0],
+	&material_8D453870D73094ABB3E[0],
+	&material_8D445E8EE925057D39E[0],
+	&material_8D445E9542EB249ABDE[0],
+	&material_8D445E9542EB249ABDE[1],
+	&material_8D445E9542EB249ABDE[2],
+	&material_8D45DC7A3D32ECBD48B[0],
+	&material_8D45DC7A3D32ECBD48B[1],
+	&material_8D45DC7A6D7EE9CC1AF[0],
+	&material_8D45DC7B286D367256C[0],
+	&material_8D445E8F38F3E091FE6[0],
+	&material_8D445E8F58E22C460E5[0],
+	&material_8D445E956B2F598F7BA[0],
+	&material_8D445E956B2F598F7BA[1],
+	&material_8D445E956B2F598F7BA[2],
+	&material_8D45DC7BB5A04CB7D68[0],
+	&material_8D45DC7BB5A04CB7D68[1],
+	&material_8D45DC7C428C94FBC56[0],
+	&material_8D45DC7CF67FAB8C487[0],
+	&material_8D445E8FA1B36037376[0],
+	&material_8D445E8FC5A0ADECF0B[0],
+	&material_8D445E95BE65D66A1A7[0],
+	&material_8D445E95BE65D66A1A7[1],
+	&material_8D445E95BE65D66A1A7[2],
+	&material_8D445E8FE7181050EBC[0],
+	&material_8D445E90038DA3030F6[0],
+	&material_8D445E95E551C95391C[0],
+	&material_8D445E95E551C95391C[1],
+	&material_8D445E95E551C95391C[2],
+	&matlist_00579C94[0],
+	&material_8D455980FE9A6F043AF[0],
+	&material_8D455980FE9A6F043AF[1],
+	&material_8D455980FE9A6F043AF[2],
+	&material_8D455980FE9A6F043AF[3],
+	&material_8D455980FE9A6F043AF[4],
+	&material_8D455980FE9A6F043AF[5],
+	&material_8D4559811C9B8977DED[0],
+	&material_8D45599A5D708A86372[0],
+	&material_8D45599A5D708A86372[1],
+	&material_8D45599ACF3F8224D1C[0],
+	&material_8D4559813AA3F716A17[0],
+	&matlist_00571D10[0],
+	&material_8D45599A7DCF25E9B18[0],
+	&material_8D45599A98F15891B68[0],
+	&material_8D45599AB4CF8B1F7B5[0],
+	&material_8D45599AB4CF8B1F7B5[1],
+	&material_8D45599AB4CF8B1F7B5[2],
+	&material_8D455981806F32B97A7[0],
+	&material_8D455981806F32B97A7[1],
+	&matlist_0056D3E8[0],
+	&material_8D455981DC7CFFBB8FC[0],
+	&material_8D45599C712248911C6[0],
+	&material_8D45599C98158E99BE1[0],
+	&material_8D45599CB0120B7C941[0],
+	&material_8D45599CB0120B7C941[1],
+	&material_8D45599CB0120B7C941[2],
+	&material_8D455981A57F0B9445A[0],
+	&material_8D455981A57F0B9445A[1],
+	&matlist_0056E708[0],
+	&material_8D455981C21E1FEB4AC[0],
+	&material_8D45599B9C25AE3F0EA[0],
+	&material_8D45599B5C4B87D2C2F[0],
+	&material_8D45599AF041B2EA39E[0],
+	&material_8D45599AF041B2EA39E[1],
+	&material_8D45599AF041B2EA39E[2],
+	&material_8D4559826913D3B51F9[0],
+	&material_8D4559826913D3B51F9[1],
+	&material_8D4559826913D3B51F9[2],
+	&material_8D4559826913D3B51F9[3],
+	&material_8D4559824D555EB9391[0],
+	&material_8D4559824D555EB9391[1],
+	&material_8D45599CEF6377DCE7C[0],
+	&material_8D45599D1B8E446FC1D[0],
+	&material_8D45599CD2ABF93600E[0],
+	&material_8D45599CD2ABF93600E[1],
+	&material_8D45599CD2ABF93600E[2],
+	&material_8D4559820F8F7A3DB37[0],
+	&material_8D4559820F8F7A3DB37[1],
+	&material_8D4559820F8F7A3DB37[2],
+	&material_8D4559820F8F7A3DB37[3],
+	&material_8D455981F1CDDAA19D0[0],
+	&material_8D455981F1CDDAA19D0[1],
+
+	//Knuckles Material Fixes
+	&material_8D49E330C443CA61291[0],
+	&material_8D49E330C443CA61291[1],
+	&material_8D49E330C443CA61291[2],
+	&material_8D49E330C443CA61291[3],
+	&material_8D49E330C443CA61291[4],
+
+	//Amy Material Fixes
+	&material_8D4AD8CBDFCFE5DC5E7[0],
+	&material_8D4AD8CBDFCFE5DC5E7[1],
+	&material_8D4AD8CBDFCFE5DC5E7[2],
+	&material_8D4AD8CBDFCFE5DC5E7[3],
+	&material_8D4AD8CBDFCFE5DC5E7[4],
+	&material_8D4DDBA25E4EB1EBB0F[0],
+	&material_8D4DDBA25E4EB1EBB0F[1],
+	&material_8D4AD8E518CB827EF9F[0],
+	&material_8D4AD8E518CB827EF9F[1],
+	&material_8D4AD8E518CB827EF9F[2],
+	&material_8D4AD8E53D5C658C3BE[0],
+	&material_8D4AD8E53D5C658C3BE[1],
+	&material_8D4AD8E53D5C658C3BE[2],
+	&material_8D4AD8E53D5C658C3BE[3],
+
+	//Big Material Fixes
+	&material_8D4DCB42FADA04DEFDC[0],
+	&material_8D4CB1307C0B65BDDCF[0],
+	&material_8D4CB129D9AC3A75E76[0],
+	&material_8D4CB129D9AC3A75E76[1],
+	&material_8D4CB129D9AC3A75E76[2],
+	&material_8D4CB12950D75E95CA5[0],
+	&material_8D4CB12950D75E95CA5[1],
+	&material_8D4CB128B96FD40E733[0],
+	&material_8D4CB128B96FD40E733[1],
+	&material_8D4AD90B5033F10C6FA[0],
+	&material_8D4AD90B5033F10C6FA[1],
+	&material_8D4AD90B5033F10C6FA[2],
+	&material_8D4AD91D254FDC1DBD2[0],
+	&material_8D4AD91B2897CD2EB94[0],
+	&material_8D4AD91B2897CD2EB94[1],
+	&material_8D4AD91B2897CD2EB94[2],
+	&material_8D4AD91B2897CD2EB94[3],
+	&material_8D4AD90B888C983F2AF[0],
+	&material_8D4AD90B888C983F2AF[1],
+
+	//Super Sonic Material Fixes
+	&material_8D4559469C00BD8650C[0],
+	&material_8D4559469C00BD8650C[1],
+	&material_8D4559469C00BD8650C[2],
+	&material_8D4559469C00BD8650C[3],
+	&material_8D4559469C00BD8650C[0],
+	&material_8D45594ECBF9842020C[0],
+	&material_8D45594E29C8962BEDF[0],
+	&material_8D45594D5026F36945C[0],
+	&material_8D45594515B2EA7651B[0],
+	&material_8D45594515B2EA7651B[1],
+	&material_8D4559506FC499BABBA[0],
+	&material_8D455945DD2BD93604F[0],
+	&material_8D4559461176D83848C[0],
+	&material_8D45594639A031C1B14[0],
+	&material_8D45594639A031C1B14[1],
+	&material_8D45594639A031C1B14[2],
+	&material_8D45DC83129D328A0B3[0],
+	&material_8D45DC83129D328A0B3[1],
+	&material_8D45DC8353B24E7A972[0],
+	&material_8D45DC8330355079F55[0],
+	&material_8D45594549A3932E69C[0],
+	&material_8D4559456CDEA53E9A4[0],
+	&material_8D455945880348F0E5C[0],
+	&material_8D455945880348F0E5C[1],
+	&material_8D455945880348F0E5C[2],
+	&material_8D45DC820E06D6BB572[0],
+	&material_8D45DC820E06D6BB572[1],
+	&material_8D45DC8247365910C0C[0],
+	&material_8D45DC82AFAF0AAC4E7[0],
+	&material_8D455947A84E4F37A4E[0],
+	&material_8D455947DD6B475EE3A[0],
+	&material_8D4559480838EFC6628[0],
+	&material_8D4559480838EFC6628[1],
+	&material_8D4559480838EFC6628[2],
+	&material_8D455948968E9144EBD[0],
+	&material_8D455948968E9144EBD[1],
+	&material_8D455948968E9144EBD[2],
+	&material_8D455948968E9144EBD[3],
+	&material_8D455948968E9144EBD[4],
+	&material_8D455948AC9B6BFEE39[0],
+	&material_8D455948AC9B6BFEE39[1],
+	&material_8D455948AC9B6BFEE39[2],
+	&material_8D45594827ECA299216[0],
+	&material_8D4559484B7846D15FD[0],
+	&material_8D45594876D38B511BE[0],
+	&material_8D45594876D38B511BE[1],
+	&material_8D45594876D38B511BE[2],
+	&material_8D455948CD45B76EA23[0],
+	&material_8D455948CD45B76EA23[1],
+	&material_8D455948CD45B76EA23[2],
+	&material_8D455948CD45B76EA23[3],
+	&material_8D455948CD45B76EA23[4],
+	&material_8D455948E41855F1077[0],
+	&material_8D455948E41855F1077[1],
+	&material_8D455948E41855F1077[2],
+};
+
+NJS_MATERIAL* Specular3[] = {
+	//Knuckles Material Fixes
+	&material_8D49E33095E01C8B132[2],
+
+	//Gamma Material Fixes
+	materials_001FD8E8[0],
+
+};
+
+bool ForceCharSpec0(NJS_MATERIAL* material, Uint32 flags)
+{
+	set_diffuse(2, false);
+	set_specular(0, false);
+	use_default_diffuse(true);
+	return true;
+}
+
+bool ForceCharSpec1(NJS_MATERIAL* material, Uint32 flags)
+{
+	set_diffuse(2, false);
+	set_specular(1, false);
+	use_default_diffuse(true);
+	return true;
+}
+
+bool ForceCharSpec2(NJS_MATERIAL* material, Uint32 flags)
+{
+	set_diffuse(2, false);
+	set_specular(2, false);
+	use_default_diffuse(true);
+	return true;
+}
+
+bool ForceCharSpec3(NJS_MATERIAL* material, Uint32 flags)
+{
+	set_diffuse(2, false);
+	set_specular(3, false);
+	use_default_diffuse(true);
+	return true;
+}
+
 extern "C" __declspec(dllexport) void __cdecl Init(const char *path, const HelperFunctions &helperFunctions)
 {
 	HMODULE handle = GetModuleHandle(L"CHRMODELS_orig");
 
+	//Lantern API Export
+	HMODULE Lantern = GetModuleHandle(L"sadx-dc-lighting");
+	if (Lantern != nullptr)
+	{
+		typedef const char* (__cdecl* lantern_load_cb)(int level, int act);
+		material_register(Specular0, LengthOfArray(Specular0), &ForceCharSpec0);
+		material_register(Specular1, LengthOfArray(Specular1), &ForceCharSpec1);
+		material_register(Specular2, LengthOfArray(Specular2), &ForceCharSpec2);
+		material_register(Specular3, LengthOfArray(Specular3), &ForceCharSpec3);
+	}
+
 	//Sonic Data for DLL Export
-	ResizeTextureList((NJS_TEXLIST *)0x91CB58, 28);
+	//ResizeTextureList((NJS_TEXLIST *)0x91CB58, 28);
 	NJS_OBJECT **___SONIC_OBJECTS = (NJS_OBJECT **)GetProcAddress(handle, "___SONIC_OBJECTS");
 	SONIC_OBJECTS = ___SONIC_OBJECTS;
 	NJS_ACTION **___SONIC_ACTIONS = (NJS_ACTION **)GetProcAddress(handle, "___SONIC_ACTIONS");
@@ -2522,7 +2862,7 @@ extern "C" __declspec(dllexport) void __cdecl Init(const char *path, const Helpe
 	___SONIC_MOTIONS[0] = &CinematicHead;
 
 	//Tails Model Data
-	ResizeTextureList((NJS_TEXLIST *)0x91A9C8, 24);
+	//ResizeTextureList((NJS_TEXLIST *)0x91A9C8, 24);
 	NJS_OBJECT **___MILES_OBJECTS = (NJS_OBJECT **)GetProcAddress(handle, "___MILES_OBJECTS");
 	MILES_OBJECTS = ___MILES_OBJECTS;
 	NJS_ACTION **___MILES_ACTIONS = (NJS_ACTION **)GetProcAddress(handle, "___MILES_ACTIONS");
@@ -2719,7 +3059,7 @@ extern "C" __declspec(dllexport) void __cdecl Init(const char *path, const Helpe
 	___MILES_MOTIONS[0] = &TailsCinematicHead;
 
 	//Knuckles
-	ResizeTextureList((NJS_TEXLIST *)0x0091BD20, 22);
+	//ResizeTextureList((NJS_TEXLIST *)0x0091BD20, 22);
 	NJS_OBJECT **___KNUCKLES_OBJECTS = (NJS_OBJECT **)GetProcAddress(handle, "___KNUCKLES_OBJECTS");
 	KNUCKLES_OBJECTS = ___KNUCKLES_OBJECTS;
 	NJS_ACTION **___KNUCKLES_ACTIONS = (NJS_ACTION **)GetProcAddress(handle, "___KNUCKLES_ACTIONS");
@@ -2915,7 +3255,7 @@ extern "C" __declspec(dllexport) void __cdecl Init(const char *path, const Helpe
 	___KNUCKLES_MOTIONS[0] = &KnucklesEV;
 
 	//Amy
-	ResizeTextureList((NJS_TEXLIST *)0x0091C800, 53);
+	//ResizeTextureList((NJS_TEXLIST *)0x0091C800, 53);
 	NJS_OBJECT **___AMY_OBJECTS = (NJS_OBJECT **)GetProcAddress(handle, "___AMY_OBJECTS");
 	AMY_OBJECTS = ___AMY_OBJECTS;
 	NJS_ACTION **___AMY_ACTIONS = (NJS_ACTION **)GetProcAddress(handle, "___AMY_ACTIONS");
@@ -2923,7 +3263,7 @@ extern "C" __declspec(dllexport) void __cdecl Init(const char *path, const Helpe
 	AMY_MODELS = ___AMY_MODELS;
 	NJS_MOTION **___AMY_MOTIONS = (NJS_MOTION **)GetProcAddress(handle, "___AMY_MOTIONS");
 	___AMY_OBJECTS[0] = &object_00016460;
-	//___AMY_OBJECTS[1] = &object_00016E7C;
+	___AMY_OBJECTS[1] = &object_00016E7C;
 	___AMY_OBJECTS[2] = &object_0000FB34;
 	___AMY_OBJECTS[3] = &object_0000F974;
 	___AMY_OBJECTS[4] = &object_000159CC;
@@ -3173,161 +3513,84 @@ extern "C" __declspec(dllexport) void __cdecl Init(const char *path, const Helpe
 	___BIG_MOTIONS[0] = &BigEV_Motion;
 
 	//Gamma
-	NJS_OBJECT **___E102_OBJECTS = (NJS_OBJECT **)GetProcAddress(handle, "___E102_OBJECTS");
-	NJS_ACTION **___E102_ACTIONS = (NJS_ACTION **)GetProcAddress(handle, "___E102_ACTIONS");
-	___E102_OBJECTS[0] = &object_00207290;
-	___E102_OBJECTS[7] = &object_00202C9C;
-	___E102_OBJECTS[8] = &object_00202F8C;
-	___E102_OBJECTS[9] = &object_002037EC;
-	___E102_OBJECTS[10] = &object_0020323C;
-	___E102_OBJECTS[11] = &object_00203820;
-	___E102_OBJECTS[12] = &object_00201AE4;
-	___E102_OBJECTS[22] = &object_00203820;
-	___E102_OBJECTS[24] = &object_0020323C;
-	___E102_OBJECTS[25] = &object_00202744;
-	___E102_OBJECTS[26] = &object_00205CC8;
-	___E102_OBJECTS[27] = &object_002070F0;
-	___E102_ACTIONS[0]->object = &object_00207290;
-	___E102_ACTIONS[1]->object = &object_00207290;
-	___E102_ACTIONS[2]->object = &object_00207290;
-	___E102_ACTIONS[3]->object = &object_00207290;
-	___E102_ACTIONS[4]->object = &object_00207290;
-	___E102_ACTIONS[5]->object = &object_00207290;
-	___E102_ACTIONS[6]->object = &object_00207290;
-	___E102_ACTIONS[13]->object = &object_00207290;
-	___E102_ACTIONS[14]->object = &object_00207290;
-	___E102_ACTIONS[15]->object = &object_00207290;
-	___E102_ACTIONS[16]->object = &object_00207290;
-	___E102_ACTIONS[17]->object = &object_00207290;
-	___E102_ACTIONS[18]->object = &object_00207290;
-	___E102_ACTIONS[19]->object = &object_00207290;
-	___E102_ACTIONS[20]->object = &object_00207290;
-	___E102_ACTIONS[21]->object = &object_00207290;
-	___E102_ACTIONS[22]->object = &object_00207290;
-	___E102_ACTIONS[23]->object = &object_00207290;
-	___E102_ACTIONS[24]->object = &object_00207290;
-	___E102_ACTIONS[25]->object = &object_00207290;
-	___E102_ACTIONS[26]->object = &object_00207290;
-	___E102_ACTIONS[27]->object = &object_00207290;
-	___E102_ACTIONS[28]->object = &object_00207290;
-	___E102_ACTIONS[29]->object = &object_00207290;
-	___E102_ACTIONS[30]->object = &object_00207290;
-	___E102_ACTIONS[31]->object = &object_00207290;
-	___E102_ACTIONS[32]->object = &object_00207290;
-	___E102_ACTIONS[33]->object = &object_00207290;
-	___E102_ACTIONS[34]->object = &object_00207290;
-	___E102_ACTIONS[35]->object = &object_00207290;
-	___E102_ACTIONS[36]->object = &object_00207290;
-	___E102_ACTIONS[37]->object = &object_00207290;
-	___E102_ACTIONS[38]->object = &object_00207290;
-	___E102_ACTIONS[39]->object = &object_00207290;
-	___E102_ACTIONS[40]->object = &object_00207290;
-	___E102_ACTIONS[41]->object = &object_00207290;
-	___E102_ACTIONS[42]->object = &object_00207290;
-	___E102_ACTIONS[43]->object = &object_00207290;
-	___E102_ACTIONS[44]->object = &object_00207290;
-	___E102_ACTIONS[45]->object = &object_00207290;
-	___E102_ACTIONS[46]->object = &object_00207290;
-	___E102_ACTIONS[47]->object = &object_00207290;
-	___E102_ACTIONS[48]->object = &object_00207290;
-	___E102_ACTIONS[49]->object = &object_00207290;
-	___E102_ACTIONS[51]->object = &object_00207290;
-	___E102_ACTIONS[52]->object = &object_00207290;
-	___E102_ACTIONS[53]->object = &object_00207290;
-	___E102_ACTIONS[54]->object = &object_00207290;
-	___E102_ACTIONS[55]->object = &object_00207290;
-	___E102_ACTIONS[56]->object = &object_00207290;
-	___E102_ACTIONS[57]->object = &object_00207290;
-	___E102_ACTIONS[58]->object = &object_00207290;
-	___E102_ACTIONS[59]->object = &object_00207290;
-	___E102_ACTIONS[60]->object = &object_00207290;
-	___E102_ACTIONS[62]->object = &object_00207290;
-	___E102_ACTIONS[63]->object = &object_00207290;
-	___E102_ACTIONS[64]->object = &object_00207290;
-	___E102_ACTIONS[65]->object = &object_00207290;
-	___E102_ACTIONS[66]->object = &object_00207290;
-	___E102_ACTIONS[67]->object = &object_00207290;
-	___E102_ACTIONS[68]->object = &object_00207290;
-	___E102_ACTIONS[69]->object = &object_00207290;
-	___E102_ACTIONS[70]->object = &object_00207290;
-	___E102_ACTIONS[71]->object = &object_00207290;
-	___E102_ACTIONS[72]->object = &object_00207290;
-	___E102_ACTIONS[73]->object = &object_00207290;
-	___E102_ACTIONS[74]->object = &object_00207290;
-	___E102_ACTIONS[75]->object = &object_00207290;
-	___E102_ACTIONS[76]->object = &object_00207290;
-	___E102_ACTIONS[77]->object = &object_00207290;
+	materials_00200D48[7]->attrflags |= NJD_FLAG_IGNORE_LIGHT;
+	materials_002009C0[2]->attrflags |= NJD_FLAG_IGNORE_LIGHT;
+	materials_0020052C[1]->attrflags |= NJD_FLAG_IGNORE_LIGHT;
+	materials_0020052C[2]->attrflags |= NJD_FLAG_IGNORE_LIGHT;
+	materials_00204EC8[2]->attrflags |= NJD_FLAG_IGNORE_LIGHT;
+	materials_002062D8[3]->attrflags |= NJD_FLAG_IGNORE_LIGHT;
+	materials_0020B9B8[3]->attrflags |= NJD_FLAG_IGNORE_LIGHT;
 
 	//Tikal
-	WriteData((NJS_OBJECT**)0x008F46BC, &Tikal_Object);
-	WriteData((NJS_OBJECT**)0x008F83F4, &Tikal_Object);
-	WriteData((NJS_OBJECT**)0x008FC8DC, &Tikal_Object);
-	WriteData((NJS_OBJECT**)0x00900814, &Tikal_Object);
-	WriteData((NJS_OBJECT**)0x02C81AA4, &Tikal_Object);
-	WriteData((NJS_OBJECT**)0x02C8B13C, &Tikal_Object);
-	WriteData((NJS_OBJECT**)0x02D4B2DC, &Tikal_Object);
-	WriteData((NJS_OBJECT**)0x02D53284, &Tikal_Object);
-	WriteData((NJS_OBJECT**)0x02D5C1FC, &Tikal_Object);
-	WriteData((NJS_OBJECT**)0x02D61174, &Tikal_Object);
-	WriteData((NJS_OBJECT**)0x02EAF60C, &Tikal_Object);
-	WriteData((NJS_OBJECT**)0x02EB25F4, &Tikal_Object);
-	WriteData((NJS_OBJECT**)0x02EBACB4, &Tikal_Object);
-	WriteData((NJS_OBJECT**)0x02EBF89C, &Tikal_Object);
-	WriteData((NJS_OBJECT**)0x02EC2524, &Tikal_Object);
-	WriteData((NJS_OBJECT**)0x02ECD67C, &Tikal_Object);
-	WriteData((NJS_OBJECT**)0x02ED7EA4, &Tikal_Object);
-	WriteData((NJS_OBJECT**)0x02EDBE6C, &Tikal_Object);
-	WriteData((NJS_OBJECT**)0x02EE08F4, &Tikal_Object);
-	WriteData((NJS_OBJECT**)0x02F12A34, &Tikal_Object);
-	WriteData((NJS_OBJECT**)0x02F1694C, &Tikal_Object);
-	WriteData((NJS_OBJECT**)0x02F180B4, &Tikal_Object);
-	WriteData((NJS_OBJECT**)0x02F1CBB4, &Tikal_Object);
-	WriteData((NJS_OBJECT**)0x02F21B8C, &Tikal_Object);
-	WriteData((NJS_OBJECT**)0x02F2D344, &Tikal_Object);
-	WriteData((NJS_OBJECT**)0x02F33DFC, &Tikal_Object);
-	WriteData((NJS_OBJECT**)0x02F3E204, &Tikal_Object);
-	WriteData((NJS_OBJECT**)0x02FA7544, &Tikal_Object);
-	WriteData((NJS_OBJECT**)0x02FAA58C, &Tikal_Object);
-	WriteData((NJS_OBJECT**)0x02FAB794, &Tikal_Object);
-	WriteData((NJS_OBJECT**)0x02FB1F1C, &Tikal_Object);
-	WriteData((NJS_OBJECT**)0x02FBFAA4, &Tikal_Object);
-	WriteData((NJS_OBJECT**)0x030DF19C, &Tikal_Object);
-	WriteData((NJS_OBJECT**)0x030E6944, &Tikal_Object);
-	WriteData((NJS_OBJECT**)0x030EE53C, &Tikal_Object);
-	WriteData((NJS_OBJECT**)0x030F6004, &Tikal_Object);
-	WriteData((NJS_OBJECT**)0x030F854C, &Tikal_Object);
-	WriteData((NJS_OBJECT**)0x03100084, &Tikal_Object);
-	WriteData((NJS_OBJECT**)0x03103DCC, &Tikal_Object);
-	WriteData((WeldInfo**)0x007B41AB, TikalWeldInfo);
+	//WriteData((NJS_OBJECT**)0x008F46BC, &Tikal_Object);
+	//WriteData((NJS_OBJECT**)0x008F83F4, &Tikal_Object);
+	//WriteData((NJS_OBJECT**)0x008FC8DC, &Tikal_Object);
+	//WriteData((NJS_OBJECT**)0x00900814, &Tikal_Object);
+	//WriteData((NJS_OBJECT**)0x02C81AA4, &Tikal_Object);
+	//WriteData((NJS_OBJECT**)0x02C8B13C, &Tikal_Object);
+	//WriteData((NJS_OBJECT**)0x02D4B2DC, &Tikal_Object);
+	//WriteData((NJS_OBJECT**)0x02D53284, &Tikal_Object);
+	//WriteData((NJS_OBJECT**)0x02D5C1FC, &Tikal_Object);
+	//WriteData((NJS_OBJECT**)0x02D61174, &Tikal_Object);
+	//WriteData((NJS_OBJECT**)0x02EAF60C, &Tikal_Object);
+	//WriteData((NJS_OBJECT**)0x02EB25F4, &Tikal_Object);
+	//WriteData((NJS_OBJECT**)0x02EBACB4, &Tikal_Object);
+	//WriteData((NJS_OBJECT**)0x02EBF89C, &Tikal_Object);
+	//WriteData((NJS_OBJECT**)0x02EC2524, &Tikal_Object);
+	//WriteData((NJS_OBJECT**)0x02ECD67C, &Tikal_Object);
+	//WriteData((NJS_OBJECT**)0x02ED7EA4, &Tikal_Object);
+	//WriteData((NJS_OBJECT**)0x02EDBE6C, &Tikal_Object);
+	//WriteData((NJS_OBJECT**)0x02EE08F4, &Tikal_Object);
+	//WriteData((NJS_OBJECT**)0x02F12A34, &Tikal_Object);
+	//WriteData((NJS_OBJECT**)0x02F1694C, &Tikal_Object);
+	//WriteData((NJS_OBJECT**)0x02F180B4, &Tikal_Object);
+	//WriteData((NJS_OBJECT**)0x02F1CBB4, &Tikal_Object);
+	//WriteData((NJS_OBJECT**)0x02F21B8C, &Tikal_Object);
+	//WriteData((NJS_OBJECT**)0x02F2D344, &Tikal_Object);
+	//WriteData((NJS_OBJECT**)0x02F33DFC, &Tikal_Object);
+	//WriteData((NJS_OBJECT**)0x02F3E204, &Tikal_Object);
+	//WriteData((NJS_OBJECT**)0x02FA7544, &Tikal_Object);
+	//WriteData((NJS_OBJECT**)0x02FAA58C, &Tikal_Object);
+	//WriteData((NJS_OBJECT**)0x02FAB794, &Tikal_Object);
+	//WriteData((NJS_OBJECT**)0x02FB1F1C, &Tikal_Object);
+	//WriteData((NJS_OBJECT**)0x02FBFAA4, &Tikal_Object);
+	//WriteData((NJS_OBJECT**)0x030DF19C, &Tikal_Object);
+	//WriteData((NJS_OBJECT**)0x030E6944, &Tikal_Object);
+	//WriteData((NJS_OBJECT**)0x030EE53C, &Tikal_Object);
+	//WriteData((NJS_OBJECT**)0x030F6004, &Tikal_Object);
+	//WriteData((NJS_OBJECT**)0x030F854C, &Tikal_Object);
+	//WriteData((NJS_OBJECT**)0x03100084, &Tikal_Object);
+	//WriteData((NJS_OBJECT**)0x03103DCC, &Tikal_Object);
+	//WriteData((WeldInfo**)0x007B41AB, TikalWeldInfo);
 
 	//Eggman
-	ResizeTextureList((NJS_TEXLIST*)0x00892A20, 19);
-	WriteData((NJS_OBJECT**)0x0089E254, &Eggman_Object);
-	WriteData((NJS_OBJECT**)0x008A094C, &Eggman_Object);
-	WriteData((NJS_OBJECT**)0x008A3564, &Eggman_Object);
-	WriteData((NJS_OBJECT**)0x008A513C, &Eggman_Object);
-	WriteData((NJS_OBJECT**)0x008A6BF4, &Eggman_Object);
-	WriteData((NJS_OBJECT**)0x008A8A9C, &Eggman_Object);
-	WriteData((NJS_OBJECT**)0x008AC3F4, &Eggman_Object);
-	WriteData((NJS_OBJECT**)0x008B1CCC, &Eggman_Object);
-	WriteData((NJS_OBJECT**)0x0111B72C, &Eggman_Object);
-	WriteData((NJS_OBJECT**)0x02D00DF4, &Eggman_Object);
-	WriteData((NJS_OBJECT**)0x02D027EC, &Eggman_Object);
-	WriteData((NJS_OBJECT**)0x02D06F6C, &Eggman_Object);
-	WriteData((NJS_OBJECT**)0x02D08DF4, &Eggman_Object);
-	WriteData((NJS_OBJECT**)0x02D0AC0C, &Eggman_Object);
-	WriteData((NJS_OBJECT**)0x02F9470C, &Eggman_Object);
-	WriteData((NJS_OBJECT**)0x0303D284, &Eggman_Object);
-	WriteData((NJS_OBJECT**)0x0303EE9C, &Eggman_Object);
-	WriteData((NJS_OBJECT**)0x03041A44, &Eggman_Object);
-	WriteData((NJS_OBJECT**)0x0304E9AC, &Eggman_Object);
-	WriteData((NJS_OBJECT**)0x030C62BC, &Eggman_Object);
-	WriteData((NJS_OBJECT**)0x030C7E34, &Eggman_Object);
-	WriteData((NJS_OBJECT**)0x03136234, &Eggman_Object);
-	WriteData((NJS_OBJECT**)0x0313EB3C, &Eggman_Object);
-	WriteData((NJS_OBJECT**)0x03141254, &Eggman_Object);
-	WriteData((NJS_OBJECT**)0x03142C4C, &Eggman_Object);
-	WriteData((WeldInfo**)0x007B4FBF, EggmanWeldList);
+	//ResizeTextureList((NJS_TEXLIST*)0x00892A20, 19);
+	//WriteData((NJS_OBJECT**)0x0089E254, &Eggman_Object);
+	//WriteData((NJS_OBJECT**)0x008A094C, &Eggman_Object);
+	//WriteData((NJS_OBJECT**)0x008A3564, &Eggman_Object);
+	//WriteData((NJS_OBJECT**)0x008A513C, &Eggman_Object);
+	//WriteData((NJS_OBJECT**)0x008A6BF4, &Eggman_Object);
+	//WriteData((NJS_OBJECT**)0x008A8A9C, &Eggman_Object);
+	//WriteData((NJS_OBJECT**)0x008AC3F4, &Eggman_Object);
+	//WriteData((NJS_OBJECT**)0x008B1CCC, &Eggman_Object);
+	//WriteData((NJS_OBJECT**)0x0111B72C, &Eggman_Object);
+	//WriteData((NJS_OBJECT**)0x02D00DF4, &Eggman_Object);
+	//WriteData((NJS_OBJECT**)0x02D027EC, &Eggman_Object);
+	//WriteData((NJS_OBJECT**)0x02D06F6C, &Eggman_Object);
+	//WriteData((NJS_OBJECT**)0x02D08DF4, &Eggman_Object);
+	//WriteData((NJS_OBJECT**)0x02D0AC0C, &Eggman_Object);
+	//WriteData((NJS_OBJECT**)0x02F9470C, &Eggman_Object);
+	//WriteData((NJS_OBJECT**)0x0303D284, &Eggman_Object);
+	//WriteData((NJS_OBJECT**)0x0303EE9C, &Eggman_Object);
+	//WriteData((NJS_OBJECT**)0x03041A44, &Eggman_Object);
+	//WriteData((NJS_OBJECT**)0x0304E9AC, &Eggman_Object);
+	//WriteData((NJS_OBJECT**)0x030C62BC, &Eggman_Object);
+	//WriteData((NJS_OBJECT**)0x030C7E34, &Eggman_Object);
+	//WriteData((NJS_OBJECT**)0x03136234, &Eggman_Object);
+	//WriteData((NJS_OBJECT**)0x0313EB3C, &Eggman_Object);
+	//WriteData((NJS_OBJECT**)0x03141254, &Eggman_Object);
+	//WriteData((NJS_OBJECT**)0x03142C4C, &Eggman_Object);
+	//WriteData((WeldInfo**)0x007B4FBF, EggmanWeldList);
 
 	//Sky Chase
 	WriteData((NJS_OBJECT**)0x0028B7A0C, &Tornado1_Object);
@@ -3344,6 +3607,10 @@ extern "C" __declspec(dllexport) void __cdecl Init(const char *path, const Helpe
 	WriteData((NJS_OBJECT**)0x002811CE4, &Tornado2Change_Object);
 	WriteData((NJS_OBJECT**)0x002814D9C, &Tornado2Change_Object);
 	WriteData((NJS_OBJECT**)0x002817514, &Tornado2Change_Object);
+	WriteData((NJS_OBJECT**)0x028E2C88, &object_0009153C); //Beam in Act 1
+	WriteData((NJS_OBJECT**)0x28E596C, &object_0009153C); //Beam in Act 1
+	WriteData((char*)0x0062751B, 0x00, 1); //Force Tornado light type
+	WriteData((char*)0x0062AC1F, 0x00, 1); //Force Tornado light type (transformation cutscene)
 
 	//Event Data
 	WriteData((NJS_ACTION**)0x006BF039, &EV_TR1_Action);
@@ -3382,11 +3649,7 @@ extern "C" __declspec(dllexport) void __cdecl Init(const char *path, const Helpe
 	WriteData((NJS_OBJECT***)0x007D7BC1, &EV_TR2BEFORE_Object.child);
 	WriteData((NJS_OBJECT***)0x007D7CB1, &EV_TR2BEFORE_Object.child);
 	WriteData((NJS_OBJECT***)0x007D7CE1, &EV_TR2BEFORE_Object.child);
-	WriteData((NJS_ACTION**)0x006AF5FE, &EV_TR2CHANGE_Action);
-	WriteData((NJS_ACTION**)0x006AF92D, &EV_TR2CHANGE_Action);
-	WriteData((NJS_ACTION**)0x006CDE0E, &EV_TR2CHANGE_Action);
-	WriteData((NJS_ACTION**)0x006CE10D, &EV_TR2CHANGE_Action);
-	ResizeTextureList((NJS_TEXLIST *)0x033315E4, 33);
+	WriteData((NJS_OBJECT**)0x032ECE0C, &EV_TR2CHANGE_Object);
 	WriteData((NJS_OBJECT**)0x03342074, &EV_TailsProtoPlane);
 	WriteData((NJS_OBJECT**)0x03344EAC, &EV_TailsProtoPlane);
 	WriteData((NJS_OBJECT**)0x03347734, &EV_TailsProtoPlane);

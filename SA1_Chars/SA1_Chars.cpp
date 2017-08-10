@@ -79,53 +79,53 @@ void __cdecl Sonic_MorphStretchyFeet_c(CharObj2* a1)
 				if (a1->AnimationThing.Frame <= 24.0)
 				{
 					a1->SomeFrameNumberThing = 0;
-					v3 = &LSDashMorph_Left3;
+					v3 = &LS_Morph_L03;
 				}
 				else
 				{
 					v2 = (a1->AnimationThing.Frame - 24.0) * 0.125;
 					a1->SomeFrameNumberThing = v2;
-					MorphPoints(&LSDashMorph_Left3, &LSDashMorph_Left2, &LSDashMorph_Left1, v2);
-					v3 = &LSDashMorph_Left1;
+					MorphPoints(&LS_Morph_L03, &LS_Morph_L02, &LS_Morph_L01, v2);
+					v3 = &LS_Morph_L01;
 				}
-				object_005818AC.model = v3;
+				SONIC_OBJECTS[59]->model = v3;
 			}
 			else
 			{
 				a4 = (16.0 - a1->AnimationThing.Frame) * 0.0625;
 				a1->SomeFrameNumberThing = a4;
-				MorphPoints(&LSDashMorph_Left3, &LSDashMorph_Left2, &LSDashMorph_Left1, a4);
-				object_005818AC.model = &LSDashMorph_Left1;
+				MorphPoints(&LS_Morph_L03, &LS_Morph_L02, &LS_Morph_L01, a4);
+				SONIC_OBJECTS[59]->model = &LS_Morph_L01;
 			}
 			if (a1->AnimationThing.Frame < 8.0 || a1->AnimationThing.Frame > 16.0)
 			{
 				if (a1->AnimationThing.Frame <= 16.0 || a1->AnimationThing.Frame > 32.0)
 				{
 					a1->TailsFlightTime = 0;
-					object_005825A4.model = &LSDashMorph_Right2;
+					SONIC_OBJECTS[61]->model = &LS_Morph_R02;
 				}
 				else
 				{
 					v5 = (32.0 - a1->AnimationThing.Frame) * 0.0625;
 					a1->TailsFlightTime = v5;
-					MorphPoints(&LSDashMorph_Right2, &LSDashMorph_Right3, &LSDashMorph_Right1, v5);
-					object_005825A4.model = &LSDashMorph_Right1;
+					MorphPoints(&LS_Morph_R02, &LS_Morph_R03, &LS_Morph_R01, v5);
+					SONIC_OBJECTS[61]->model = &LS_Morph_R01;
 				}
 			}
 			else
 			{
 				v4 = (a1->AnimationThing.Frame - 8.0) * 0.125;
 				a1->TailsFlightTime = v4;
-				MorphPoints(&LSDashMorph_Right2, &LSDashMorph_Right3, &LSDashMorph_Right1, v4);
-				object_005825A4.model = &LSDashMorph_Right1;
+				MorphPoints(&LS_Morph_R02, &LS_Morph_R03, &LS_Morph_R01, v4);
+				SONIC_OBJECTS[61]->model = &LS_Morph_R01;
 			}
 		}
 		else
 		{
 			a1->SomeFrameNumberThing = 0;
 			a1->TailsFlightTime = 0;
-			object_005818AC.model = &attach_00581880;
-			object_005825A4.model = &attach_00582578;
+			SONIC_OBJECTS[59]->model = &attach_00581880;
+			SONIC_OBJECTS[61]->model = &attach_00582578;
 		}
 	}
 	else
@@ -146,28 +146,28 @@ void __cdecl Sonic_MorphStretchyFeet_c(CharObj2* a1)
 					MorphPoints(&attach_0057464C, &attach_00573DFC, &attach_005735AC, v2);
 					v3 = &attach_005735AC;
 				}
-				object_0055F330.model = v3;
+				SONIC_OBJECTS[21]->model = v3;
 			}
 			else
 			{
 				a4 = (16.0 - a1->AnimationThing.Frame) * 0.0625;
 				a1->SomeFrameNumberThing = a4;
 				MorphPoints(&attach_0057464C, &attach_00573DFC, &attach_005735AC, a4);
-				object_0055F330.model = &attach_005735AC;
+				SONIC_OBJECTS[21]->model = &attach_005735AC;
 			}
 			if (a1->AnimationThing.Frame < 8.0 || a1->AnimationThing.Frame > 16.0)
 			{
 				if (a1->AnimationThing.Frame <= 16.0 || a1->AnimationThing.Frame > 32.0)
 				{
 					a1->TailsFlightTime = 0;
-					object_00560DD0.model = &attach_00575AB4;
+					SONIC_OBJECTS[16]->model = &attach_00575AB4;
 				}
 				else
 				{
 					v5 = (32.0 - a1->AnimationThing.Frame) * 0.0625;
 					a1->TailsFlightTime = v5;
 					MorphPoints(&attach_00575AB4, &attach_0057630C, &attach_0057525C, v5);
-					object_00560DD0.model = &attach_0057525C;
+					SONIC_OBJECTS[16]->model = &attach_0057525C;
 				}
 			}
 			else
@@ -175,15 +175,15 @@ void __cdecl Sonic_MorphStretchyFeet_c(CharObj2* a1)
 				v4 = (a1->AnimationThing.Frame - 8.0) * 0.125;
 				a1->TailsFlightTime = v4;
 				MorphPoints(&attach_00575AB4, &attach_0057630C, &attach_0057525C, v4);
-				object_00560DD0.model = &attach_0057525C;
+				SONIC_OBJECTS[16]->model = &attach_0057525C;
 			}
 		}
 		else
 		{
 			a1->SomeFrameNumberThing = 0;
 			a1->TailsFlightTime = 0;
-			object_0055F330.model = &attach_0055F304;
-			object_00560DD0.model = &attach_00560DA4;
+			SONIC_OBJECTS[21]->model = &attach_0055F304;
+			SONIC_OBJECTS[16]->model = &attach_00560DA4;
 		}
 	}
 }
@@ -2488,6 +2488,24 @@ NJS_MATERIAL* Specular2[] = {
 	&material_8D4559820F8F7A3DB37[3],
 	&material_8D455981F1CDDAA19D0[0],
 	&material_8D455981F1CDDAA19D0[1],
+	&matlist_8D4DE9097B6234C75B7[0],
+	&matlist_8D4DE9097B6234C75B7[1],
+	&matlist_8D4DE9097B6234C75B7[2],
+	&matlist_8D4DE90567F26F882CF[0],
+	&matlist_8D4DE90567F26F882CF[1],
+	&matlist_8D4DE90567F26F882CF[2],
+	&matlist_8D4DE8D511976FF28BD[0],
+	&matlist_8D4DE8D511976FF28BD[1],
+	&matlist_8D4DE8D511976FF28BD[2],
+	&matlist_8D4DE861F87B4796B93[0],
+	&matlist_8D4DE861F87B4796B93[1],
+	&matlist_8D4DE861F87B4796B93[2],
+	&matlist_8D4DE8523C17CC6772D[0],
+	&matlist_8D4DE8523C17CC6772D[1],
+	&matlist_8D4DE8523C17CC6772D[2],
+	&matlist_8D4DE83B3002EF45102[0],
+	&matlist_8D4DE83B3002EF45102[1],
+	&matlist_8D4DE83B3002EF45102[2],
 
 	//Knuckles Material Fixes
 	&material_8D49E330C443CA61291[0],
@@ -2635,6 +2653,8 @@ bool ForceCharSpec3(NJS_MATERIAL* material, Uint32 flags)
 extern "C" __declspec(dllexport) void __cdecl Init(const char *path, const HelperFunctions &helperFunctions)
 {
 	HMODULE handle = GetModuleHandle(L"CHRMODELS_orig");
+	HMODULE adv02dll = GetModuleHandle(L"ADV02MODELS");
+	HMODULE adv03dll = GetModuleHandle(L"ADV03MODELS");
 
 	//Lantern API Export
 	HMODULE Lantern = GetModuleHandle(L"sadx-dc-lighting");
@@ -3058,6 +3078,10 @@ extern "C" __declspec(dllexport) void __cdecl Init(const char *path, const Helpe
 	___MILES_MODELS[14] = &attach_0046DFE8;
 	___MILES_MOTIONS[0] = &TailsCinematicHead;
 
+	//Tails Upgrades
+	NJS_OBJECT **___ADV03_OBJECTS = (NJS_OBJECT **)GetProcAddress(adv03dll, "___ADV03_OBJECTS");
+	___ADV03_OBJECTS[31] = &WarriorFeather_Upgrade;
+
 	//Knuckles
 	//ResizeTextureList((NJS_TEXLIST *)0x0091BD20, 22);
 	NJS_OBJECT **___KNUCKLES_OBJECTS = (NJS_OBJECT **)GetProcAddress(handle, "___KNUCKLES_OBJECTS");
@@ -3253,6 +3277,11 @@ extern "C" __declspec(dllexport) void __cdecl Init(const char *path, const Helpe
 	___KNUCKLES_MODELS[21] = &attach_0032D430;
 	___KNUCKLES_MODELS[22] = &attach_0032CCA8;
 	___KNUCKLES_MOTIONS[0] = &KnucklesEV;
+
+	//Knuckles Upgrades
+	NJS_OBJECT **___ADV02_OBJECTS = (NJS_OBJECT **)GetProcAddress(adv02dll, "___ADV02_OBJECTS");
+	___ADV02_OBJECTS[116] = &FightGloves_Upgrade;
+	___ADV02_OBJECTS[117] = &ShovelClaw_Upgrade;
 
 	//Amy
 	//ResizeTextureList((NJS_TEXLIST *)0x0091C800, 53);

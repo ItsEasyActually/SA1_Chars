@@ -22,7 +22,7 @@
     <ProjectGuid>{411212FE-06D2-4788-889B-28D4F587074E}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>SA1_Chars</RootNamespace>
-    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>7.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -34,7 +34,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v141_xp</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -114,7 +114,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;SA1_CHARS_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;_CRT_SECURE_NO_WARNINGS;SA1_CHARS_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
     </ClCompile>
     <Link>
@@ -122,7 +122,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>sadx-dc-lighting.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>ModLoaderCommon.lib;sadx-dc-lighting.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <DelayLoadDLLs>sadx-dc-lighting.dll</DelayLoadDLLs>
     </Link>
   </ItemDefinitionGroup>
@@ -156,14 +156,15 @@
     <ClInclude Include="EV_TR1.h" />
     <ClInclude Include="EV_TR2BEFORE.h" />
     <ClInclude Include="EV_TR2CHANGE.h" />
+    <ClInclude Include="IniFile.hpp" />
     <ClInclude Include="Knuckles.h" />
     <ClInclude Include="lanternapi.h" />
-    <ClInclude Include="ModLoader\MemAccess.h" />
+    <ClInclude Include="MemAccess.h" />
     <ClInclude Include="ninja.h" />
-    <ClInclude Include="SADXModLoader\SADXEnums.h" />
-    <ClInclude Include="SADXModLoader\SADXFunctions.h" />
-    <ClInclude Include="SADXModLoader\SADXStructs.h" />
-    <ClInclude Include="SADXModLoader\SADXVariables.h" />
+    <ClInclude Include="SADXEnums.h" />
+    <ClInclude Include="SADXFunctions.h" />
+    <ClInclude Include="SADXStructs.h" />
+    <ClInclude Include="SADXVariables.h" />
     <ClInclude Include="SkyChase.h" />
     <ClInclude Include="OBJECT_SonicPointingFinger.h" />
     <ClInclude Include="SADXModLoader.h" />

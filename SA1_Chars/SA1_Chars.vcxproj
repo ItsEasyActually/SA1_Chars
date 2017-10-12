@@ -160,6 +160,7 @@
     <ClInclude Include="Knuckles.h" />
     <ClInclude Include="lanternapi.h" />
     <ClInclude Include="MemAccess.h" />
+    <ClInclude Include="MetalSonic.h" />
     <ClInclude Include="ninja.h" />
     <ClInclude Include="SADXEnums.h" />
     <ClInclude Include="SADXFunctions.h" />

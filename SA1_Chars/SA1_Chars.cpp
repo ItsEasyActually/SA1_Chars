@@ -15,6 +15,7 @@
 #include "Tikal.h"
 #include "Eggman.h"
 #include "lanternapi.h"
+#include "MetalSonic.h"
 #include <cmath>
 
 static bool SaturnSkyChase = true;
@@ -57,6 +58,7 @@ DataArray(WeldInfo, NPCKnucklesWeldInfo, 0x03C53038, 0x19);
 DataArray(WeldInfo, AmyWeldInfo, 0x03C546D0, 0x12);
 DataArray(WeldInfo, NPCAmyWeldInfo, 0x03C54EE0, 0x0D);
 DataArray(WeldInfo, BigWeldInfo, 0x03C55500, 0x11);
+DataArray(WeldInfo, MetalSonicWeldInfo, 0x03C55D68, 8);
 
 DataArray(EntityData2*, EntityData2Ptrs, 0x03B36DD0, 8);
 FunctionPointer(void, sub_4083D0, (NJS_ACTION *a1, float a2, int a3), 0x004083D0);
@@ -381,7 +383,7 @@ void __cdecl InitSonicWeldInfo_mod()
 	NJS_OBJECT *v4; // edi@1
 	NJS_OBJECT *v5; // eax@1
 
-					//The following welds are for Sonic
+	//The following welds are for Sonic
 	SonicWeldInfo[0].BaseModel = SONIC_OBJECTS[0];
 	SonicWeldInfo[0].ModelA = SONIC_OBJECTS[1];
 	SonicWeldInfo[0].ModelB = SONIC_OBJECTS[2];
@@ -2308,6 +2310,75 @@ void __cdecl InitBigWeldInfo_mod()
 	BigWeldInfo[16].VertIndexes = 0;
 }
 
+void __cdecl InitMetalSonicWeldInfo()
+{
+	NJS_OBJECT *v0; // esi@1
+
+	MetalSonicWeldInfo[0].BaseModel = *SONIC_OBJECTS;
+	MetalSonicWeldInfo[0].ModelA = SONIC_OBJECTS[5];
+	MetalSonicWeldInfo[0].ModelB = 0;
+	MetalSonicWeldInfo[0].WeldType = 4;
+	MetalSonicWeldInfo[0].anonymous_5 = 0;
+	MetalSonicWeldInfo[0].VertexBuffer = 0;
+	MetalSonicWeldInfo[0].VertIndexes = 0;
+	MetalSonicWeldInfo[0].VertexPairCount = 2;
+	MetalSonicWeldInfo[1].BaseModel = *SONIC_OBJECTS;
+	v0 = SONIC_OBJECTS[11];
+	MetalSonicWeldInfo[1].VertexPairCount = 2;
+	MetalSonicWeldInfo[1].ModelA = v0;
+	MetalSonicWeldInfo[1].ModelB = 0;
+	MetalSonicWeldInfo[1].WeldType = 5;
+	MetalSonicWeldInfo[1].anonymous_5 = 0;
+	MetalSonicWeldInfo[1].VertexBuffer = 0;
+	MetalSonicWeldInfo[1].VertIndexes = 0;
+	MetalSonicWeldInfo[2].BaseModel = *SONIC_OBJECTS;
+	MetalSonicWeldInfo[2].ModelA = SONIC_OBJECTS[59];
+	MetalSonicWeldInfo[2].ModelB = 0;
+	MetalSonicWeldInfo[2].VertexPairCount = 0;
+	MetalSonicWeldInfo[2].WeldType = 7;
+	MetalSonicWeldInfo[2].anonymous_5 = 0;
+	MetalSonicWeldInfo[2].VertexBuffer = 0;
+	MetalSonicWeldInfo[2].VertIndexes = 0;
+	MetalSonicWeldInfo[3].BaseModel = *SONIC_OBJECTS;
+	MetalSonicWeldInfo[3].ModelA = SONIC_OBJECTS[61];
+	MetalSonicWeldInfo[3].ModelB = 0;
+	MetalSonicWeldInfo[3].VertexPairCount = 0;
+	MetalSonicWeldInfo[3].anonymous_5 = 0;
+	MetalSonicWeldInfo[3].VertexBuffer = 0;
+	MetalSonicWeldInfo[3].VertIndexes = 0;
+	MetalSonicWeldInfo[3].WeldType = 6;
+	MetalSonicWeldInfo[4].BaseModel = *SONIC_OBJECTS;
+	MetalSonicWeldInfo[4].ModelA = SONIC_OBJECTS[16];
+	MetalSonicWeldInfo[4].ModelB = 0;
+	MetalSonicWeldInfo[4].VertexPairCount = 0;
+	MetalSonicWeldInfo[4].WeldType = 6;
+	MetalSonicWeldInfo[4].anonymous_5 = 0;
+	MetalSonicWeldInfo[4].VertexBuffer = 0;
+	MetalSonicWeldInfo[4].VertIndexes = 0;
+	MetalSonicWeldInfo[5].BaseModel = *SONIC_OBJECTS;
+	MetalSonicWeldInfo[5].ModelA = SONIC_OBJECTS[21];
+	MetalSonicWeldInfo[5].ModelB = 0;
+	MetalSonicWeldInfo[5].VertexPairCount = 0;
+	MetalSonicWeldInfo[5].WeldType = 7;
+	MetalSonicWeldInfo[5].anonymous_5 = 0;
+	MetalSonicWeldInfo[5].VertexBuffer = 0;
+	MetalSonicWeldInfo[5].VertIndexes = 0;
+	MetalSonicWeldInfo[6].BaseModel = *SONIC_OBJECTS;
+	MetalSonicWeldInfo[6].ModelA = SONIC_OBJECTS[45];
+	MetalSonicWeldInfo[6].ModelB = 0;
+	MetalSonicWeldInfo[6].VertexPairCount = 0;
+	MetalSonicWeldInfo[6].WeldType = 8;
+	MetalSonicWeldInfo[6].anonymous_5 = 0;
+	MetalSonicWeldInfo[6].VertexBuffer = 0;
+	MetalSonicWeldInfo[7].ModelA = 0;
+	MetalSonicWeldInfo[7].ModelB = 0;
+	MetalSonicWeldInfo[7].VertexPairCount = 0;
+	MetalSonicWeldInfo[7].VertexBuffer = 0;
+	MetalSonicWeldInfo[6].VertIndexes = 0;
+	MetalSonicWeldInfo[7].BaseModel = 0;
+	MetalSonicWeldInfo[7].VertIndexes = 0;
+}
+
 //Lantern API Fixes
 NJS_MATERIAL* Specular0[] = {
 	//Gamma Material Fixes
@@ -2698,6 +2769,8 @@ extern "C" __declspec(dllexport) void __cdecl Init(const char *path, const Helpe
 		material_register(Specular3, LengthOfArray(Specular3), &ForceCharSpec3);
 	}
 
+	CopyFileA((std::string(path) + "\\default.ini").c_str(), (std::string(path) + "\\config.ini").c_str(), true);
+
 	//Ini Configuration
 	const IniFile *config = new IniFile(std::string(path) + "\\config.ini");
 	SaturnSkyChase = config->getBool("", "EnableSaturnSkyChase", true);
@@ -2725,6 +2798,11 @@ extern "C" __declspec(dllexport) void __cdecl Init(const char *path, const Helpe
 	WriteJump((void*)0x007CCB90, InitAmyWeldInfo_mod);
 	WriteJump((void*)0x007CD000, InitNPCAmyWeldInfo_mod);
 	WriteJump((void*)0x007CE860, InitBigWeldInfo_mod);
+	WriteJump((void*)0x007D18F0, InitMetalSonicWeldInfo);
+	WriteData<2>((void*)0x004916A5, 0x90u);
+	WriteData<1>((void*)0x00495B3A, 12);
+	WriteData<1>((void*)0x00495B10, 12);
+	WriteData<1>((void*)0x00495BEB, 146);
 
 	//Sonic Data for DLL Export
 	//ResizeTextureList((NJS_TEXLIST *)0x91CB58, 28);
@@ -2800,7 +2878,11 @@ extern "C" __declspec(dllexport) void __cdecl Init(const char *path, const Helpe
 	___SONIC_OBJECTS[65] = &object_00585EB4;
 	___SONIC_OBJECTS[66] = &object_005729CC;
 	___SONIC_OBJECTS[67] = &object_0057BC44;
+	___SONIC_OBJECTS[68] = &object_00591068;
+	___SONIC_OBJECTS[69] = &object_0059C234;
+	___SONIC_OBJECTS[70] = &object_0059E254;
 	___SONIC_ACTIONS[0]->object = &object_0056AF50;
+	//___SONIC_ACTIONS[0]->motion = &___SONIC_ACTIONS_0;
 	___SONIC_ACTIONS[1]->object = &object_0056AF50;
 	___SONIC_ACTIONS[2]->object = &object_0056AF50;
 	___SONIC_ACTIONS[3]->object = &object_0056AF50;

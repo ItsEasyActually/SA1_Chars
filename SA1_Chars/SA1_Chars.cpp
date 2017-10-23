@@ -2379,6 +2379,78 @@ void __cdecl InitMetalSonicWeldInfo()
 	MetalSonicWeldInfo[7].VertIndexes = 0;
 }
 
+void __cdecl Sonic_Run1Ani_mod(CharObj2 *a1)
+{
+	ObjectMaster *v1; // eax@3
+
+	if (MetalSonicFlag)
+	{
+		if (a1->AnimationThing.Index != 12)
+		{
+			v1 = LoadObject(LoadObj_Data1, 3, MetalSonic_AfterImages_Main);
+			if (v1)
+			{
+				v1->Data1->Object = (NJS_OBJECT*)5;
+			}
+		}
+		a1->AnimationThing.Index = 12;
+	}
+	else
+	{
+		a1->AnimationThing.Index = 12;
+	}
+}
+
+static void __declspec(naked) Sonic_Run1Ani_asm()
+{
+	__asm
+	{
+		push esi // a1
+
+				 // Call your __cdecl function here:
+				 call Sonic_Run1Ani_mod
+
+				 pop esi // a1
+				 retn
+	}
+}
+
+void __cdecl Sonic_Run2Ani_mod(CharObj2 *a1)
+{
+	ObjectMaster *v1; // eax@3
+
+	if (MetalSonicFlag)
+	{
+		if (a1->AnimationThing.Index != 146)
+		{
+			v1 = LoadObject(LoadObj_Data1, 3, MetalSonic_AfterImages_Main);
+			if (v1)
+			{
+				v1->Data1->Object = (NJS_OBJECT*)10;
+			}
+		}
+		a1->AnimationThing.Index = 146;
+	}
+	else
+	{
+		a1->AnimationThing.Index = 13;
+	}
+}
+
+static void __declspec(naked) Sonic_Run2Ani_asm()
+{
+	__asm
+	{
+		push esi // a1
+
+				 // Call your __cdecl function here:
+				 call Sonic_Run2Ani_mod
+
+				 pop esi // a1
+				 retn
+	}
+}
+
 //Lantern API Fixes
 NJS_MATERIAL* Specular0[] = {
 	//Gamma Material Fixes
@@ -2800,9 +2872,8 @@ extern "C" __declspec(dllexport) void __cdecl Init(const char *path, const Helpe
 	WriteJump((void*)0x007CE860, InitBigWeldInfo_mod);
 	WriteJump((void*)0x007D18F0, InitMetalSonicWeldInfo);
 	WriteData<2>((void*)0x004916A5, 0x90u);
-	WriteData<1>((void*)0x00495B3A, 12);
-	WriteData<1>((void*)0x00495B10, 12);
-	WriteData<1>((void*)0x00495BEB, 146);
+	WriteJump((void*)0x00495BE0, Sonic_Run2Ani_asm);
+	WriteJump((void*)0x00495B00, Sonic_Run1Ani_asm);
 
 	//Sonic Data for DLL Export
 	//ResizeTextureList((NJS_TEXLIST *)0x91CB58, 28);
@@ -2882,7 +2953,6 @@ extern "C" __declspec(dllexport) void __cdecl Init(const char *path, const Helpe
 	___SONIC_OBJECTS[69] = &object_0059C234;
 	___SONIC_OBJECTS[70] = &object_0059E254;
 	___SONIC_ACTIONS[0]->object = &object_0056AF50;
-	//___SONIC_ACTIONS[0]->motion = &___SONIC_ACTIONS_0;
 	___SONIC_ACTIONS[1]->object = &object_0056AF50;
 	___SONIC_ACTIONS[2]->object = &object_0056AF50;
 	___SONIC_ACTIONS[3]->object = &object_0056AF50;

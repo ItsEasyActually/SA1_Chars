@@ -21,6 +21,10 @@
 static bool SaturnSkyChase = true;
 static bool LSShoeMorphs = true;
 static bool StretchyShoe = true;
+static bool SwapMSHover = true;
+static bool MSAlwaysHover = true;
+static bool EnableCDMS = true;
+char CDMetalSonic[] = "CDMETALSONIC";
 
 static NJS_OBJECT **SONIC_OBJECTS = nullptr;
 static NJS_ACTION **SONIC_ACTIONS = nullptr;
@@ -48,6 +52,7 @@ static NJS_MODEL_SADX **BIG_MODELS = nullptr;
 static NJS_MOTION **BIG_MOTIONS = nullptr;
 
 DataPointer(int, EVENT_ID, 0x03B2C570);
+DataPointer(void*, EV_MainThread_ptr, 0x3B2C578);
 
 DataArray(WeldInfo, SonicWeldInfo, 0x03C55E28, 0x25);
 DataArray(WeldInfo, NPCSonicWeldInfo, 0x03C56B50, 0x10);
@@ -65,6 +70,8 @@ FunctionPointer(void, sub_4083D0, (NJS_ACTION *a1, float a2, int a3), 0x004083D0
 DataArray(float, TailsMatrix1, 0x03C49CF8, 16);
 DataArray(float, TailsMatrix2, 0x03C49C60, 16);
 DataArray(AnimData, TailsAnimData, 0x03C49D90, 136);
+
+
 
 //Replacement Functions
 void __cdecl Sonic_MorphStretchyFeet_c(CharObj2* a1)
@@ -2401,7 +2408,7 @@ void __cdecl Sonic_Run1Ani_mod(CharObj2 *a1)
 	}
 }
 
-static void __declspec(naked) Sonic_Run1Ani_asm()
+static void __declspec(naked) Sonic_Run1Ani_swap()
 {
 	__asm
 	{
@@ -2437,7 +2444,7 @@ void __cdecl Sonic_Run2Ani_mod(CharObj2 *a1)
 	}
 }
 
-static void __declspec(naked) Sonic_Run2Ani_asm()
+static void __declspec(naked) Sonic_Run2Ani_swap()
 {
 	__asm
 	{
@@ -2445,6 +2452,42 @@ static void __declspec(naked) Sonic_Run2Ani_asm()
 
 				 // Call your __cdecl function here:
 				 call Sonic_Run2Ani_mod
+
+				 pop esi // a1
+				 retn
+	}
+}
+
+void __cdecl Sonic_Run1Ani_orig(CharObj2 *a1)
+{
+	ObjectMaster *v1; // eax@3
+
+	if (MetalSonicFlag)
+	{
+		if (a1->AnimationThing.Index != 146)
+		{
+			v1 = LoadObject(LoadObj_Data1, 3, MetalSonic_AfterImages_Main);
+			if (v1)
+			{
+				v1->Data1->Object = (NJS_OBJECT*)5;
+			}
+		}
+		a1->AnimationThing.Index = 146;
+	}
+	else
+	{
+		a1->AnimationThing.Index = 12;
+	}
+}
+
+static void __declspec(naked) Sonic_Run1Ani_origasm()
+{
+	__asm
+	{
+		push esi // a1
+
+				 // Call your __cdecl function here:
+				 call Sonic_Run1Ani_orig
 
 				 pop esi // a1
 				 retn
@@ -2478,6 +2521,25 @@ NJS_MATERIAL* Specular0[] = {
 	&material_8D4CAF2D8C00C49DCD9[0],
 	&material_8D4CAF2DCEC878E36AD[0],
 	&material_8D4CAF2DF0647AE1D44[0],
+
+	//Tornado Destroyed
+	&matlist_0251D088[30],
+	&matlist_02518540[2],
+
+	//Tornado 2 (EV Sky Chase)
+	&material_8D4E896FEA3542F8997[2],
+	&material_8D4E896FEA3542F8997[3],
+	&material_8D4E89C4BBB70AD861C[3],
+
+	//Tornado 2 (Saturn Sky Chase)
+	&matlist_000E58D0[2],
+	&matlist_000E3994[2],
+	&matlist_000E3994[3],
+
+	//Tornado 2 Transformation
+	&matlist_024535B8[2],
+	&matlist_024535B8[4],
+	&matlist_0244A340[4],
 };
 
 NJS_MATERIAL* Specular1[] = {
@@ -2509,6 +2571,50 @@ NJS_MATERIAL* Specular1[] = {
 	&matlist_001B1474[2],
 	&matlist_001B1474[3],
 	&matlist_001B1474[4],
+	&matlist_001B197C[0],
+	&matlist_001B197C[1],
+	&matlist_001B197C[2],
+	&matlist_001B197C[3],
+	&matlist_001B197C[4],
+	&matlist_001B1474[0],
+	&matlist_001B1474[1],
+	&matlist_001B1474[2],
+	&matlist_001B1474[3],
+	&matlist_001B1474[4],
+
+	//Sky Chase
+	//EV Tornado 1
+	&matlist_024ADD58[1],
+	&matlist_024ADD58[15],
+	&matlist_024ADD58[22],
+	&matlist_024AD118[0],
+	&matlist_024AD118[1],
+
+	//Broken Tornado
+	&matlist_0251DAB0[1],
+	&matlist_0251DAB0[14],
+	&matlist_0251DAB0[15],
+	&matlist_0251DAB0[23],
+	&matlist_0251DAB0[24],
+	&matlist_0251C540[14],
+	&matlist_0251C540[15],
+	&matlist_0251C540[23],
+	&matlist_0251C540[24],
+
+	//Saturn Tornado 1
+	&matlist_0005CE64[1],
+	&matlist_0005CE64[15],
+	&matlist_0005CE64[22],
+	&matlist_0005C240[0],
+	&matlist_0005C240[1],
+
+	//Tornado 2 (Saturn Sky Chase)
+	&matlist_000E0A5C[0],
+	&matlist_000E0A5C[1],
+
+	//Tornado 2 Changed (Event)
+	&material_8D4714ACE7FAE0BE986[0],
+	&material_8D4714ACE7FAE0BE986[1],
 };
 
 NJS_MATERIAL* Specular2[] = {
@@ -2781,6 +2887,47 @@ NJS_MATERIAL* Specular2[] = {
 	&material_8D455948E41855F1077[0],
 	&material_8D455948E41855F1077[1],
 	&material_8D455948E41855F1077[2],
+
+	//Event Stuff
+	//TR1 Fixes
+	&material_8D47043946447123A04[0],
+	&material_8D47043946447123A04[1],
+	&material_8D470436E94C4D7B904[0],
+	&material_8D470436E94C4D7B904[1],
+	&material_8D47043971B0CCE5880[0],
+	&material_8D470436BBEDDE61BF3[0],
+	&material_8D470435EF9F1294B1B[0],
+	&material_8D470435EF9F1294B1B[1],
+	&material_8D47043618B05E86AB4[0],
+	&material_8D4704399D0E827EA21[0],
+	&material_8D47043A4ADACCF377B[0],
+	&material_8D47043A4ADACCF377B[1],
+	&material_8D47043A886889A598E[0],
+	&material_8D470437145BE1E4FE8[0],
+	&material_8D4704374092E394F8D[0],
+	&material_8D4704374092E394F8D[1],
+	&material_8D47043770BCB221B23[0],
+	&material_8D470435C319EFA501F[0],
+	&material_8D470435C319EFA501F[1],
+	&material_8D470435C319EFA501F[2],
+	&material_8D470435C319EFA501F[3],
+	&material_8D470435C319EFA501F[4],
+	&material_8D4704318652107447A[0],
+	&material_8D4704318652107447A[1],
+	&material_8D4704337D27B04548F[0],
+	&material_8D47043362D29494675[0],
+	&material_8D47043362D29494675[1],
+	&material_8D47043343F5BCEA273[0],
+	&material_8D47043209B25BE0FC5[0],
+	&material_8D470431E10A0C79291[0],
+	&material_8D470431E10A0C79291[1],
+	&material_8D470431BA2F30D48B4[0],
+	&material_8D4704315E91B3786D4[0],
+	&material_8D4704315E91B3786D4[1],
+	&material_8D4704315E91B3786D4[2],
+	&material_8D4704315E91B3786D4[3],
+	&material_8D47042EA72D43C6BC0[0],
+	&material_8D47042EA72D43C6BC0[1],
 };
 
 NJS_MATERIAL* Specular3[] = {
@@ -2790,6 +2937,78 @@ NJS_MATERIAL* Specular3[] = {
 	//Gamma Material Fixes
 	materials_001FD8E8[0],
 
+	//Event
+	//TR1 Model
+	&material_8D47042E09EA9D5D092[0],
+	&material_8D47042E09EA9D5D092[1],
+	&material_8D47042E09EA9D5D092[2],
+	&material_8D47042E09EA9D5D092[3],
+	&material_8D47042E09EA9D5D092[4],
+	&material_8D47042E09EA9D5D092[5],
+	&material_8D47042E09EA9D5D092[6],
+	&material_8D47042E09EA9D5D092[7],
+	&material_8D47042E09EA9D5D092[8],
+	&material_8D47042E09EA9D5D092[9],
+	&material_8D47042E09EA9D5D092[10],
+	&material_8D47042E09EA9D5D092[11],
+	&material_8D47042E09EA9D5D092[12],
+	&material_8D47042E09EA9D5D092[13],
+	&material_8D47042E09EA9D5D092[14],
+	&material_8D47042E09EA9D5D092[15],
+	&material_8D47042E09EA9D5D092[16],
+	&material_8D47042E09EA9D5D092[17],
+	&material_8D47042E09EA9D5D092[18],
+	&material_8D47042E09EA9D5D092[19],
+	&material_8D47042E09EA9D5D092[20],
+	&material_8D47042E09EA9D5D092[21],
+	&material_8D47042E09EA9D5D092[22],
+	&material_8D47042E09EA9D5D092[23],
+	&material_8D47042E09EA9D5D092[24],
+	&material_8D47042E09EA9D5D092[25],
+	&material_8D47042E09EA9D5D092[26],
+	&material_8D47042E09EA9D5D092[27],
+	&material_8D47042E09EA9D5D092[28],
+	&material_8D47042E09EA9D5D092[29],
+	&material_8D47042E09EA9D5D092[30],
+	&material_8D47042EF73446CA83B[0],
+	&material_8D47042EF73446CA83B[1],
+	&material_8D4704368516FAD610A[0],
+	&material_8D4704368516FAD610A[1],
+	&material_8D4704368516FAD610A[2],
+	&material_8D4704368516FAD610A[3],
+	&material_8D4704368516FAD610A[4],
+	&material_8D4704365E4FA77C9AF[0],
+	&material_8D4704365E4FA77C9AF[1],
+	&material_8D4704365E4FA77C9AF[2],
+	&material_8D4704365E4FA77C9AF[3],
+	&material_8D4704365E4FA77C9AF[4],
+
+	//Tornado 2 (Event)
+	&matlist_00016068[0],
+	&matlist_00016068[1],
+	&matlist_000159C8[0],
+};
+
+NJS_MATERIAL* TailsFixesRed[] = {
+	&matlist_02F37A50[9],
+};
+
+NJS_MATERIAL* TailsFixesGreen[] = {
+	&material_8D473BAA53BFE1CA22F[1],
+	&material_8D473BAA6CA9332C47A[1],
+	&material_8D473BA91E15540678B[1],
+	&material_8D473BA9380B3752C10[1],
+};
+
+NJS_MATERIAL* TailsFixesLBlue[] = {
+	&matlist_02F37A50[0],
+	&matlist_02F37A50[3],
+	&matlist_02F37A50[5],
+	&matlist_02F37A50[9],
+	&matlist_02F36AE8[0],
+	&matlist_02F36AE8[1],
+	&matlist_02F36AE8[2],
+	&matlist_02F36AE8[3],
 };
 
 bool ForceCharSpec0(NJS_MATERIAL* material, Uint32 flags)
@@ -2839,6 +3058,18 @@ extern "C" __declspec(dllexport) void __cdecl Init(const char *path, const Helpe
 		material_register(Specular1, LengthOfArray(Specular1), &ForceCharSpec1);
 		material_register(Specular2, LengthOfArray(Specular2), &ForceCharSpec2);
 		material_register(Specular3, LengthOfArray(Specular3), &ForceCharSpec3);
+		if (EV_MainThread_ptr != nullptr && EVENT_ID == 3)
+		{
+			material_register(TailsFixesRed, LengthOfArray(TailsFixesRed), &ForceCharSpec0);
+		}
+		//else
+		//{
+			//material_register(TailsFixesLBlue, LengthOfArray(TailsFixesLBlue), &ForceCharSpec3);
+		//}
+		if (TailsAI_ptr != nullptr)
+		{
+			material_register(TailsFixesGreen, LengthOfArray(TailsFixesGreen), &ForceCharSpec1);
+		}
 	}
 
 	CopyFileA((std::string(path) + "\\default.ini").c_str(), (std::string(path) + "\\config.ini").c_str(), true);
@@ -2848,6 +3079,9 @@ extern "C" __declspec(dllexport) void __cdecl Init(const char *path, const Helpe
 	SaturnSkyChase = config->getBool("", "EnableSaturnSkyChase", true);
 	LSShoeMorphs = config->getBool("", "EnableLightSpeedShoeMorphs", true);
 	StretchyShoe = config->getBool("", "DisableStretchyShoes", true);
+	SwapMSHover = config->getBool("", "SwapMetalSonicHover", true);
+	MSAlwaysHover = config->getBool("", "MetalSonicAlwaysHovers", true);
+	EnableCDMS = config->getBool("", "EnableCDMetalSonic", true);
 	delete config;
 
 	//Functions
@@ -2859,21 +3093,17 @@ extern "C" __declspec(dllexport) void __cdecl Init(const char *path, const Helpe
 	{
 		WriteData((char*)0x00493500, (char)0xC3);
 	}
-	WriteJump((void*)0x007D0B50, InitSonicWeldInfo_mod);
-	WriteJump((void*)0x007D14D0, InitNPCSonicWeldInfo_mod);
-	WriteJump((void*)0x0045B840, Tails_Jiggle_mod);
-	WriteJump((void*)0x007C6D80, InitTailsWeldInfo_mod);
-	WriteJump((void*)0x007C7560, InitNPCTailsWeldInfo_mod);
-	WriteJump((void*)0x007C94D0, InitKnucklesWeldInfo_mod);
-	WriteJump((void*)0x007C9C80, InitNPCKnucklesWeldInfo_mod);
-	WriteJump((void*)0x004726A0, Knuckles_Upgrades_mod);
-	WriteJump((void*)0x007CCB90, InitAmyWeldInfo_mod);
-	WriteJump((void*)0x007CD000, InitNPCAmyWeldInfo_mod);
-	WriteJump((void*)0x007CE860, InitBigWeldInfo_mod);
-	WriteJump((void*)0x007D18F0, InitMetalSonicWeldInfo);
 	WriteData<2>((void*)0x004916A5, 0x90u);
-	WriteJump((void*)0x00495BE0, Sonic_Run2Ani_asm);
-	WriteJump((void*)0x00495B00, Sonic_Run1Ani_asm);
+	if (SwapMSHover)
+	{
+		WriteJump((void*)0x00495BE0, Sonic_Run2Ani_swap);
+		WriteJump((void*)0x00495B00, Sonic_Run1Ani_swap);
+	}
+	if (MSAlwaysHover)
+	{
+		WriteJump((void*)0x00495BE0, Sonic_Run2Ani_swap);
+		WriteJump((void*)0x00495B00, Sonic_Run1Ani_origasm);
+	}
 
 	//Sonic Data for DLL Export
 	//ResizeTextureList((NJS_TEXLIST *)0x91CB58, 28);
@@ -2949,9 +3179,14 @@ extern "C" __declspec(dllexport) void __cdecl Init(const char *path, const Helpe
 	___SONIC_OBJECTS[65] = &object_00585EB4;
 	___SONIC_OBJECTS[66] = &object_005729CC;
 	___SONIC_OBJECTS[67] = &object_0057BC44;
-	___SONIC_OBJECTS[68] = &object_00591068;
-	___SONIC_OBJECTS[69] = &object_0059C234;
-	___SONIC_OBJECTS[70] = &object_0059E254;
+	if (EnableCDMS)
+	{
+		___SONIC_OBJECTS[68] = &object_00591068;
+		___SONIC_OBJECTS[69] = &object_0059C234;
+		___SONIC_OBJECTS[70] = &object_0059E254;
+		WriteData((char**)0x0090ED44, CDMetalSonic);
+		WriteJump((void*)0x007D18F0, InitMetalSonicWeldInfo);
+	}
 	___SONIC_ACTIONS[0]->object = &object_0056AF50;
 	___SONIC_ACTIONS[1]->object = &object_0056AF50;
 	___SONIC_ACTIONS[2]->object = &object_0056AF50;
@@ -3091,6 +3326,8 @@ extern "C" __declspec(dllexport) void __cdecl Init(const char *path, const Helpe
 	___SONIC_MODELS[8] = &attach_00569568;
 	___SONIC_MODELS[9] = &attach_00579C68;
 	___SONIC_MOTIONS[0] = &CinematicHead;
+	WriteJump((void*)0x007D0B50, InitSonicWeldInfo_mod);
+	WriteJump((void*)0x007D14D0, InitNPCSonicWeldInfo_mod);
 
 	//Tails Model Data
 	//ResizeTextureList((NJS_TEXLIST *)0x91A9C8, 24);
@@ -3289,6 +3526,9 @@ extern "C" __declspec(dllexport) void __cdecl Init(const char *path, const Helpe
 	___MILES_MODELS[14] = &attach_0046DFE8;
 	___MILES_MOTIONS[0] = &TailsCinematicHead;
 	WriteData((NJS_OBJECT**)0x7D2186, &JetAnklet);
+	WriteJump((void*)0x0045B840, Tails_Jiggle_mod);
+	WriteJump((void*)0x007C6D80, InitTailsWeldInfo_mod);
+	WriteJump((void*)0x007C7560, InitNPCTailsWeldInfo_mod);
 
 	//Tails Upgrades
 	NJS_OBJECT **___ADV03_OBJECTS = (NJS_OBJECT **)GetProcAddress(adv03dll, "___ADV03_OBJECTS");
@@ -3489,6 +3729,9 @@ extern "C" __declspec(dllexport) void __cdecl Init(const char *path, const Helpe
 	___KNUCKLES_MODELS[21] = &attach_0032D430;
 	___KNUCKLES_MODELS[22] = &attach_0032CCA8;
 	___KNUCKLES_MOTIONS[0] = &KnucklesEV;
+	WriteJump((void*)0x007C94D0, InitKnucklesWeldInfo_mod);
+	WriteJump((void*)0x007C9C80, InitNPCKnucklesWeldInfo_mod);
+	WriteJump((void*)0x004726A0, Knuckles_Upgrades_mod);
 
 	//Knuckles Upgrades
 	NJS_OBJECT **___ADV02_OBJECTS = (NJS_OBJECT **)GetProcAddress(adv02dll, "___ADV02_OBJECTS");
@@ -3628,6 +3871,8 @@ extern "C" __declspec(dllexport) void __cdecl Init(const char *path, const Helpe
 	___AMY_MODELS[4] = &attach_00018A90;
 	___AMY_MOTIONS[0] = &AmyEVHead_Motion;
 	WriteData((NJS_OBJECT**)0x009858A4, &object_00584EE0);
+	WriteJump((void*)0x007CCB90, InitAmyWeldInfo_mod);
+	WriteJump((void*)0x007CD000, InitNPCAmyWeldInfo_mod);
 
 	//Big
 	NJS_OBJECT **___BIG_OBJECTS = (NJS_OBJECT **)GetProcAddress(handle, "___BIG_OBJECTS");
@@ -3752,6 +3997,7 @@ extern "C" __declspec(dllexport) void __cdecl Init(const char *path, const Helpe
 	___BIG_MODELS[2] = &attach_0011F358;
 	___BIG_MODELS[3] = &attach_001291A8;
 	___BIG_MOTIONS[0] = &BigEV_Motion;
+	WriteJump((void*)0x007CE860, InitBigWeldInfo_mod);
 
 	//Gamma
 	materials_00200D48[7]->attrflags |= NJD_FLAG_IGNORE_LIGHT;
@@ -3763,46 +4009,47 @@ extern "C" __declspec(dllexport) void __cdecl Init(const char *path, const Helpe
 	materials_0020B9B8[3]->attrflags |= NJD_FLAG_IGNORE_LIGHT;
 
 	//Tikal
-	//WriteData((NJS_OBJECT**)0x008F46BC, &Tikal_Object);
-	//WriteData((NJS_OBJECT**)0x008F83F4, &Tikal_Object);
-	//WriteData((NJS_OBJECT**)0x008FC8DC, &Tikal_Object);
-	//WriteData((NJS_OBJECT**)0x00900814, &Tikal_Object);
-	//WriteData((NJS_OBJECT**)0x02C81AA4, &Tikal_Object);
-	//WriteData((NJS_OBJECT**)0x02C8B13C, &Tikal_Object);
-	//WriteData((NJS_OBJECT**)0x02D4B2DC, &Tikal_Object);
-	//WriteData((NJS_OBJECT**)0x02D53284, &Tikal_Object);
-	//WriteData((NJS_OBJECT**)0x02D5C1FC, &Tikal_Object);
-	//WriteData((NJS_OBJECT**)0x02D61174, &Tikal_Object);
-	//WriteData((NJS_OBJECT**)0x02EAF60C, &Tikal_Object);
-	//WriteData((NJS_OBJECT**)0x02EB25F4, &Tikal_Object);
-	//WriteData((NJS_OBJECT**)0x02EBACB4, &Tikal_Object);
-	//WriteData((NJS_OBJECT**)0x02EBF89C, &Tikal_Object);
-	//WriteData((NJS_OBJECT**)0x02EC2524, &Tikal_Object);
-	//WriteData((NJS_OBJECT**)0x02ECD67C, &Tikal_Object);
-	//WriteData((NJS_OBJECT**)0x02ED7EA4, &Tikal_Object);
-	//WriteData((NJS_OBJECT**)0x02EDBE6C, &Tikal_Object);
-	//WriteData((NJS_OBJECT**)0x02EE08F4, &Tikal_Object);
-	//WriteData((NJS_OBJECT**)0x02F12A34, &Tikal_Object);
-	//WriteData((NJS_OBJECT**)0x02F1694C, &Tikal_Object);
-	//WriteData((NJS_OBJECT**)0x02F180B4, &Tikal_Object);
-	//WriteData((NJS_OBJECT**)0x02F1CBB4, &Tikal_Object);
-	//WriteData((NJS_OBJECT**)0x02F21B8C, &Tikal_Object);
-	//WriteData((NJS_OBJECT**)0x02F2D344, &Tikal_Object);
-	//WriteData((NJS_OBJECT**)0x02F33DFC, &Tikal_Object);
-	//WriteData((NJS_OBJECT**)0x02F3E204, &Tikal_Object);
-	//WriteData((NJS_OBJECT**)0x02FA7544, &Tikal_Object);
-	//WriteData((NJS_OBJECT**)0x02FAA58C, &Tikal_Object);
-	//WriteData((NJS_OBJECT**)0x02FAB794, &Tikal_Object);
-	//WriteData((NJS_OBJECT**)0x02FB1F1C, &Tikal_Object);
-	//WriteData((NJS_OBJECT**)0x02FBFAA4, &Tikal_Object);
-	//WriteData((NJS_OBJECT**)0x030DF19C, &Tikal_Object);
-	//WriteData((NJS_OBJECT**)0x030E6944, &Tikal_Object);
-	//WriteData((NJS_OBJECT**)0x030EE53C, &Tikal_Object);
-	//WriteData((NJS_OBJECT**)0x030F6004, &Tikal_Object);
-	//WriteData((NJS_OBJECT**)0x030F854C, &Tikal_Object);
-	//WriteData((NJS_OBJECT**)0x03100084, &Tikal_Object);
-	//WriteData((NJS_OBJECT**)0x03103DCC, &Tikal_Object);
-	//WriteData((WeldInfo**)0x007B41AB, TikalWeldInfo);
+	//WriteData((NJS_OBJECT**)0x0008F46BC, &OBJECT_Tikal);
+	//WriteData((NJS_OBJECT**)0x0008F83F4, &OBJECT_Tikal);
+	//WriteData((NJS_OBJECT**)0x0008FC8DC, &OBJECT_Tikal);
+	//WriteData((NJS_OBJECT**)0x000900814, &OBJECT_Tikal);
+	//WriteData((NJS_OBJECT**)0x002C81AA4, &OBJECT_Tikal);
+	//WriteData((NJS_OBJECT**)0x002C8B13C, &OBJECT_Tikal);
+	//WriteData((NJS_OBJECT**)0x002D4B2DC, &OBJECT_Tikal);
+	//WriteData((NJS_OBJECT**)0x002D53284, &OBJECT_Tikal);
+	//WriteData((NJS_OBJECT**)0x002D5C1FC, &OBJECT_Tikal);
+	//WriteData((NJS_OBJECT**)0x002D61174, &OBJECT_Tikal);
+	//WriteData((NJS_OBJECT**)0x002EAF60C, &OBJECT_Tikal);
+	//WriteData((NJS_OBJECT**)0x002EB25F4, &OBJECT_Tikal);
+	//WriteData((NJS_OBJECT**)0x002EBACB4, &OBJECT_Tikal);
+	//WriteData((NJS_OBJECT**)0x002EBF89C, &OBJECT_Tikal);
+	//WriteData((NJS_OBJECT**)0x002EC2524, &OBJECT_Tikal);
+	//WriteData((NJS_OBJECT**)0x002ECD67C, &OBJECT_Tikal);
+	//WriteData((NJS_OBJECT**)0x002ED7EA4, &OBJECT_Tikal);
+	//WriteData((NJS_OBJECT**)0x002EDBE6C, &OBJECT_Tikal);
+	//WriteData((NJS_OBJECT**)0x002EE08F4, &OBJECT_Tikal);
+	//WriteData((NJS_OBJECT**)0x002F12A34, &OBJECT_Tikal);
+	//WriteData((NJS_OBJECT**)0x002F1694C, &OBJECT_Tikal);
+	//WriteData((NJS_OBJECT**)0x002F180B4, &OBJECT_Tikal);
+	//WriteData((NJS_OBJECT**)0x002F1CBB4, &OBJECT_Tikal);
+	//WriteData((NJS_OBJECT**)0x002F21B8C, &OBJECT_Tikal);
+	//WriteData((NJS_OBJECT**)0x002F2D344, &OBJECT_Tikal);
+	//WriteData((NJS_OBJECT**)0x002F33DFC, &OBJECT_Tikal);
+	//WriteData((NJS_OBJECT**)0x002F3E204, &OBJECT_Tikal);
+	//WriteData((NJS_OBJECT**)0x002FA7544, &OBJECT_Tikal);
+	//WriteData((NJS_OBJECT**)0x002FAA58C, &OBJECT_Tikal);
+	//WriteData((NJS_OBJECT**)0x002FAB794, &OBJECT_Tikal);
+	//WriteData((NJS_OBJECT**)0x002FB1F1C, &OBJECT_Tikal);
+	//WriteData((NJS_OBJECT**)0x002FBFAA4, &OBJECT_Tikal);
+	//WriteData((NJS_OBJECT**)0x0030DF19C, &OBJECT_Tikal);
+	//WriteData((NJS_OBJECT**)0x0030E6944, &OBJECT_Tikal);
+	//WriteData((NJS_OBJECT**)0x0030EE53C, &OBJECT_Tikal);
+	//WriteData((NJS_OBJECT**)0x0030F6004, &OBJECT_Tikal);
+	//WriteData((NJS_OBJECT**)0x0030F854C, &OBJECT_Tikal);
+	//WriteData((NJS_OBJECT**)0x003100084, &OBJECT_Tikal);
+	//WriteData((NJS_OBJECT**)0x003103DCC, &OBJECT_Tikal);
+	//WriteData((WeldInfo**)0x007B41AB, (WeldInfo*)&TikalWeldInfo);
+	//WriteData((NJS_OBJECT**)0x038F3988, &object_0000707C);
 
 	//Eggman
 	//ResizeTextureList((NJS_TEXLIST*)0x00892A20, 19);

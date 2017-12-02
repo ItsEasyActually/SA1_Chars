@@ -24,7 +24,6 @@ static bool StretchyShoe = true;
 static bool SwapMSHover = true;
 static bool MSAlwaysHover = true;
 static bool EnableCDMS = true;
-char CDMetalSonic[] = "CDMETALSONIC";
 
 static NJS_OBJECT **SONIC_OBJECTS = nullptr;
 static NJS_ACTION **SONIC_ACTIONS = nullptr;
@@ -53,6 +52,7 @@ static NJS_MOTION **BIG_MOTIONS = nullptr;
 
 DataPointer(int, EVENT_ID, 0x03B2C570);
 DataPointer(void*, EV_MainThread_ptr, 0x3B2C578);
+DataPointer(PVMEntry, MetalPVMList, 0x0090ED44);
 
 DataArray(WeldInfo, SonicWeldInfo, 0x03C55E28, 0x25);
 DataArray(WeldInfo, NPCSonicWeldInfo, 0x03C56B50, 0x10);
@@ -3184,7 +3184,7 @@ extern "C" __declspec(dllexport) void __cdecl Init(const char *path, const Helpe
 		___SONIC_OBJECTS[68] = &object_00591068;
 		___SONIC_OBJECTS[69] = &object_0059C234;
 		___SONIC_OBJECTS[70] = &object_0059E254;
-		WriteData((char**)0x0090ED44, CDMetalSonic);
+		MetalPVMList.Name = "CDMETALSONIC";
 		WriteJump((void*)0x007D18F0, InitMetalSonicWeldInfo);
 	}
 	___SONIC_ACTIONS[0]->object = &object_0056AF50;

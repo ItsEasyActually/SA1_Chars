@@ -24,7 +24,6 @@ static bool StretchyShoe = true;
 static bool SwapMSHover = true;
 static bool MSAlwaysHover = true;
 static bool EnableCDMS = true;
-char CDMetalSonic[] = "CDMETALSONIC";
 
 static NJS_OBJECT **SONIC_OBJECTS = nullptr;
 static NJS_ACTION **SONIC_ACTIONS = nullptr;
@@ -53,6 +52,7 @@ static NJS_MOTION **BIG_MOTIONS = nullptr;
 
 DataPointer(int, EVENT_ID, 0x03B2C570);
 DataPointer(void*, EV_MainThread_ptr, 0x3B2C578);
+DataArray(PVMEntry, MetalPVMList, 0x0090ED44, 2);
 
 DataArray(WeldInfo, SonicWeldInfo, 0x03C55E28, 0x25);
 DataArray(WeldInfo, NPCSonicWeldInfo, 0x03C56B50, 0x10);
@@ -2496,6 +2496,8 @@ static void __declspec(naked) Sonic_Run1Ani_origasm()
 
 //Lantern API Fixes
 NJS_MATERIAL* Specular0[] = {
+	//Tails fixes red
+	&matlist_02F37A50[9],
 	//Gamma Material Fixes
 	materials_0020B9B8[0],
 	materials_0020B9B8[1],
@@ -2560,7 +2562,7 @@ NJS_MATERIAL* Specular1[] = {
 	materials_0020B1D0[3],
 	materials_0020B1D0[4],
 
-	//Tails
+	//Tails Jet Anklet
 	&matlist_001B197C[0],
 	&matlist_001B197C[1],
 	&matlist_001B197C[2],
@@ -2590,24 +2592,6 @@ NJS_MATERIAL* Specular1[] = {
 	&matlist_024AD118[0],
 	&matlist_024AD118[1],
 
-	//Broken Tornado
-	&matlist_0251DAB0[1],
-	&matlist_0251DAB0[14],
-	&matlist_0251DAB0[15],
-	&matlist_0251DAB0[23],
-	&matlist_0251DAB0[24],
-	&matlist_0251C540[14],
-	&matlist_0251C540[15],
-	&matlist_0251C540[23],
-	&matlist_0251C540[24],
-
-	//Saturn Tornado 1
-	&matlist_0005CE64[1],
-	&matlist_0005CE64[15],
-	&matlist_0005CE64[22],
-	&matlist_0005C240[0],
-	&matlist_0005C240[1],
-
 	//Tornado 2 (Saturn Sky Chase)
 	&matlist_000E0A5C[0],
 	&matlist_000E0A5C[1],
@@ -2615,6 +2599,32 @@ NJS_MATERIAL* Specular1[] = {
 	//Tornado 2 Changed (Event)
 	&material_8D4714ACE7FAE0BE986[0],
 	&material_8D4714ACE7FAE0BE986[1],
+
+	//Tails' plane when Sonic sees him crash (Event)
+	((NJS_MATERIAL*)0x03176DC0),
+	((NJS_MATERIAL*)0x03176DD4),
+	((NJS_MATERIAL*)0x03176DE8),
+	((NJS_MATERIAL*)0x03176DFC),
+	((NJS_MATERIAL*)0x03176E10),
+	((NJS_MATERIAL*)0x03176E24),
+	((NJS_MATERIAL*)0x03176E38),
+	((NJS_MATERIAL*)0x03176E4C),
+	((NJS_MATERIAL*)0x03176E60),
+	((NJS_MATERIAL*)0x03176E74),
+	((NJS_MATERIAL*)0x03176E88),
+	((NJS_MATERIAL*)0x03176E9C),
+	((NJS_MATERIAL*)0x03176EB0),
+	((NJS_MATERIAL*)0x03176EC4),
+	((NJS_MATERIAL*)0x03176ED8),
+	((NJS_MATERIAL*)0x03176EEC),
+	((NJS_MATERIAL*)0x03176F00),
+	((NJS_MATERIAL*)0x03176F14),
+	((NJS_MATERIAL*)0x0317661C),
+	((NJS_MATERIAL*)0x03176630),
+	((NJS_MATERIAL*)0x03175E90),
+	((NJS_MATERIAL*)0x03175EA4),
+	((NJS_MATERIAL*)0x03175EB8),
+	((NJS_MATERIAL*)0x03175ECC),
 };
 
 NJS_MATERIAL* Specular2[] = {
@@ -2931,6 +2941,16 @@ NJS_MATERIAL* Specular2[] = {
 };
 
 NJS_MATERIAL* Specular3[] = {
+	//Tails intro
+	&matlist_02F37A50[0],
+	&matlist_02F37A50[3],
+	&matlist_02F37A50[5],
+	&matlist_02F37A50[9],
+	&matlist_02F36AE8[0],
+	&matlist_02F36AE8[1],
+	&matlist_02F36AE8[2],
+	&matlist_02F36AE8[3],
+
 	//Knuckles Material Fixes
 	&material_8D49E33095E01C8B132[2],
 
@@ -2987,47 +3007,79 @@ NJS_MATERIAL* Specular3[] = {
 	&matlist_00016068[0],
 	&matlist_00016068[1],
 	&matlist_000159C8[0],
+
+	//Tornado 2 Change
+	&material_8D4714ACE7FAE0BE986[0],
+	&material_8D4714ACE7FAE0BE986[1],
 };
 
-NJS_MATERIAL* TailsFixesRed[] = {
-	&matlist_02F37A50[9],
+
+NJS_MATERIAL* TailsHead[] = {
+	&material_8D4738D5844FAA4637C[0],
+	&material_8D4738D5844FAA4637C[1],
+	&material_8D4738D5844FAA4637C[2],
+	&material_8D4738D5844FAA4637C[3],
 };
 
-NJS_MATERIAL* TailsFixesGreen[] = {
-	&material_8D473BAA53BFE1CA22F[1],
+NJS_MATERIAL* TailsShoes[] = {
+	&material_8D473BAA6CA9332C47A[0],
 	&material_8D473BAA6CA9332C47A[1],
-	&material_8D473BA91E15540678B[1],
+	&material_8D473BAA53BFE1CA22F[0],
+	&material_8D473BAA53BFE1CA22F[1],
+	&material_8D473BA9380B3752C10[0],
 	&material_8D473BA9380B3752C10[1],
+	&material_8D473BA91E15540678B[0],
+	&material_8D473BA91E15540678B[1],
 };
 
-NJS_MATERIAL* TailsFixesLBlue[] = {
-	&matlist_02F37A50[0],
-	&matlist_02F37A50[3],
-	&matlist_02F37A50[5],
-	&matlist_02F37A50[9],
-	&matlist_02F36AE8[0],
-	&matlist_02F36AE8[1],
-	&matlist_02F36AE8[2],
-	&matlist_02F36AE8[3],
-};
-
-bool ForceCharSpec0(NJS_MATERIAL* material, Uint32 flags)
+bool ForceDiffuse0Specular0(NJS_MATERIAL* material, Uint32 flags)
 {
-	set_diffuse(2, false);
+	set_diffuse(0, false);
 	set_specular(0, false);
 	use_default_diffuse(true);
 	return true;
 }
 
-bool ForceCharSpec1(NJS_MATERIAL* material, Uint32 flags)
+bool ForceDiffuse0Specular1(NJS_MATERIAL* material, Uint32 flags)
 {
-	set_diffuse(2, false);
-	set_specular(1, false);
-	use_default_diffuse(true);
+		set_diffuse(0, false);
+		set_specular(1, false);
+		return true;
+}
+
+
+bool ForceDiffuse0Specular0_Tails(NJS_MATERIAL* material, Uint32 flags)
+{
+	if (CurrentLevel == 1 && CurrentAct == 1 && TailsAI_ptr == nullptr)
+	{
+		set_diffuse(0, false);
+		set_specular(0, false);
+	}
+	else
+	{
+		set_diffuse(2, false);
+		set_specular(2, false);
+	}
 	return true;
 }
 
-bool ForceCharSpec2(NJS_MATERIAL* material, Uint32 flags)
+bool ForceDiffuse0Specular1_Tails(NJS_MATERIAL* material, Uint32 flags)
+{
+	if (CurrentLevel == 1 && CurrentAct == 1 && TailsAI_ptr == nullptr)
+	{
+		set_diffuse(0, false);
+		set_specular(1, false);
+	}
+	else
+	{
+		set_diffuse(2, false);
+		set_specular(3, false);
+	}
+	return true;
+}
+
+
+bool ForceDiffuse2Specular2(NJS_MATERIAL* material, Uint32 flags)
 {
 	set_diffuse(2, false);
 	set_specular(2, false);
@@ -3035,7 +3087,7 @@ bool ForceCharSpec2(NJS_MATERIAL* material, Uint32 flags)
 	return true;
 }
 
-bool ForceCharSpec3(NJS_MATERIAL* material, Uint32 flags)
+bool ForceDiffuse2Specular3(NJS_MATERIAL* material, Uint32 flags)
 {
 	set_diffuse(2, false);
 	set_specular(3, false);
@@ -3054,22 +3106,12 @@ extern "C" __declspec(dllexport) void __cdecl Init(const char *path, const Helpe
 	if (Lantern != nullptr)
 	{
 		typedef const char* (__cdecl* lantern_load_cb)(int level, int act);
-		material_register(Specular0, LengthOfArray(Specular0), &ForceCharSpec0);
-		material_register(Specular1, LengthOfArray(Specular1), &ForceCharSpec1);
-		material_register(Specular2, LengthOfArray(Specular2), &ForceCharSpec2);
-		material_register(Specular3, LengthOfArray(Specular3), &ForceCharSpec3);
-		if (EV_MainThread_ptr != nullptr && EVENT_ID == 3)
-		{
-			material_register(TailsFixesRed, LengthOfArray(TailsFixesRed), &ForceCharSpec0);
-		}
-		//else
-		//{
-			//material_register(TailsFixesLBlue, LengthOfArray(TailsFixesLBlue), &ForceCharSpec3);
-		//}
-		if (TailsAI_ptr != nullptr)
-		{
-			material_register(TailsFixesGreen, LengthOfArray(TailsFixesGreen), &ForceCharSpec1);
-		}
+		material_register(Specular0, LengthOfArray(Specular0), &ForceDiffuse0Specular0);
+		material_register(Specular1, LengthOfArray(Specular1), &ForceDiffuse0Specular1);
+		material_register(Specular2, LengthOfArray(Specular2), &ForceDiffuse2Specular2);
+		material_register(Specular3, LengthOfArray(Specular3), &ForceDiffuse2Specular3);
+		material_register(TailsHead, LengthOfArray(TailsHead), &ForceDiffuse0Specular0_Tails);
+		material_register(TailsShoes, LengthOfArray(TailsShoes), &ForceDiffuse0Specular1_Tails);
 	}
 
 	CopyFileA((std::string(path) + "\\default.ini").c_str(), (std::string(path) + "\\config.ini").c_str(), true);
@@ -3184,7 +3226,7 @@ extern "C" __declspec(dllexport) void __cdecl Init(const char *path, const Helpe
 		___SONIC_OBJECTS[68] = &object_00591068;
 		___SONIC_OBJECTS[69] = &object_0059C234;
 		___SONIC_OBJECTS[70] = &object_0059E254;
-		WriteData((char**)0x0090ED44, CDMetalSonic);
+		MetalPVMList[0].Name = "CDMETALSONIC";
 		WriteJump((void*)0x007D18F0, InitMetalSonicWeldInfo);
 	}
 	___SONIC_ACTIONS[0]->object = &object_0056AF50;
@@ -3529,7 +3571,20 @@ extern "C" __declspec(dllexport) void __cdecl Init(const char *path, const Helpe
 	WriteJump((void*)0x0045B840, Tails_Jiggle_mod);
 	WriteJump((void*)0x007C6D80, InitTailsWeldInfo_mod);
 	WriteJump((void*)0x007C7560, InitNPCTailsWeldInfo_mod);
-
+	//Material fixes for the cutscene where Sonic sees Tails crash
+	((NJS_MATERIAL*)0x03171BD0)->diffuse.color = 0xFFB2B2B2;
+	((NJS_MATERIAL*)0x03171BE4)->diffuse.color = 0xFFB2B2B2;
+	((NJS_MATERIAL*)0x03171BF8)->diffuse.color = 0xFFB2B2B2;
+	((NJS_MATERIAL*)0x03171C0C)->diffuse.color = 0xFFB2B2B2;
+	((NJS_MATERIAL*)0x03171C20)->diffuse.color = 0xFFB2B2B2;
+	((NJS_MATERIAL*)0x03171C34)->diffuse.color = 0xFFB2B2B2;
+	((NJS_MATERIAL*)0x03171C48)->diffuse.color = 0xFFB2B2B2;
+	((NJS_MATERIAL*)0x03171C5C)->diffuse.color = 0xFFB2B2B2;
+	((NJS_MATERIAL*)0x03171C70)->diffuse.color = 0xFFB2B2B2;
+	((NJS_MATERIAL*)0x03171A48)->diffuse.color = 0xFFB2B2B2;
+	((NJS_MATERIAL*)0x031718C4)->diffuse.color = 0xFFB2B2B2;
+	((NJS_OBJECT*)0x317178C)->basicdxmodel->mats[1].attrflags &= ~NJD_FLAG_USE_ALPHA;
+	((NJS_OBJECT*)0x31708E4)->basicdxmodel->mats[1].attrflags &= ~NJD_FLAG_USE_ALPHA;
 	//Tails Upgrades
 	NJS_OBJECT **___ADV03_OBJECTS = (NJS_OBJECT **)GetProcAddress(adv03dll, "___ADV03_OBJECTS");
 	___ADV03_OBJECTS[31] = &WarriorFeather_Upgrade;

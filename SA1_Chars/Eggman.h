@@ -6110,7 +6110,7 @@ NJS_MODEL_SADX attach_0049C804 = { vertex_0049C7A4, normal_0049C7D4, LengthOfArr
 
 NJS_OBJECT Eggman_Object = { NJD_EVAL_UNIT_POS | NJD_EVAL_UNIT_ANG | NJD_EVAL_UNIT_SCL, &attach_0049C804, 0, 0, 0, 0, 0, 0, 1, 1, 1, &object_0049C734, NULL };
 
-uint16_t vi_00563F88[] = {
+uint16_t Eggman_ArmIndices[] = {
 	20, 5,
 	21, 6,
 	22, 3,
@@ -6118,14 +6118,14 @@ uint16_t vi_00563F88[] = {
 	24, 8,
 };
 
-uint16_t vi_00563F9C[] = {
+uint16_t Eggman_HandIndices[] = {
 	0, 14,
 	1, 13,
 	5, 12,
 	4, 15,
 };
 
-uint16_t vi_00563FAC[] = {
+uint16_t Eggman_LegIndices[] = {
 	15, 4,
 	16, 7,
 	17, 10,
@@ -6133,7 +6133,7 @@ uint16_t vi_00563FAC[] = {
 	19, 0,
 };
 
-uint16_t vi_00563FC0[] = {
+uint16_t Eggman_AnkleIndices[] = {
 	2, 18,
 	5, 15,
 	11, 17,
@@ -6141,7 +6141,7 @@ uint16_t vi_00563FC0[] = {
 	9, 22,
 };
 
-uint16_t vi_00563FD4[] = {
+uint16_t Eggman_ToeIndices[] = {
 	33, 8,
 	26, 9,
 	27, 10,
@@ -6153,19 +6153,19 @@ uint16_t vi_00563FD4[] = {
 };
 
 WeldInfo EggmanWeldList[] = {
-	{ &Eggman_Object, &object_00498F28, &object_00498A44, (uint8_t)(LengthOfArray(vi_00563F88) / 2), 1, 0, nullptr, vi_00563F88 },
-	{ &Eggman_Object, &object_00497318, &object_00496E34, (uint8_t)(LengthOfArray(vi_00563F88) / 2), 1, 0, nullptr, vi_00563F88 },
-	{ &Eggman_Object, &object_00498320, &object_00497DE0, (uint8_t)(LengthOfArray(vi_00563F9C) / 2), 1, 0, nullptr, vi_00563F9C },
-	{ &Eggman_Object, &object_00496710, &object_004961E0, (uint8_t)(LengthOfArray(vi_00563F9C) / 2), 1, 0, nullptr, vi_00563F9C },
-	{ &Eggman_Object, &object_00494A04, &object_004946C0, (uint8_t)(LengthOfArray(vi_00563FAC) / 2), 1, 0, nullptr, vi_00563FAC },
-	{ &Eggman_Object, &object_00493A04, &object_004936C0, (uint8_t)(LengthOfArray(vi_00563FAC) / 2), 1, 0, nullptr, vi_00563FAC },
-	{ &Eggman_Object, &object_004946C0, &object_004943E0, (uint8_t)(LengthOfArray(vi_00563FC0) / 2), 1, 0, nullptr, vi_00563FC0 },
-	{ &Eggman_Object, &object_004936C0, &object_004933D0, (uint8_t)(LengthOfArray(vi_00563FC0) / 2), 1, 0, nullptr, vi_00563FC0 },
-	{ &Eggman_Object, &object_004943E0, &object_00493DBC, (uint8_t)(LengthOfArray(vi_00563FD4) / 2), 1, 0, nullptr, vi_00563FD4 },
-	{ &Eggman_Object, &object_004933D0, &object_00492DAC, (uint8_t)(LengthOfArray(vi_00563FD4) / 2), 1, 0, nullptr, vi_00563FD4 },
-	{ &Eggman_Object, &object_004961E0, nullptr, 0, 4, 0, nullptr, },
-	{ &Eggman_Object, &object_00497DE0, nullptr, 0, 5, 0, nullptr, },
-	{ &Eggman_Object, &object_004933D0, nullptr, 0, 6, 0, nullptr, },
-	{ &Eggman_Object, &object_004943E0, nullptr, 0, 7, 0, nullptr, },
+	{ &Eggman_Object, &object_00498F28, &object_00498A44, (uint8_t)(LengthOfArray(Eggman_ArmIndices) / 2), 1, 0, nullptr, Eggman_ArmIndices },
+	{ &Eggman_Object, &object_00497318, &object_00496E34, (uint8_t)(LengthOfArray(Eggman_ArmIndices) / 2), 1, 0, nullptr, Eggman_ArmIndices },
+	{ &Eggman_Object, &object_00498320, &object_00497DE0, (uint8_t)(LengthOfArray(Eggman_HandIndices) / 2), 1, 0, nullptr, Eggman_HandIndices },
+	{ &Eggman_Object, &object_00496710, &object_004961E0, (uint8_t)(LengthOfArray(Eggman_HandIndices) / 2), 1, 0, nullptr, Eggman_HandIndices },
+	{ &Eggman_Object, &object_00494A04, &object_004946C0, (uint8_t)(LengthOfArray(Eggman_LegIndices) / 2), 1, 0, nullptr, Eggman_LegIndices },
+	{ &Eggman_Object, &object_00493A04, &object_004936C0, (uint8_t)(LengthOfArray(Eggman_LegIndices) / 2), 1, 0, nullptr, Eggman_LegIndices },
+	{ &Eggman_Object, &object_004946C0, &object_004943E0, (uint8_t)(LengthOfArray(Eggman_AnkleIndices) / 2), 1, 0, nullptr, Eggman_AnkleIndices },
+	{ &Eggman_Object, &object_004936C0, &object_004933D0, (uint8_t)(LengthOfArray(Eggman_AnkleIndices) / 2), 1, 0, nullptr, Eggman_AnkleIndices },
+	{ &Eggman_Object, &object_004943E0, &object_00493DBC, (uint8_t)(LengthOfArray(Eggman_ToeIndices) / 2), 1, 0, nullptr, Eggman_ToeIndices },
+	{ &Eggman_Object, &object_004933D0, &object_00492DAC, (uint8_t)(LengthOfArray(Eggman_ToeIndices) / 2), 1, 0, nullptr,Eggman_ToeIndices },
+	{ &Eggman_Object, &object_004961E0, nullptr, 2, 4, 0, nullptr, nullptr },
+	{ &Eggman_Object, &object_00497DE0, nullptr, 2, 5, 0, nullptr, nullptr },
+	{ &Eggman_Object, &object_004933D0, nullptr, 0, 6, 0, nullptr, nullptr },
+	{ &Eggman_Object, &object_004943E0, nullptr, 0, 7, 0, nullptr, nullptr },
 	{ 0 }
 };

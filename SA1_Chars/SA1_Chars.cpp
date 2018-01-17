@@ -64,6 +64,8 @@ DataArray(WeldInfo, AmyWeldInfo, 0x03C546D0, 0x12);
 DataArray(WeldInfo, NPCAmyWeldInfo, 0x03C54EE0, 0x0D);
 DataArray(WeldInfo, BigWeldInfo, 0x03C55500, 0x11);
 DataArray(WeldInfo, MetalSonicWeldInfo, 0x03C55D68, 8);
+DataArray(WeldInfo, TikalWeldInfo, 0x038F3AB8, 14);
+DataArray(WeldInfo, EggmanWeldInfo, 0x038F3F28, 15);
 
 DataArray(EntityData2*, EntityData2Ptrs, 0x03B36DD0, 8);
 FunctionPointer(void, sub_4083D0, (NJS_ACTION *a1, float a2, int a3), 0x004083D0);
@@ -82,7 +84,7 @@ void __cdecl Sonic_MorphStretchyFeet_c(CharObj2* a1)
 	float v4; // ST10_4@10
 	float v5; // ST10_4@13
 
-	if (a1->Upgrades & Upgrades_LightShoes)
+	if (SONIC_OBJECTS[19]->sibling == SONIC_OBJECTS[58])
 	{
 		if (a1->AnimationThing.Index == 13)
 		{
@@ -1776,116 +1778,6 @@ void __cdecl InitNPCKnucklesWeldInfo_mod()
 	NPCKnucklesWeldInfo[24].VertIndexes = 0;
 }
 
-void __cdecl Knuckles_Upgrades_c(CharObj2 *a1)
-{
-	unsigned __int16 *v1; // eax@2
-
-	switch (a1->Upgrades & 0x60)
-	{
-	case 0:
-		KNUCKLES_OBJECTS[58]->model = KNUCKLES_MODELS[7];
-		KNUCKLES_OBJECTS[59]->model = KNUCKLES_MODELS[8];
-		KNUCKLES_OBJECTS[60]->model = KNUCKLES_MODELS[9];
-		KNUCKLES_OBJECTS[61]->model = KNUCKLES_MODELS[10];
-		KNUCKLES_OBJECTS[62]->model = KNUCKLES_MODELS[11];
-		KNUCKLES_OBJECTS[63]->model = KNUCKLES_MODELS[12];
-		KNUCKLES_OBJECTS[64]->model = KNUCKLES_MODELS[13];
-		KNUCKLES_OBJECTS[65]->model = KNUCKLES_MODELS[14];
-		KNUCKLES_OBJECTS[66]->model = KNUCKLES_MODELS[7];
-		KNUCKLES_OBJECTS[67]->model = KNUCKLES_MODELS[8];
-		KNUCKLES_OBJECTS[68]->model = KNUCKLES_MODELS[9];
-		KNUCKLES_OBJECTS[69]->model = KNUCKLES_MODELS[10];
-		KNUCKLES_OBJECTS[70]->model = KNUCKLES_MODELS[11];
-		KNUCKLES_OBJECTS[71]->model = KNUCKLES_MODELS[12];
-		KNUCKLES_OBJECTS[72]->model = KNUCKLES_MODELS[13];
-		KNUCKLES_OBJECTS[73]->model = KNUCKLES_MODELS[14];
-		v1 = (unsigned __int16 *)&Knuckles_HandIndices;
-		goto LABEL_7;
-	case 0x40:
-		KNUCKLES_OBJECTS[58]->model = KNUCKLES_MODELS[7];
-		KNUCKLES_OBJECTS[59]->model = KNUCKLES_MODELS[8];
-		KNUCKLES_OBJECTS[60]->model = *KNUCKLES_MODELS;
-		KNUCKLES_OBJECTS[61]->model = KNUCKLES_MODELS[10];
-		KNUCKLES_OBJECTS[62]->model = KNUCKLES_MODELS[11];
-		KNUCKLES_OBJECTS[63]->model = KNUCKLES_MODELS[12];
-		KNUCKLES_OBJECTS[64]->model = KNUCKLES_MODELS[2];
-		KNUCKLES_OBJECTS[65]->model = KNUCKLES_MODELS[14];
-		KNUCKLES_OBJECTS[66]->model = KNUCKLES_MODELS[7];
-		KNUCKLES_OBJECTS[67]->model = KNUCKLES_MODELS[8];
-		KNUCKLES_OBJECTS[68]->model = *KNUCKLES_MODELS;
-		KNUCKLES_OBJECTS[69]->model = KNUCKLES_MODELS[10];
-		KNUCKLES_OBJECTS[70]->model = KNUCKLES_MODELS[11];
-		KNUCKLES_OBJECTS[71]->model = KNUCKLES_MODELS[12];
-		KNUCKLES_OBJECTS[72]->model = KNUCKLES_MODELS[2];
-		KNUCKLES_OBJECTS[73]->model = KNUCKLES_MODELS[14];
-		goto LABEL_6;
-	case 0x20:
-		KNUCKLES_OBJECTS[58]->model = KNUCKLES_MODELS[15];
-		KNUCKLES_OBJECTS[59]->model = KNUCKLES_MODELS[16];
-		KNUCKLES_OBJECTS[60]->model = KNUCKLES_MODELS[17];
-		KNUCKLES_OBJECTS[61]->model = KNUCKLES_MODELS[18];
-		KNUCKLES_OBJECTS[62]->model = KNUCKLES_MODELS[19];
-		KNUCKLES_OBJECTS[63]->model = KNUCKLES_MODELS[20];
-		KNUCKLES_OBJECTS[64]->model = KNUCKLES_MODELS[21];
-		KNUCKLES_OBJECTS[65]->model = KNUCKLES_MODELS[22];
-		KNUCKLES_OBJECTS[66]->model = KNUCKLES_MODELS[15];
-		KNUCKLES_OBJECTS[67]->model = KNUCKLES_MODELS[16];
-		KNUCKLES_OBJECTS[68]->model = KNUCKLES_MODELS[17];
-		KNUCKLES_OBJECTS[69]->model = KNUCKLES_MODELS[18];
-		KNUCKLES_OBJECTS[70]->model = KNUCKLES_MODELS[19];
-		KNUCKLES_OBJECTS[71]->model = KNUCKLES_MODELS[20];
-		KNUCKLES_OBJECTS[72]->model = KNUCKLES_MODELS[21];
-		KNUCKLES_OBJECTS[73]->model = KNUCKLES_MODELS[22];
-		v1 = (unsigned __int16 *)&Knuckles_HandIndices;
-		goto LABEL_7;
-	case 0x60:
-		KNUCKLES_OBJECTS[58]->model = KNUCKLES_MODELS[15];
-		KNUCKLES_OBJECTS[59]->model = KNUCKLES_MODELS[16];
-		KNUCKLES_OBJECTS[60]->model = KNUCKLES_MODELS[1];
-		KNUCKLES_OBJECTS[61]->model = KNUCKLES_MODELS[18];
-		KNUCKLES_OBJECTS[62]->model = KNUCKLES_MODELS[19];
-		KNUCKLES_OBJECTS[63]->model = KNUCKLES_MODELS[20];
-		KNUCKLES_OBJECTS[64]->model = KNUCKLES_MODELS[3];
-		KNUCKLES_OBJECTS[65]->model = KNUCKLES_MODELS[22];
-		KNUCKLES_OBJECTS[66]->model = KNUCKLES_MODELS[15];
-		KNUCKLES_OBJECTS[67]->model = KNUCKLES_MODELS[16];
-		KNUCKLES_OBJECTS[68]->model = KNUCKLES_MODELS[1];
-		KNUCKLES_OBJECTS[69]->model = KNUCKLES_MODELS[18];
-		KNUCKLES_OBJECTS[70]->model = KNUCKLES_MODELS[19];
-		KNUCKLES_OBJECTS[71]->model = KNUCKLES_MODELS[20];
-		KNUCKLES_OBJECTS[72]->model = KNUCKLES_MODELS[3];
-		KNUCKLES_OBJECTS[73]->model = KNUCKLES_MODELS[22];
-	LABEL_6:
-		v1 = (unsigned __int16 *)&Knuckles_ShovelClawIndices;
-	LABEL_7:
-		KnucklesWeldInfo[23].VertIndexes = v1;
-		KnucklesWeldInfo[22].VertIndexes = v1;
-		KnucklesWeldInfo[11].VertIndexes = v1;
-		KnucklesWeldInfo[10].VertIndexes = v1;
-		NPCKnucklesWeldInfo[23].VertIndexes = v1;
-		NPCKnucklesWeldInfo[22].VertIndexes = v1;
-		NPCKnucklesWeldInfo[11].VertIndexes = v1;
-		NPCKnucklesWeldInfo[10].VertIndexes = v1;
-		break;
-	default:
-		return;
-	}
-}
-
-static void __declspec(naked) Knuckles_Upgrades_mod()
-{
-	__asm
-	{
-		push eax // a1
-
-				 // Call your __cdecl function here:
-				 call Knuckles_Upgrades_c
-
-				 pop eax // a1
-				 retn
-	}
-}
-
 void __cdecl InitAmyWeldInfo_mod()
 {
 	NJS_OBJECT *v0; // edi@1
@@ -2784,6 +2676,9 @@ NJS_MATERIAL* Specular2[] = {
 	&material_8D45B297FEEE52B8B4E[1],
 	&material_8D45DD457E9605D13AE[0],
 	&material_8D45DD457E9605D13AE[1],
+	&matlist_0000B68C[0],
+	&matlist_0000B68C[1],
+	&matlist_0000B68C[2],
 
 	//Knuckles Material Fixes
 	&material_8D49E330C443CA61291[0],
@@ -2928,6 +2823,9 @@ NJS_MATERIAL* Specular2[] = {
 	&material_8D4704315E91B3786D4[3],
 	&material_8D47042EA72D43C6BC0[0],
 	&material_8D47042EA72D43C6BC0[1],
+
+	//Tikal
+	&matlist_00002884[0],
 };
 
 NJS_MATERIAL* Specular3[] = {
@@ -3228,6 +3126,7 @@ NJS_MATERIAL* TailsShoes[] = {
 	&material_8D473CEEB3CE205889C[1],
 	&matlist_0043F4E8[0], //Jumpball
 };
+
 bool ForceDiffuse0Specular0(NJS_MATERIAL* material, Uint32 flags)
 {
 	set_diffuse(0, false);
@@ -3242,7 +3141,6 @@ bool ForceDiffuse0Specular1(NJS_MATERIAL* material, Uint32 flags)
 		set_specular(1, false);
 		return true;
 }
-
 
 bool ForceDiffuse0Specular0_Tails(NJS_MATERIAL* material, Uint32 flags)
 {
@@ -3273,7 +3171,6 @@ bool ForceDiffuse0Specular1_Tails(NJS_MATERIAL* material, Uint32 flags)
 	}
 	return true;
 }
-
 
 bool ForceDiffuse2Specular2(NJS_MATERIAL* material, Uint32 flags)
 {
@@ -3417,14 +3314,6 @@ extern "C" __declspec(dllexport) void __cdecl Init(const char *path, const Helpe
 	___SONIC_OBJECTS[65] = &object_00585EB4;
 	___SONIC_OBJECTS[66] = &object_005729CC;
 	___SONIC_OBJECTS[67] = &object_0057BC44;
-	if (EnableCDMS)
-	{
-		___SONIC_OBJECTS[68] = &object_00591068;
-		___SONIC_OBJECTS[69] = &object_0059C234;
-		___SONIC_OBJECTS[70] = &object_0059E254;
-		MetalPVMList[0].Name = "CDMETALSONIC";
-		WriteJump((void*)0x007D18F0, InitMetalSonicWeldInfo);
-	}
 	___SONIC_ACTIONS[0]->object = &object_0056AF50;
 	___SONIC_ACTIONS[1]->object = &object_0056AF50;
 	___SONIC_ACTIONS[2]->object = &object_0056AF50;
@@ -3566,6 +3455,19 @@ extern "C" __declspec(dllexport) void __cdecl Init(const char *path, const Helpe
 	___SONIC_MOTIONS[0] = &CinematicHead;
 	WriteJump((void*)0x007D0B50, InitSonicWeldInfo_mod);
 	WriteJump((void*)0x007D14D0, InitNPCSonicWeldInfo_mod);
+	WriteData((NJS_OBJECT**)0x00664C3E, &OBJECT_SonicPointingFinger);
+	WriteData((NJS_OBJECT**)0x0069E24B, &OBJECT_SonicPointingFinger);
+	WriteData((NJS_OBJECT**)0x006D010C, &OBJECT_SonicPointingFinger);
+	WriteData((NJS_OBJECT**)0x006D711E, &OBJECT_SonicPointingFinger);
+
+	if (EnableCDMS)
+	{
+		___SONIC_OBJECTS[68] = &object_00591068;
+		___SONIC_OBJECTS[69] = &object_0059C234;
+		___SONIC_OBJECTS[70] = &object_0059E254;
+		MetalPVMList[0].Name = "CDMETALSONIC";
+		WriteJump((void*)0x007D18F0, InitMetalSonicWeldInfo);
+	}
 
 	//Tails Model Data
 	//ResizeTextureList((NJS_TEXLIST *)0x91A9C8, 24);
@@ -3784,6 +3686,18 @@ extern "C" __declspec(dllexport) void __cdecl Init(const char *path, const Helpe
 	//Tails Upgrades
 	NJS_OBJECT **___ADV03_OBJECTS = (NJS_OBJECT **)GetProcAddress(adv03dll, "___ADV03_OBJECTS");
 	___ADV03_OBJECTS[31] = &WarriorFeather_Upgrade;
+	WriteData((NJS_OBJECT**)0x03342074, &EV_TailsProtoPlane);
+	WriteData((NJS_OBJECT**)0x03344EAC, &EV_TailsProtoPlane);
+	WriteData((NJS_OBJECT**)0x03347734, &EV_TailsProtoPlane);
+	WriteData((NJS_OBJECT**)0x0334A8FC, &EV_TailsProtoPlane);
+	WriteData((NJS_OBJECT**)0x006F9483, &EV_TailsCineHead_DC);
+	WriteData((NJS_OBJECT**)0x0334A910, &EV_TailsCineHead_DC);
+	WriteData((NJS_OBJECT**)0x0334A924, &EV_TailsCineHead_DC);
+	WriteData((NJS_OBJECT**)0x0334A938, &EV_TailsCineHead_DC);
+	WriteData((NJS_MOTION**)0x03375D88, &EV_Tails02);
+	WriteData((NJS_MOTION**)0x03375D98, &EV_Tails01);
+	WriteData((NJS_MOTION**)0x03375DA8, &EV_Tails01);
+	WriteData((NJS_MOTION**)0x03375DB8, &EV_Tails00);
 
 	//Knuckles
 	//ResizeTextureList((NJS_TEXLIST *)0x0091BD20, 22);
@@ -3982,13 +3896,15 @@ extern "C" __declspec(dllexport) void __cdecl Init(const char *path, const Helpe
 	___KNUCKLES_MOTIONS[0] = &KnucklesEV;
 	WriteJump((void*)0x007C94D0, InitKnucklesWeldInfo_mod);
 	WriteJump((void*)0x007C9C80, InitNPCKnucklesWeldInfo_mod);
-	WriteJump((void*)0x004726A0, Knuckles_Upgrades_mod);
-
+	WriteData((uint16_t**)0x0472CAC, (uint16_t*)&Knuckles_ShovelClawIndices);
+	WriteData((uint16_t**)0x0472B2C, (uint16_t*)&Knuckles_HandIndices);
+	WriteData((uint16_t**)0x0472835, (uint16_t*)&Knuckles_HandIndices);
+	
 	//Knuckles Upgrades
 	NJS_OBJECT **___ADV02_OBJECTS = (NJS_OBJECT **)GetProcAddress(adv02dll, "___ADV02_OBJECTS");
 	___ADV02_OBJECTS[116] = &FightGloves_Upgrade;
 	___ADV02_OBJECTS[117] = &ShovelClaw_Upgrade;
-
+	
 	//Amy
 	//ResizeTextureList((NJS_TEXLIST *)0x0091C800, 53);
 	NJS_OBJECT **___AMY_OBJECTS = (NJS_OBJECT **)GetProcAddress(handle, "___AMY_OBJECTS");
@@ -4124,6 +4040,7 @@ extern "C" __declspec(dllexport) void __cdecl Init(const char *path, const Helpe
 	WriteData((NJS_OBJECT**)0x009858A4, &object_00584EE0);
 	WriteJump((void*)0x007CCB90, InitAmyWeldInfo_mod);
 	WriteJump((void*)0x007CD000, InitNPCAmyWeldInfo_mod);
+	
 
 	//Big
 	NJS_OBJECT **___BIG_OBJECTS = (NJS_OBJECT **)GetProcAddress(handle, "___BIG_OBJECTS");
@@ -4260,76 +4177,53 @@ extern "C" __declspec(dllexport) void __cdecl Init(const char *path, const Helpe
 	materials_0020B9B8[3]->attrflags |= NJD_FLAG_IGNORE_LIGHT;
 
 	//Tikal
-	//WriteData((NJS_OBJECT**)0x0008F46BC, &OBJECT_Tikal);
-	//WriteData((NJS_OBJECT**)0x0008F83F4, &OBJECT_Tikal);
-	//WriteData((NJS_OBJECT**)0x0008FC8DC, &OBJECT_Tikal);
-	//WriteData((NJS_OBJECT**)0x000900814, &OBJECT_Tikal);
-	//WriteData((NJS_OBJECT**)0x002C81AA4, &OBJECT_Tikal);
-	//WriteData((NJS_OBJECT**)0x002C8B13C, &OBJECT_Tikal);
-	//WriteData((NJS_OBJECT**)0x002D4B2DC, &OBJECT_Tikal);
-	//WriteData((NJS_OBJECT**)0x002D53284, &OBJECT_Tikal);
-	//WriteData((NJS_OBJECT**)0x002D5C1FC, &OBJECT_Tikal);
-	//WriteData((NJS_OBJECT**)0x002D61174, &OBJECT_Tikal);
-	//WriteData((NJS_OBJECT**)0x002EAF60C, &OBJECT_Tikal);
-	//WriteData((NJS_OBJECT**)0x002EB25F4, &OBJECT_Tikal);
-	//WriteData((NJS_OBJECT**)0x002EBACB4, &OBJECT_Tikal);
-	//WriteData((NJS_OBJECT**)0x002EBF89C, &OBJECT_Tikal);
-	//WriteData((NJS_OBJECT**)0x002EC2524, &OBJECT_Tikal);
-	//WriteData((NJS_OBJECT**)0x002ECD67C, &OBJECT_Tikal);
-	//WriteData((NJS_OBJECT**)0x002ED7EA4, &OBJECT_Tikal);
-	//WriteData((NJS_OBJECT**)0x002EDBE6C, &OBJECT_Tikal);
-	//WriteData((NJS_OBJECT**)0x002EE08F4, &OBJECT_Tikal);
-	//WriteData((NJS_OBJECT**)0x002F12A34, &OBJECT_Tikal);
-	//WriteData((NJS_OBJECT**)0x002F1694C, &OBJECT_Tikal);
-	//WriteData((NJS_OBJECT**)0x002F180B4, &OBJECT_Tikal);
-	//WriteData((NJS_OBJECT**)0x002F1CBB4, &OBJECT_Tikal);
-	//WriteData((NJS_OBJECT**)0x002F21B8C, &OBJECT_Tikal);
-	//WriteData((NJS_OBJECT**)0x002F2D344, &OBJECT_Tikal);
-	//WriteData((NJS_OBJECT**)0x002F33DFC, &OBJECT_Tikal);
-	//WriteData((NJS_OBJECT**)0x002F3E204, &OBJECT_Tikal);
-	//WriteData((NJS_OBJECT**)0x002FA7544, &OBJECT_Tikal);
-	//WriteData((NJS_OBJECT**)0x002FAA58C, &OBJECT_Tikal);
-	//WriteData((NJS_OBJECT**)0x002FAB794, &OBJECT_Tikal);
-	//WriteData((NJS_OBJECT**)0x002FB1F1C, &OBJECT_Tikal);
-	//WriteData((NJS_OBJECT**)0x002FBFAA4, &OBJECT_Tikal);
-	//WriteData((NJS_OBJECT**)0x0030DF19C, &OBJECT_Tikal);
-	//WriteData((NJS_OBJECT**)0x0030E6944, &OBJECT_Tikal);
-	//WriteData((NJS_OBJECT**)0x0030EE53C, &OBJECT_Tikal);
-	//WriteData((NJS_OBJECT**)0x0030F6004, &OBJECT_Tikal);
-	//WriteData((NJS_OBJECT**)0x0030F854C, &OBJECT_Tikal);
-	//WriteData((NJS_OBJECT**)0x003100084, &OBJECT_Tikal);
-	//WriteData((NJS_OBJECT**)0x003103DCC, &OBJECT_Tikal);
-	//WriteData((WeldInfo**)0x007B41AB, (WeldInfo*)&TikalWeldInfo);
-	//WriteData((NJS_OBJECT**)0x038F3988, &object_0000707C);
+	WriteData((NJS_OBJECT**)0x008CEBF8, &object_000038CC); //Left Palm
+	WriteData((NJS_OBJECT**)0x008CE084, &object_000036C0); //Left Thumb
+	WriteData((NJS_OBJECT**)0x008CEB5C, &object_00003BD8); //Left Fingers
+	WriteData((NJS_OBJECT**)0x008CD210, &object_00002850); //Right Palm
+	WriteData((NJS_OBJECT**)0x008CC684, &object_00002644); //Right Thumb
+	WriteData((NJS_OBJECT**)0x008CD174, &object_00002B38); //Right Fingers
+	TikalWeldInfo[0].ModelA = &object_000038CC;
+	TikalWeldInfo[0].ModelB = &object_00003BD8;
+	TikalWeldInfo[0].VertexPairCount = 4;
+	TikalWeldInfo[0].VertIndexes = (unsigned short *)&Tikal_LeftHandIndices;
+	TikalWeldInfo[1].ModelA = &object_00002850;
+	TikalWeldInfo[1].ModelB = &object_00002B38;
+	TikalWeldInfo[1].VertexPairCount = 4;
+	TikalWeldInfo[1].VertIndexes = (unsigned short *)&Tikal_RightHandIndices;
+
 
 	//Eggman
-	//ResizeTextureList((NJS_TEXLIST*)0x00892A20, 19);
-	//WriteData((NJS_OBJECT**)0x0089E254, &Eggman_Object);
-	//WriteData((NJS_OBJECT**)0x008A094C, &Eggman_Object);
-	//WriteData((NJS_OBJECT**)0x008A3564, &Eggman_Object);
-	//WriteData((NJS_OBJECT**)0x008A513C, &Eggman_Object);
-	//WriteData((NJS_OBJECT**)0x008A6BF4, &Eggman_Object);
-	//WriteData((NJS_OBJECT**)0x008A8A9C, &Eggman_Object);
-	//WriteData((NJS_OBJECT**)0x008AC3F4, &Eggman_Object);
-	//WriteData((NJS_OBJECT**)0x008B1CCC, &Eggman_Object);
-	//WriteData((NJS_OBJECT**)0x0111B72C, &Eggman_Object);
-	//WriteData((NJS_OBJECT**)0x02D00DF4, &Eggman_Object);
-	//WriteData((NJS_OBJECT**)0x02D027EC, &Eggman_Object);
-	//WriteData((NJS_OBJECT**)0x02D06F6C, &Eggman_Object);
-	//WriteData((NJS_OBJECT**)0x02D08DF4, &Eggman_Object);
-	//WriteData((NJS_OBJECT**)0x02D0AC0C, &Eggman_Object);
-	//WriteData((NJS_OBJECT**)0x02F9470C, &Eggman_Object);
-	//WriteData((NJS_OBJECT**)0x0303D284, &Eggman_Object);
-	//WriteData((NJS_OBJECT**)0x0303EE9C, &Eggman_Object);
-	//WriteData((NJS_OBJECT**)0x03041A44, &Eggman_Object);
-	//WriteData((NJS_OBJECT**)0x0304E9AC, &Eggman_Object);
-	//WriteData((NJS_OBJECT**)0x030C62BC, &Eggman_Object);
-	//WriteData((NJS_OBJECT**)0x030C7E34, &Eggman_Object);
-	//WriteData((NJS_OBJECT**)0x03136234, &Eggman_Object);
-	//WriteData((NJS_OBJECT**)0x0313EB3C, &Eggman_Object);
-	//WriteData((NJS_OBJECT**)0x03141254, &Eggman_Object);
-	//WriteData((NJS_OBJECT**)0x03142C4C, &Eggman_Object);
-	//WriteData((WeldInfo**)0x007B4FBF, EggmanWeldList);
+	WriteData((NJS_OBJECT**)0x0089E254, &Eggman_Object);
+	WriteData((NJS_OBJECT**)0x008A094C, &Eggman_Object);
+	WriteData((NJS_OBJECT**)0x008A3564, &Eggman_Object);
+	WriteData((NJS_OBJECT**)0x008A513C, &Eggman_Object);
+	WriteData((NJS_OBJECT**)0x008A6BF4, &Eggman_Object);
+	WriteData((NJS_OBJECT**)0x008A8A9C, &Eggman_Object);
+	WriteData((NJS_OBJECT**)0x008AC3F4, &Eggman_Object);
+	WriteData((NJS_OBJECT**)0x008B1CCC, &Eggman_Object);
+	WriteData((NJS_OBJECT**)0x0111B72C, &Eggman_Object);
+	WriteData((NJS_OBJECT**)0x02D00DF4, &Eggman_Object);
+	WriteData((NJS_OBJECT**)0x02D027EC, &Eggman_Object);
+	WriteData((NJS_OBJECT**)0x02D03974, &Eggman_Object);
+	WriteData((NJS_OBJECT**)0x02D06F6C, &Eggman_Object);
+	WriteData((NJS_OBJECT**)0x02D08DF4, &Eggman_Object);
+	WriteData((NJS_OBJECT**)0x02D0AC0C, &Eggman_Object);
+	WriteData((NJS_OBJECT**)0x02D64FBC, &Eggman_Object);
+	WriteData((NJS_OBJECT**)0x02F9470C, &Eggman_Object);
+	WriteData((NJS_OBJECT**)0x02FDF18C, &Eggman_Object);
+	WriteData((NJS_OBJECT**)0x0303D284, &Eggman_Object);
+	WriteData((NJS_OBJECT**)0x0303EE9C, &Eggman_Object);
+	WriteData((NJS_OBJECT**)0x03041A44, &Eggman_Object);
+	WriteData((NJS_OBJECT**)0x0304E9AC, &Eggman_Object);
+	WriteData((NJS_OBJECT**)0x030C3AD4, &Eggman_Object);
+	WriteData((NJS_OBJECT**)0x030C62BC, &Eggman_Object);
+	WriteData((NJS_OBJECT**)0x030C7E34, &Eggman_Object);
+	WriteData((NJS_OBJECT**)0x03136234, &Eggman_Object);
+	WriteData((NJS_OBJECT**)0x0313EB3C, &Eggman_Object);
+	WriteData((NJS_OBJECT**)0x03141254, &Eggman_Object);
+	WriteData((NJS_OBJECT**)0x03142C4C, &Eggman_Object);
+	WriteData((WeldInfo**)0x007B4FBF, (WeldInfo*)&EggmanWeldList);
 
 	//Sky Chase
 	if (SaturnSkyChase)
@@ -4368,8 +4262,6 @@ extern "C" __declspec(dllexport) void __cdecl Init(const char *path, const Helpe
 	WriteData((NJS_OBJECT**)0x28E596C, &object_0009153C); //Beam in Act 1
 	WriteData((char*)0x0062751B, 0x00, 1); //Force Tornado light type
 	WriteData((char*)0x0062AC1F, 0x00, 1); //Force Tornado light type (transformation cutscene)
-
-	//Event Data
 	WriteData((NJS_ACTION**)0x006BF039, &EV_TR1_Action);
 	WriteData((NJS_ACTION**)0x006BF3AA, &EV_TR1_Action);
 	WriteData((NJS_ACTION**)0x006BF6B7, &EV_TR1_Action);
@@ -4384,10 +4276,6 @@ extern "C" __declspec(dllexport) void __cdecl Init(const char *path, const Helpe
 	WriteData((NJS_OBJECT***)0x007D7BE1, &EV_TR1_Object.child);
 	WriteData((NJS_OBJECT***)0x007D7C11, &EV_TR1_Object.child);
 	WriteData((NJS_OBJECT***)0x007D7D01, &EV_TR1_Object.child);
-	WriteData((NJS_OBJECT**)0x00664C3E, &OBJECT_SonicPointingFinger);
-	WriteData((NJS_OBJECT**)0x0069E24B, &OBJECT_SonicPointingFinger);
-	WriteData((NJS_OBJECT**)0x006D010C, &OBJECT_SonicPointingFinger);
-	WriteData((NJS_OBJECT**)0x006D711E, &OBJECT_SonicPointingFinger);
 	WriteData((NJS_ACTION**)0x006B9527, &EV_TR2BEFORE_Action);
 	WriteData((NJS_ACTION**)0x006BA8B6, &EV_TR2BEFORE_Action);
 	WriteData((NJS_ACTION**)0x006BA9E1, &EV_TR2BEFORE_Action);
@@ -4407,18 +4295,6 @@ extern "C" __declspec(dllexport) void __cdecl Init(const char *path, const Helpe
 	WriteData((NJS_OBJECT***)0x007D7CB1, &EV_TR2BEFORE_Object.child);
 	WriteData((NJS_OBJECT***)0x007D7CE1, &EV_TR2BEFORE_Object.child);
 	WriteData((NJS_OBJECT**)0x032ECE0C, &EV_TR2CHANGE_Object);
-	WriteData((NJS_OBJECT**)0x03342074, &EV_TailsProtoPlane);
-	WriteData((NJS_OBJECT**)0x03344EAC, &EV_TailsProtoPlane);
-	WriteData((NJS_OBJECT**)0x03347734, &EV_TailsProtoPlane);
-	WriteData((NJS_OBJECT**)0x0334A8FC, &EV_TailsProtoPlane);
-	WriteData((NJS_OBJECT**)0x006F9483, &EV_TailsCineHead_DC);
-	WriteData((NJS_OBJECT**)0x0334A910, &EV_TailsCineHead_DC);
-	WriteData((NJS_OBJECT**)0x0334A924, &EV_TailsCineHead_DC);
-	WriteData((NJS_OBJECT**)0x0334A938, &EV_TailsCineHead_DC);
-	WriteData((NJS_MOTION**)0x03375D88, &EV_Tails02);
-	WriteData((NJS_MOTION**)0x03375D98, &EV_Tails01);
-	WriteData((NJS_MOTION**)0x03375DA8, &EV_Tails01);
-	WriteData((NJS_MOTION**)0x03375DB8, &EV_Tails00);
 }
 
 extern "C" __declspec(dllexport) const ModInfo SADXModInfo = { ModLoaderVer };

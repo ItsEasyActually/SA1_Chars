@@ -1,3 +1,5 @@
+#pragma once
+
 #include "SADXModLoader.h"
 
 NJS_MATERIAL matlist_0000B68C[] = {

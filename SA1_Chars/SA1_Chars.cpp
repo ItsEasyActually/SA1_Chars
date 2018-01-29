@@ -1,5 +1,8 @@
 #include "stdafx.h"
-#include "IniFile.hpp"
+
+#include <IniFile.hpp>
+#include <cmath>
+
 #include "Sonic.h"
 #include "Tails.h"
 #include "Knuckles.h"
@@ -16,7 +19,6 @@
 #include "Eggman.h"
 #include "lanternapi.h"
 #include "MetalSonic.h"
-#include <cmath>
 
 static bool SaturnSkyChase = true;
 static bool LSShoeMorphs = true;
@@ -25,40 +27,11 @@ static bool SwapMSHover = true;
 static bool MSAlwaysHover = true;
 static bool EnableCDMS = true;
 
-static NJS_OBJECT **SONIC_OBJECTS = nullptr;
-static NJS_ACTION **SONIC_ACTIONS = nullptr;
-static NJS_MODEL_SADX **SONIC_MODELS = nullptr;
-static NJS_MOTION **SONIC_MOTIONS = nullptr;
-
-static NJS_OBJECT **MILES_OBJECTS = nullptr;
-static NJS_ACTION **MILES_ACTIONS = nullptr;
-static NJS_MODEL_SADX **MILES_MODELS = nullptr;
-static NJS_MOTION **MILES_MOTIONS = nullptr;
-
-static NJS_OBJECT **KNUCKLES_OBJECTS = nullptr;
-static NJS_ACTION **KNUCKLES_ACTIONS = nullptr;
-static NJS_MODEL_SADX **KNUCKLES_MODELS = nullptr;
-static NJS_MOTION **KNUCKLES_MOTIONS = nullptr;
-
-static NJS_OBJECT **AMY_OBJECTS = nullptr;
-static NJS_ACTION **AMY_ACTIONS = nullptr;
-static NJS_MODEL_SADX **AMY_MODELS = nullptr;
-static NJS_MOTION **AMY_MOTIONS = nullptr;
-
-static NJS_OBJECT **BIG_OBJECTS = nullptr;
-static NJS_ACTION **BIG_ACTIONS = nullptr;
-static NJS_MODEL_SADX **BIG_MODELS = nullptr;
-static NJS_MOTION **BIG_MOTIONS = nullptr;
-
 DataPointer(int, EVENT_ID, 0x03B2C570);
-DataPointer(void*, EV_MainThread_ptr, 0x3B2C578);
-DataArray(PVMEntry, MetalPVMList, 0x0090ED44, 2);
 
-DataArray(WeldInfo, SonicWeldInfo, 0x03C55E28, 0x25);
 DataArray(WeldInfo, NPCSonicWeldInfo, 0x03C56B50, 0x10);
 DataArray(WeldInfo, TailsWeldInfo, 0x03C4A610, 0x1E);
 DataArray(WeldInfo, NPCTailsWeldInfo, 0x03C4A938, 0x19);
-DataArray(WeldInfo, KnucklesWeldInfo, 0x03C52D68, 0x1E);
 DataArray(WeldInfo, NPCKnucklesWeldInfo, 0x03C53038, 0x19);
 DataArray(WeldInfo, AmyWeldInfo, 0x03C546D0, 0x12);
 DataArray(WeldInfo, NPCAmyWeldInfo, 0x03C54EE0, 0x0D);
@@ -67,13 +40,7 @@ DataArray(WeldInfo, MetalSonicWeldInfo, 0x03C55D68, 8);
 DataArray(WeldInfo, TikalWeldInfo, 0x038F3AB8, 14);
 DataArray(WeldInfo, EggmanWeldInfo, 0x038F3F28, 15);
 
-DataArray(EntityData2*, EntityData2Ptrs, 0x03B36DD0, 8);
 FunctionPointer(void, sub_4083D0, (NJS_ACTION *a1, float a2, int a3), 0x004083D0);
-DataArray(float, TailsMatrix1, 0x03C49CF8, 16);
-DataArray(float, TailsMatrix2, 0x03C49C60, 16);
-DataArray(AnimData, TailsAnimData, 0x03C49D90, 136);
-
-
 
 //Replacement Functions
 void __cdecl Sonic_MorphStretchyFeet_c(CharObj2* a1)
@@ -237,7 +204,7 @@ static void __cdecl Tails_Jiggle_mod(ObjectMaster *_this)
 	EntityData1* v2 = _this->Data1;
 	int v3 = v2->CharIndex;
 
-	if (!CharObj1Ptrs[v3])
+	if (!EntityData1Ptrs[v3])
 	{
 		CheckThingButThenDeleteObject(_this);
 		return;

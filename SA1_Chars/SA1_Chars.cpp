@@ -54,16 +54,16 @@ void __cdecl Sonic_MorphStretchyFeet_c(CharObj2* a1)
 	{
 		if (a1->AnimationThing.Index == 13)
 		{
-			if (a1->AnimationThing.Frame >= 16.0)
+			if (a1->AnimationThing.Frame >= 16.0f)
 			{
-				if (a1->AnimationThing.Frame <= 24.0)
+				if (a1->AnimationThing.Frame <= 24.0f)
 				{
-					a1->SomeFrameNumberThing = 0;
+					a1->SomeFrameNumberThing = 0.0f;
 					v3 = &LS_Morph_L03;
 				}
 				else
 				{
-					v2 = (a1->AnimationThing.Frame - 24.0) * 0.125;
+					v2 = (a1->AnimationThing.Frame - 24.0f) * 0.125f;
 					a1->SomeFrameNumberThing = v2;
 					MorphPoints(&LS_Morph_L03, &LS_Morph_L02, &LS_Morph_L01, v2);
 					v3 = &LS_Morph_L01;
@@ -72,21 +72,21 @@ void __cdecl Sonic_MorphStretchyFeet_c(CharObj2* a1)
 			}
 			else
 			{
-				a4 = (16.0 - a1->AnimationThing.Frame) * 0.0625;
+				a4 = (16.0f - a1->AnimationThing.Frame) * 0.0625f;
 				a1->SomeFrameNumberThing = a4;
 				MorphPoints(&LS_Morph_L03, &LS_Morph_L02, &LS_Morph_L01, a4);
 				SONIC_OBJECTS[59]->model = &LS_Morph_L01;
 			}
-			if (a1->AnimationThing.Frame < 8.0 || a1->AnimationThing.Frame > 16.0)
+			if (a1->AnimationThing.Frame < 8.0f || a1->AnimationThing.Frame > 16.0f)
 			{
-				if (a1->AnimationThing.Frame <= 16.0 || a1->AnimationThing.Frame > 32.0)
+				if (a1->AnimationThing.Frame <= 16.0f || a1->AnimationThing.Frame > 32.0f)
 				{
-					a1->TailsFlightTime = 0;
+					a1->TailsFlightTime = 0.0f;
 					SONIC_OBJECTS[61]->model = &LS_Morph_R02;
 				}
 				else
 				{
-					v5 = (32.0 - a1->AnimationThing.Frame) * 0.0625;
+					v5 = (32.0f - a1->AnimationThing.Frame) * 0.0625f;
 					a1->TailsFlightTime = v5;
 					MorphPoints(&LS_Morph_R02, &LS_Morph_R03, &LS_Morph_R01, v5);
 					SONIC_OBJECTS[61]->model = &LS_Morph_R01;
@@ -94,7 +94,7 @@ void __cdecl Sonic_MorphStretchyFeet_c(CharObj2* a1)
 			}
 			else
 			{
-				v4 = (a1->AnimationThing.Frame - 8.0) * 0.125;
+				v4 = (a1->AnimationThing.Frame - 8.0f) * 0.125f;
 				a1->TailsFlightTime = v4;
 				MorphPoints(&LS_Morph_R02, &LS_Morph_R03, &LS_Morph_R01, v4);
 				SONIC_OBJECTS[61]->model = &LS_Morph_R01;
@@ -102,8 +102,8 @@ void __cdecl Sonic_MorphStretchyFeet_c(CharObj2* a1)
 		}
 		else
 		{
-			a1->SomeFrameNumberThing = 0;
-			a1->TailsFlightTime = 0;
+			a1->SomeFrameNumberThing = 0.0f;
+			a1->TailsFlightTime = 0.0f;
 			SONIC_OBJECTS[59]->model = &attach_00581880;
 			SONIC_OBJECTS[61]->model = &attach_00582578;
 		}
@@ -112,16 +112,16 @@ void __cdecl Sonic_MorphStretchyFeet_c(CharObj2* a1)
 	{
 		if (a1->AnimationThing.Index == 13)
 		{
-			if (a1->AnimationThing.Frame >= 16.0)
+			if (a1->AnimationThing.Frame >= 16.0f)
 			{
-				if (a1->AnimationThing.Frame <= 24.0)
+				if (a1->AnimationThing.Frame <= 24.0f)
 				{
-					a1->SomeFrameNumberThing = 0;
+					a1->SomeFrameNumberThing = 0.0f;
 					v3 = &attach_0057464C;
 				}
 				else
 				{
-					v2 = (a1->AnimationThing.Frame - 24.0) * 0.125;
+					v2 = (a1->AnimationThing.Frame - 24.0f) * 0.125f;
 					a1->SomeFrameNumberThing = v2;
 					MorphPoints(&attach_0057464C, &attach_00573DFC, &attach_005735AC, v2);
 					v3 = &attach_005735AC;
@@ -130,21 +130,21 @@ void __cdecl Sonic_MorphStretchyFeet_c(CharObj2* a1)
 			}
 			else
 			{
-				a4 = (16.0 - a1->AnimationThing.Frame) * 0.0625;
+				a4 = (16.0f - a1->AnimationThing.Frame) * 0.0625f;
 				a1->SomeFrameNumberThing = a4;
 				MorphPoints(&attach_0057464C, &attach_00573DFC, &attach_005735AC, a4);
 				SONIC_OBJECTS[21]->model = &attach_005735AC;
 			}
-			if (a1->AnimationThing.Frame < 8.0 || a1->AnimationThing.Frame > 16.0)
+			if (a1->AnimationThing.Frame < 8.0f || a1->AnimationThing.Frame > 16.0f)
 			{
-				if (a1->AnimationThing.Frame <= 16.0 || a1->AnimationThing.Frame > 32.0)
+				if (a1->AnimationThing.Frame <= 16.0f || a1->AnimationThing.Frame > 32.0f)
 				{
-					a1->TailsFlightTime = 0;
+					a1->TailsFlightTime = 0.0f;
 					SONIC_OBJECTS[16]->model = &attach_00575AB4;
 				}
 				else
 				{
-					v5 = (32.0 - a1->AnimationThing.Frame) * 0.0625;
+					v5 = (32.0f - a1->AnimationThing.Frame) * 0.0625f;
 					a1->TailsFlightTime = v5;
 					MorphPoints(&attach_00575AB4, &attach_0057630C, &attach_0057525C, v5);
 					SONIC_OBJECTS[16]->model = &attach_0057525C;
@@ -152,7 +152,7 @@ void __cdecl Sonic_MorphStretchyFeet_c(CharObj2* a1)
 			}
 			else
 			{
-				v4 = (a1->AnimationThing.Frame - 8.0) * 0.125;
+				v4 = (a1->AnimationThing.Frame - 8.0f) * 0.125f;
 				a1->TailsFlightTime = v4;
 				MorphPoints(&attach_00575AB4, &attach_0057630C, &attach_0057525C, v4);
 				SONIC_OBJECTS[16]->model = &attach_0057525C;
@@ -160,8 +160,8 @@ void __cdecl Sonic_MorphStretchyFeet_c(CharObj2* a1)
 		}
 		else
 		{
-			a1->SomeFrameNumberThing = 0;
-			a1->TailsFlightTime = 0;
+			a1->SomeFrameNumberThing = 0.0f;
+			a1->TailsFlightTime = 0.0f;
 			SONIC_OBJECTS[21]->model = &attach_0055F304;
 			SONIC_OBJECTS[16]->model = &attach_00560DA4;
 		}
@@ -2272,11 +2272,11 @@ static void __declspec(naked) Sonic_Run1Ani_swap()
 	{
 		push esi // a1
 
-				 // Call your __cdecl function here:
-				 call Sonic_Run1Ani_mod
+		// Call your __cdecl function here:
+		call Sonic_Run1Ani_mod
 
-				 pop esi // a1
-				 retn
+		pop esi // a1
+		retn
 	}
 }
 
@@ -2308,11 +2308,11 @@ static void __declspec(naked) Sonic_Run2Ani_swap()
 	{
 		push esi // a1
 
-				 // Call your __cdecl function here:
-				 call Sonic_Run2Ani_mod
+		// Call your __cdecl function here:
+		call Sonic_Run2Ani_mod
 
-				 pop esi // a1
-				 retn
+		pop esi // a1
+		retn
 	}
 }
 
@@ -2344,11 +2344,11 @@ static void __declspec(naked) Sonic_Run1Ani_origasm()
 	{
 		push esi // a1
 
-				 // Call your __cdecl function here:
-				 call Sonic_Run1Ani_orig
+		// Call your __cdecl function here:
+		call Sonic_Run1Ani_orig
 
-				 pop esi // a1
-				 retn
+		pop esi // a1
+		retn
 	}
 }
 

@@ -144,9 +144,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <Text Include="ReadMe.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="Amy.h" />
     <ClInclude Include="Big.h" />
     <ClInclude Include="d3d8types.h" />

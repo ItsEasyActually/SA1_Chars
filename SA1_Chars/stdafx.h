@@ -1,8 +1,8 @@
 #pragma once
 
 #include <SADXModLoader.h>
-#include <string>
 #include <IniFile.hpp>
+#include <cmath>
 
 #include "lanternapi.h"
 

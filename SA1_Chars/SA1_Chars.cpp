@@ -3163,7 +3163,6 @@ extern "C" __declspec(dllexport) void __cdecl Init(const char *path, const Helpe
 	HMODULE Lantern = GetModuleHandle(L"sadx-dc-lighting");
 	if (Lantern != nullptr)
 	{
-		typedef const char* (__cdecl* lantern_load_cb)(int level, int act);
 		material_register(Specular0, LengthOfArray(Specular0), &ForceDiffuse0Specular0);
 		material_register(Specular1, LengthOfArray(Specular1), &ForceDiffuse0Specular1);
 		material_register(Specular2, LengthOfArray(Specular2), &ForceDiffuse2Specular2);

@@ -1,3 +1,5 @@
+#pragma once
+
 #include "SADXModLoader.h"
 
 NJS_MATERIAL material_8D4D123E5CCFF67AF8D[] = {

@@ -82,13 +82,13 @@ void __cdecl Sonic_MorphStretchyFeet_c(CharObj2* a1)
 				if (a1->AnimationThing.Frame <= 16.0f || a1->AnimationThing.Frame > 32.0f)
 				{
 					a1->TailsFlightTime = 0.0f;
-					SONIC_OBJECTS[61]->model = &LS_Morph_R02;
+					SONIC_OBJECTS[61]->model = &LS_Morph_R03;
 				}
 				else
 				{
 					v5 = (32.0f - a1->AnimationThing.Frame) * 0.0625f;
 					a1->TailsFlightTime = v5;
-					MorphPoints(&LS_Morph_R02, &LS_Morph_R03, &LS_Morph_R01, v5);
+					MorphPoints(&LS_Morph_R03, &LS_Morph_R02, &LS_Morph_R01, v5);
 					SONIC_OBJECTS[61]->model = &LS_Morph_R01;
 				}
 			}
@@ -96,7 +96,7 @@ void __cdecl Sonic_MorphStretchyFeet_c(CharObj2* a1)
 			{
 				v4 = (a1->AnimationThing.Frame - 8.0f) * 0.125f;
 				a1->TailsFlightTime = v4;
-				MorphPoints(&LS_Morph_R02, &LS_Morph_R03, &LS_Morph_R01, v4);
+				MorphPoints(&LS_Morph_R03, &LS_Morph_R02, &LS_Morph_R01, v4);
 				SONIC_OBJECTS[61]->model = &LS_Morph_R01;
 			}
 		}
@@ -117,14 +117,14 @@ void __cdecl Sonic_MorphStretchyFeet_c(CharObj2* a1)
 				if (a1->AnimationThing.Frame <= 24.0f)
 				{
 					a1->SomeFrameNumberThing = 0.0f;
-					v3 = &attach_0057464C;
+					v3 = SONIC_MODELS[4];
 				}
 				else
 				{
 					v2 = (a1->AnimationThing.Frame - 24.0f) * 0.125f;
 					a1->SomeFrameNumberThing = v2;
-					MorphPoints(&attach_0057464C, &attach_00573DFC, &attach_005735AC, v2);
-					v3 = &attach_005735AC;
+					MorphPoints(SONIC_MODELS[4], SONIC_MODELS[3], SONIC_MODELS[2], v2);
+					v3 = SONIC_MODELS[2];
 				}
 				SONIC_OBJECTS[21]->model = v3;
 			}
@@ -132,38 +132,38 @@ void __cdecl Sonic_MorphStretchyFeet_c(CharObj2* a1)
 			{
 				a4 = (16.0f - a1->AnimationThing.Frame) * 0.0625f;
 				a1->SomeFrameNumberThing = a4;
-				MorphPoints(&attach_0057464C, &attach_00573DFC, &attach_005735AC, a4);
-				SONIC_OBJECTS[21]->model = &attach_005735AC;
+				MorphPoints(SONIC_MODELS[4], SONIC_MODELS[3], SONIC_MODELS[2], a4);
+				SONIC_OBJECTS[21]->model = SONIC_MODELS[2];
 			}
 			if (a1->AnimationThing.Frame < 8.0f || a1->AnimationThing.Frame > 16.0f)
 			{
 				if (a1->AnimationThing.Frame <= 16.0f || a1->AnimationThing.Frame > 32.0f)
 				{
 					a1->TailsFlightTime = 0.0f;
-					SONIC_OBJECTS[16]->model = &attach_00575AB4;
+					SONIC_OBJECTS[16]->model = SONIC_MODELS[7];
 				}
 				else
 				{
 					v5 = (32.0f - a1->AnimationThing.Frame) * 0.0625f;
 					a1->TailsFlightTime = v5;
-					MorphPoints(&attach_00575AB4, &attach_0057630C, &attach_0057525C, v5);
-					SONIC_OBJECTS[16]->model = &attach_0057525C;
+					MorphPoints(SONIC_MODELS[7], SONIC_MODELS[6], SONIC_MODELS[5], v5);
+					SONIC_OBJECTS[16]->model = SONIC_MODELS[5];
 				}
 			}
 			else
 			{
 				v4 = (a1->AnimationThing.Frame - 8.0f) * 0.125f;
 				a1->TailsFlightTime = v4;
-				MorphPoints(&attach_00575AB4, &attach_0057630C, &attach_0057525C, v4);
-				SONIC_OBJECTS[16]->model = &attach_0057525C;
+				MorphPoints(SONIC_MODELS[7], SONIC_MODELS[6], SONIC_MODELS[5], v4);
+				SONIC_OBJECTS[16]->model = SONIC_MODELS[5];
 			}
 		}
 		else
 		{
 			a1->SomeFrameNumberThing = 0.0f;
 			a1->TailsFlightTime = 0.0f;
-			SONIC_OBJECTS[21]->model = &attach_0055F304;
-			SONIC_OBJECTS[16]->model = &attach_00560DA4;
+			SONIC_OBJECTS[21]->model = SONIC_MODELS[0];
+			SONIC_OBJECTS[16]->model = SONIC_MODELS[1];
 		}
 	}
 }
@@ -2645,6 +2645,118 @@ NJS_MATERIAL* Specular2[] = {
 	&matlist_0000B68C[0],
 	&matlist_0000B68C[1],
 	&matlist_0000B68C[2],
+
+	//Metal Sonic Materials
+	&matlist_8D55B7D118592DBAB23[0],
+	&matlist_8D55B7D16E366A94E23[0],
+	&matlist_8D55B7D16E366A94E23[1],
+	&matlist_8D55B7D22CB369ACD09[0],
+	&matlist_8D55B7D22CB369ACD09[1],
+	&matlist_8D55B7D22CB369ACD09[2],
+	&matlist_8D55B7D4CD69DA45D9A[0],
+	&matlist_8D55B7D4CD69DA45D9A[1],
+	&matlist_8D55B7D4CD69DA45D9A[2],
+	&matlist_8D55B7D1CA1362FB857[0],
+	&matlist_8D55B7DDFED0D5D9370[0],
+	&matlist_8D55B7DE4C2001ADD5A[0],
+	&matlist_8D55B7DE4C2001ADD5A[1],
+	&matlist_8D55B7DE4C2001ADD5A[2],
+	&matlist_8D55B7DEE6DE16B776D[0],
+	&matlist_8D55B7DEE6DE16B776D[1],
+	&matlist_8D55B7DEE6DE16B776D[2],
+	&matlist_8D55B7DEBD3F2EAD2F1[0],
+	&matlist_8D55B7DEBD3F2EAD2F1[1],
+	&matlist_8D55B7DEBD3F2EAD2F1[2],
+	&matlist_8D55B7DE849D486F6B4[0],
+	&matlist_8D55B7AA7C8826CEEB7[0],
+	&matlist_8D55B7AAAC52BCF18C5[0],
+	&matlist_8D55B7AAAC52BCF18C5[1],
+	&matlist_8D55B7AAAC52BCF18C5[2],
+	&matlist_8D55B7AB76E2BB3A8EE[0],
+	&matlist_8D55B7AB41864833F33[0],
+	&matlist_8D55B7AB23349B956BA[0],
+	&matlist_8D55B7AB23349B956BA[1],
+	&matlist_8D55B7AB23349B956BA[2],
+	&matlist_8D55B7AAFF6E5E7C4A7[0],
+	&matlist_8D55B7BF81BF26F0024[0],
+	&matlist_8D55B7BFB85B71B70B3[0],
+	&matlist_8D55B7BFB85B71B70B3[1],
+	&matlist_8D55B7BFB85B71B70B3[2],
+	&matlist_8D55B7C096E197DEFF4[0],
+	&matlist_8D55B7C055B68284902[0],
+	&matlist_8D55B7C01FB67A12012[0],
+	&matlist_8D55B7C01FB67A12012[1],
+	&matlist_8D55B7C01FB67A12012[2],
+	&matlist_8D55B7BFE3DDC6C7D4B[0],
+	&material_8D55B7A3530446F0991[0],
+	&material_8D55B7A3530446F0991[1],
+	&material_8D55B7A3530446F0991[2],
+	&material_8D55B7A3530446F0991[3],
+	&material_8D55B7A3530446F0991[4],
+	&material_8D55B7A3530446F0991[5],
+	&material_8D55B7A38789DEDC69C[0],
+	&material_8D55B7A38789DEDC69C[1],
+	&material_8D55B7A38789DEDC69C[2],
+	&material_8D55B7A38789DEDC69C[3],
+	&material_8D55B7A38789DEDC69C[4],
+	&material_8D5116C3926D8D5906F[0],
+	&material_8D5116C3BA15800DEB6[0],
+	&material_8D5116C3BA15800DEB6[1],
+	&material_8D5116BE293DDE1DEF2[0],
+	&material_8D5116BE293DDE1DEF2[1],
+	&material_8D5116BE293DDE1DEF2[2],
+	&material_8D5116BE0A8816F0248[0],
+	&material_8D5116BE0A8816F0248[1],
+	&material_8D5116BE0A8816F0248[2],
+	&material_8D5116C3DFE158B2CBE[0],
+	&material_8D5116C3043A1A5A37C[0],
+	&material_8D5116C33EA2214B41C[0],
+	&material_8D5116C33EA2214B41C[1],
+	&material_8D5116BF0847DC2166A[0],
+	&material_8D5116BF0847DC2166A[1],
+	&material_8D5116BF0847DC2166A[2],
+	&material_8D5116BEBA32EC72570[0],
+	&material_8D5116BEBA32EC72570[1],
+	&material_8D5116BEBA32EC72570[2],
+	&material_8D5116C361324ADDBE2[0],
+	&material_8D5116BFAFDEB45D904[0],
+	&material_8D5116BFD50968AB039[0],
+	&material_8D5116BFD50968AB039[1],
+	&material_8D5116BFD50968AB039[2],
+	&material_8D5116C06D78A30A694[0],
+	&material_8D5116C0AB6327155F9[1],
+	&material_8D5116C02408BBC885F[0],
+	&material_8D5116C02408BBC885F[1],
+	&material_8D5116C02408BBC885F[2],
+	&material_8D5116BFFC0B54D56ED[0],
+	&material_8D5116C1C0CED7077A1[0],
+	&material_8D5116C1E1E9721DF1B[0],
+	&material_8D5116C1E1E9721DF1B[1],
+	&material_8D5116C1E1E9721DF1B[2],
+	&material_8D5116C2775C7842B41[0],
+	&material_8D5116C253DF7A4E3E5[0],
+	&material_8D5116C21F5EC47BAEB[0],
+	&material_8D5116C21F5EC47BAEB[1],
+	&material_8D5116C21F5EC47BAEB[2],
+	&material_8D5116C20044E2E60D1[0],
+	&material_8D5116BD49226C08BC9[0],
+	&material_8D5116BD49226C08BC9[1],
+	&material_8D5116BD49226C08BC9[2],
+	&material_8D5116BD49226C08BC9[3],
+	&material_8D5116BD49226C08BC9[4],
+	&material_8D5116BD49226C08BC9[5],
+	&material_8D5116BDB429733A462[0],
+	&material_8D5116BDB429733A462[1],
+	&material_8D5116BDB429733A462[2],
+	&material_8D5116BDB429733A462[3],
+	&material_8D5116BDB429733A462[4],
+	&matlist_0058CD08[0],
+	&matlist_0058F83C[0],
+	&matlist_0058FAE0[0],
+	&matlist_00597EA8[0],
+	&matlist_0059A9D4[0],
+	&matlist_0059AC78[0],
+	&matlist_0059C268[0],
 
 	//Knuckles Material Fixes
 	&material_8D49E330C443CA61291[0],

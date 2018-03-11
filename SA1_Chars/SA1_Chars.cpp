@@ -21,12 +21,17 @@
 #include "lanternapi.h"
 #include "MetalSonic.h"
 
+#define ReplacePVM(a)  helperFunctions.ReplaceFile("system\\" a ".PVM", "system\\" a "_DC.PVM");
+#define ReplacePVMHQ(a)  helperFunctions.ReplaceFile("system\\" a ".PVM", "system\\" a "_HQ.PVM");
+
+enum MSHoverBehavior { Normal, Swap, Always };
+enum StretchyShoesBehavior { Regular, LSShoeMorphs, Disable };
+
 static bool SaturnSkyChase = true;
-static bool LSShoeMorphs = true;
-static bool StretchyShoe = true;
-static bool SwapMSHover = true;
-static bool MSAlwaysHover = true;
-static bool EnableCDMS = true;
+static int StretchyShoes = Regular;
+static int MSHover = Normal;
+static bool EnableCDMetalSonic = true;
+static bool HighResTex = true;
 
 DataPointer(int, EVENT_ID, 0x03B2C570);
 
@@ -3268,6 +3273,9 @@ bool ForceDiffuse2Specular3(NJS_MATERIAL* material, Uint32 flags)
 
 extern "C" __declspec(dllexport) void __cdecl Init(const char *path, const HelperFunctions &helperFunctions)
 {
+	if (helperFunctions.Version < 6) {
+		PrintDebug("Hey you need to update or something\n");
+	};
 	HMODULE adv02dll = GetModuleHandle(L"ADV02MODELS");
 	HMODULE adv03dll = GetModuleHandle(L"ADV03MODELS");
 
@@ -3283,34 +3291,40 @@ extern "C" __declspec(dllexport) void __cdecl Init(const char *path, const Helpe
 		material_register(TailsShoes, LengthOfArray(TailsShoes), &ForceDiffuse0Specular1_Tails);
 	}
 
-	CopyFileA((std::string(path) + "\\default.ini").c_str(), (std::string(path) + "\\config.ini").c_str(), true);
-
 	//Ini Configuration
 	const IniFile *config = new IniFile(std::string(path) + "\\config.ini");
-	SaturnSkyChase = config->getBool("", "EnableSaturnSkyChase", true);
-	LSShoeMorphs = config->getBool("", "EnableLightSpeedShoeMorphs", true);
-	StretchyShoe = config->getBool("", "DisableStretchyShoes", true);
-	SwapMSHover = config->getBool("", "SwapMetalSonicHover", true);
-	MSAlwaysHover = config->getBool("", "MetalSonicAlwaysHovers", true);
-	EnableCDMS = config->getBool("", "EnableCDMetalSonic", true);
+	EnableCDMetalSonic = config->getBool("Characters", "EnableCDMetalSonic", true);
+	HighResTex = config->getBool("Characters", "HighResTextures", false);
+	SaturnSkyChase = config->getBool("SkyChase", "DisableSaturnSkyChase", true);
+
+	std::string MSHover_String = "Normal";
+	MSHover_String = config->getString("Characters", "MetalSonicHoverBehavior", "Normal");
+	std::string StretchyShoes_String = "Regular";
+	StretchyShoes_String = config->getString("Characters", "StretchyShoes", "Regular");
+	if (MSHover_String == "Normal") MSHover = Normal;
+	if (MSHover_String == "Swap") MSHover = Swap;
+	if (MSHover_String == "Always") MSHover = Always;
+	if (StretchyShoes_String == "Regular") StretchyShoes = Regular;
+	if (StretchyShoes_String == "LSShoeMorphs") StretchyShoes = LSShoeMorphs;
+	if (StretchyShoes_String == "Disable") StretchyShoes = Disable;
 	delete config;
 
 	//Functions
-	if (LSShoeMorphs)
+	if (StretchyShoes == LSShoeMorphs)
 	{
 		WriteJump((void*)0x00493500, Sonic_MorphStretchyFeet_asm);
 	}
-	if (StretchyShoe)
+	if (StretchyShoes == Disable)
 	{
 		WriteData((char*)0x00493500, (char)0xC3);
 	}
 	WriteData<2>((void*)0x004916A5, 0x90u);
-	if (SwapMSHover)
+	if (MSHover == Swap)
 	{
 		WriteJump((void*)0x00495BE0, Sonic_Run2Ani_swap);
 		WriteJump((void*)0x00495B00, Sonic_Run1Ani_swap);
 	}
-	if (MSAlwaysHover)
+	if (MSHover == Always)
 	{
 		WriteJump((void*)0x00495BE0, Sonic_Run2Ani_swap);
 		WriteJump((void*)0x00495B00, Sonic_Run1Ani_origasm);
@@ -3528,8 +3542,11 @@ extern "C" __declspec(dllexport) void __cdecl Init(const char *path, const Helpe
 	WriteData((NJS_OBJECT**)0x0069E24B, &OBJECT_SonicPointingFinger);
 	WriteData((NJS_OBJECT**)0x006D010C, &OBJECT_SonicPointingFinger);
 	WriteData((NJS_OBJECT**)0x006D711E, &OBJECT_SonicPointingFinger);
+	ReplacePVM("SONIC", "SONIC_DC");
+	ReplacePVM("SON_EFF", "SON_EFF_DC");
+	ReplacePVM("SUPERSONIC", "SUPERSONIC_DC");
 
-	if (EnableCDMS)
+	if (EnableCDMetalSonic)
 	{
 		SONIC_OBJECTS[68] = &object_00591068;
 		SONIC_OBJECTS[69] = &object_0059C234;
@@ -3760,6 +3777,9 @@ extern "C" __declspec(dllexport) void __cdecl Init(const char *path, const Helpe
 	WriteData((NJS_MOTION**)0x03375D98, &EV_Tails01);
 	WriteData((NJS_MOTION**)0x03375DA8, &EV_Tails01);
 	WriteData((NJS_MOTION**)0x03375DB8, &EV_Tails00);
+	ReplacePVM("MILES", "MILES_DC");
+	ReplacePVM("M_HEAD_1", "M_HEAD_1_DC");
+	ReplacePVM("M_TR_P", "M_TR_P_DC");
 
 	//Knuckles
 	//ResizeTextureList((NJS_TEXLIST *)0x0091BD20, 22);
@@ -3954,6 +3974,7 @@ extern "C" __declspec(dllexport) void __cdecl Init(const char *path, const Helpe
 	WriteData((uint16_t**)0x0472CAC, (uint16_t*)&Knuckles_ShovelClawIndices);
 	WriteData((uint16_t**)0x0472B2C, (uint16_t*)&Knuckles_HandIndices);
 	WriteData((uint16_t**)0x0472835, (uint16_t*)&Knuckles_HandIndices);
+	ReplacePVM("KNUCKLES", "KNUCKLES_DC");
 	
 	//Knuckles Upgrades
 	NJS_OBJECT **___ADV02_OBJECTS = (NJS_OBJECT **)GetProcAddress(adv02dll, "___ADV02_OBJECTS");
@@ -4090,6 +4111,11 @@ extern "C" __declspec(dllexport) void __cdecl Init(const char *path, const Helpe
 	WriteData((NJS_OBJECT**)0x009858A4, &object_00584EE0);
 	WriteJump((void*)0x007CCB90, InitAmyWeldInfo_mod);
 	WriteJump((void*)0x007CD000, InitNPCAmyWeldInfo_mod);
+	ReplacePVM("AMY", "AMY_DC");
+	ReplacePVM("A_HEAD", "A_HEAD_DC");
+	ReplacePVM("AMY_EFF", "AMY_EFF_DC");
+	ReplacePVM("AMY_EGGROBO", "AMY_EGGROBO_DC");
+	ReplacePVM("AMYROB_WING", "AMYROB_WING_DC");
 	
 
 	//Big
@@ -4212,6 +4238,7 @@ extern "C" __declspec(dllexport) void __cdecl Init(const char *path, const Helpe
 	BIG_MODELS[3] = &attach_001291A8;
 	BIG_MOTIONS[0] = &BigEV_Motion;
 	WriteJump((void*)0x007CE860, InitBigWeldInfo_mod);
+	ReplacePVM("BIG", "BIG_DC");
 
 	//Gamma
 	materials_00200D48[7]->attrflags |= NJD_FLAG_IGNORE_LIGHT;
@@ -4237,6 +4264,7 @@ extern "C" __declspec(dllexport) void __cdecl Init(const char *path, const Helpe
 	TikalWeldInfo[1].ModelB = &object_00002B38;
 	TikalWeldInfo[1].VertexPairCount = 4;
 	TikalWeldInfo[1].VertIndexes = (unsigned short *)&Tikal_RightHandIndices;
+	ReplacePVM("TIKAL", "TIKAL_DC");
 
 
 	//Eggman
@@ -4270,24 +4298,10 @@ extern "C" __declspec(dllexport) void __cdecl Init(const char *path, const Helpe
 	WriteData((NJS_OBJECT**)0x03141254, &Eggman_Object);
 	WriteData((NJS_OBJECT**)0x03142C4C, &Eggman_Object);
 	WriteData((WeldInfo**)0x007B4FBF, (WeldInfo*)&EggmanWeldList);
+	ReplacePVM("EGGMAN", "EGGMAN_DC");
 
 	//Sky Chase
 	if (SaturnSkyChase)
-	{
-		WriteData((NJS_OBJECT**)0x0028B7A0C, &Tornado1_Saturn);
-		WriteData((NJS_OBJECT**)0x0028BA71C, &Tornado1_Saturn);
-		WriteData((NJS_OBJECT**)0x0028BDDBC, &Tornado1_Saturn);
-		WriteData((NJS_OBJECT**)0x0028C09FC, &Tornado1_Saturn);
-		WriteData((NJS_OBJECT**)0x0027EFDDC, &Tornado2Before_Saturn);
-		WriteData((NJS_OBJECT**)0x0027F2AA4, &Tornado2Before_Saturn);
-		WriteData((NJS_OBJECT**)0x0027F612C, &Tornado2Before_Saturn);
-		WriteData((NJS_OBJECT**)0x0027F8974, &Tornado2Before_Saturn);
-		WriteData((NJS_OBJECT**)0x00280F23C, &Tornado2Change_Saturn);
-		WriteData((NJS_OBJECT**)0x002811CE4, &Tornado2Change_Saturn);
-		WriteData((NJS_OBJECT**)0x002814D9C, &Tornado2Change_Saturn);
-		WriteData((NJS_OBJECT**)0x002817514, &Tornado2Change_Saturn);
-	}
-	else
 	{
 		WriteData((NJS_OBJECT**)0x0028B7A0C, &Tornado1_Object);
 		WriteData((NJS_OBJECT**)0x0028BA71C, &Tornado1_Object);
@@ -4301,6 +4315,21 @@ extern "C" __declspec(dllexport) void __cdecl Init(const char *path, const Helpe
 		WriteData((NJS_OBJECT**)0x002811CE4, &Tornado2Change_Object);
 		WriteData((NJS_OBJECT**)0x002814D9C, &Tornado2Change_Object);
 		WriteData((NJS_OBJECT**)0x002817514, &Tornado2Change_Object);
+	}
+	else
+	{
+		WriteData((NJS_OBJECT**)0x0028B7A0C, &Tornado1_Saturn);
+		WriteData((NJS_OBJECT**)0x0028BA71C, &Tornado1_Saturn);
+		WriteData((NJS_OBJECT**)0x0028BDDBC, &Tornado1_Saturn);
+		WriteData((NJS_OBJECT**)0x0028C09FC, &Tornado1_Saturn);
+		WriteData((NJS_OBJECT**)0x0027EFDDC, &Tornado2Before_Saturn);
+		WriteData((NJS_OBJECT**)0x0027F2AA4, &Tornado2Before_Saturn);
+		WriteData((NJS_OBJECT**)0x0027F612C, &Tornado2Before_Saturn);
+		WriteData((NJS_OBJECT**)0x0027F8974, &Tornado2Before_Saturn);
+		WriteData((NJS_OBJECT**)0x00280F23C, &Tornado2Change_Saturn);
+		WriteData((NJS_OBJECT**)0x002811CE4, &Tornado2Change_Saturn);
+		WriteData((NJS_OBJECT**)0x002814D9C, &Tornado2Change_Saturn);
+		WriteData((NJS_OBJECT**)0x002817514, &Tornado2Change_Saturn);
 	}
 	WriteData((NJS_OBJECT**)0x002935DFC, &TornadoDestroyed_Object);
 	WriteData((NJS_OBJECT**)0x0028988FC, &Tornado2Transformation_Object);
@@ -4341,6 +4370,20 @@ extern "C" __declspec(dllexport) void __cdecl Init(const char *path, const Helpe
 	WriteData((NJS_OBJECT***)0x007D7CB1, &EV_TR2BEFORE_Object.child);
 	WriteData((NJS_OBJECT***)0x007D7CE1, &EV_TR2BEFORE_Object.child);
 	WriteData((NJS_OBJECT**)0x032ECE0C, &EV_TR2CHANGE_Object);
+	ReplacePVM("SHOOTING1", "SHOOTING1_DC");
+	ReplacePVM("SHOOTING2", "SHOOTING2_DC");
+	ReplacePVM("EV_TR1_WITH_SONIC", "EV_TR1_WITH_SONIC_DC");
+	ReplacePVM("EV_TR2BEFORE_WITH_SONIC", "EV_TR2BEFORE_WITH_SONIC_DC");
+	ReplacePVM("EV_TR2CHANGE_WITH_SONIC", "EV_TR2CHANGE_WITH_SONIC_DC");
+
+	if (HighResTex)
+	{
+		ReplacePVMHQ("SONIC", "SONIC_HQ");
+		ReplacePVMHQ("AMY", "AMY_HQ");
+		ReplacePVMHQ("BIG", "BIG_HQ");
+		ReplacePVMHQ("KNUCKLES", "KNUCKLES_HQ");
+		ReplacePVMHQ("MILES", "MILES_HQ");
+	}
 }
 
 extern "C" __declspec(dllexport) const ModInfo SADXModInfo = { ModLoaderVer };

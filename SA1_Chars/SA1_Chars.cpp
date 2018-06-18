@@ -22,7 +22,6 @@
 #include "MetalSonic.h"
 
 #define ReplacePVM(a)  helperFunctions.ReplaceFile("system\\" a ".PVM", "system\\" a "_DC.PVM");
-#define ReplacePVMHQ(a)  helperFunctions.ReplaceFile("system\\" a ".PVM", "system\\" a "_HQ.PVM");
 
 enum MSHoverBehavior { Normal, Swap, Always };
 enum StretchyShoesBehavior { Regular, LSShoeMorphs, Disable };
@@ -31,7 +30,6 @@ static bool SaturnSkyChase = true;
 static int StretchyShoes = Regular;
 static int MSHover = Normal;
 static bool EnableCDMetalSonic = true;
-static bool HighResTex = true;
 
 DataPointer(int, EVENT_ID, 0x03B2C570);
 
@@ -3294,7 +3292,6 @@ extern "C" __declspec(dllexport) void __cdecl Init(const char *path, const Helpe
 	//Ini Configuration
 	const IniFile *config = new IniFile(std::string(path) + "\\config.ini");
 	EnableCDMetalSonic = config->getBool("Characters", "EnableCDMetalSonic", true);
-	HighResTex = config->getBool("Characters", "HighResTextures", false);
 	SaturnSkyChase = config->getBool("SkyChase", "DisableSaturnSkyChase", true);
 
 	std::string MSHover_String = "Normal";
@@ -3551,8 +3548,8 @@ extern "C" __declspec(dllexport) void __cdecl Init(const char *path, const Helpe
 		SONIC_OBJECTS[68] = &object_00591068;
 		SONIC_OBJECTS[69] = &object_0059C234;
 		SONIC_OBJECTS[70] = &object_0059E254;
-		MetalPVMList[0].Name = "CDMETALSONIC";
 		WriteJump((void*)0x007D18F0, InitMetalSonicWeldInfo);
+		ReplacePVM("METALSONIC", "METALSONIC_DC");
 	}
 
 	//Tails Model Data
@@ -4375,15 +4372,6 @@ extern "C" __declspec(dllexport) void __cdecl Init(const char *path, const Helpe
 	ReplacePVM("EV_TR1_WITH_SONIC", "EV_TR1_WITH_SONIC_DC");
 	ReplacePVM("EV_TR2BEFORE_WITH_SONIC", "EV_TR2BEFORE_WITH_SONIC_DC");
 	ReplacePVM("EV_TR2CHANGE_WITH_SONIC", "EV_TR2CHANGE_WITH_SONIC_DC");
-
-	if (HighResTex)
-	{
-		ReplacePVMHQ("SONIC", "SONIC_HQ");
-		ReplacePVMHQ("AMY", "AMY_HQ");
-		ReplacePVMHQ("BIG", "BIG_HQ");
-		ReplacePVMHQ("KNUCKLES", "KNUCKLES_HQ");
-		ReplacePVMHQ("MILES", "MILES_HQ");
-	}
 }
 
 extern "C" __declspec(dllexport) const ModInfo SADXModInfo = { ModLoaderVer };

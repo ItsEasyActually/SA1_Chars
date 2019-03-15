@@ -4297,6 +4297,29 @@ extern "C" __declspec(dllexport) void __cdecl Init(const char *path, const Helpe
 	WriteData((WeldInfo**)0x007B4FBF, (WeldInfo*)&EggmanWeldList);
 	ReplacePVM("EGGMAN", "EGGMAN_DC");
 
+	//Eggman in Eggmobile for cutscenes (EV_EGGMOBLE0)
+	WriteData((NJS_OBJECT**)0x2CD393C, &Eggmobile0_Object);
+	WriteData((NJS_OBJECT**)0x2CD46F4, &Eggmobile0_Object);
+	WriteData((NJS_OBJECT**)0x2CD594C, &Eggmobile0_Object);
+	WriteData((NJS_OBJECT**)0x2CD6904, &Eggmobile0_Object);
+	WriteData((NJS_OBJECT**)0x2D41A34, &Eggmobile0_Object);
+	WriteData((NJS_OBJECT**)0x2D42BBC, &Eggmobile0_Object);
+	WriteData((NJS_OBJECT**)0x2D44434, &Eggmobile0_Object);
+	WriteData((NJS_OBJECT**)0x2DCDB14, &Eggmobile0_Object);
+	WriteData((NJS_OBJECT**)0x2E2C844, &Eggmobile0_Object);
+	WriteData((NJS_OBJECT**)0x2EEC334, &Eggmobile0_Object);
+	WriteData((NJS_OBJECT**)0x3018C44, &Eggmobile0_Object);
+	WriteData((NJS_OBJECT**)0x3019E5C, &Eggmobile0_Object);
+	WriteData((NJS_OBJECT**)0x301B074, &Eggmobile0_Object);
+	WriteData((NJS_OBJECT**)0x301C41C, &Eggmobile0_Object);
+	WriteData((NJS_OBJECT**)0x301DE94, &Eggmobile0_Object);
+	WriteData((NJS_OBJECT**)0x302015C, &Eggmobile0_Object);
+	WriteData((NJS_OBJECT**)0x3021854, &Eggmobile0_Object);
+	WriteData((NJS_OBJECT**)0x30220EC, &Eggmobile0_Object);
+	WriteData((NJS_OBJECT**)0x321A55C, &Eggmobile0_Object);
+	WriteData((WeldInfo**)0x006F08FB, (WeldInfo*)&Eggmobile0WeldList);
+	ReplacePVM("EV_EGGMOBLE0", "EV_EGGMOBLE0_DC");
+
 	//Sky Chase
 	if (SaturnSkyChase)
 	{

@@ -26,7 +26,7 @@
 enum MSHoverBehavior { Normal, Swap, Always };
 enum StretchyShoesBehavior { Regular, LSShoeMorphs, Disable };
 
-static bool SaturnSkyChase = true;
+static bool DisableSaturnSkyChase = false;
 static int StretchyShoes = Regular;
 static int MSHover = Normal;
 static bool EnableCDMetalSonic = true;
@@ -3292,7 +3292,7 @@ extern "C" __declspec(dllexport) void __cdecl Init(const char *path, const Helpe
 	//Ini Configuration
 	const IniFile *config = new IniFile(std::string(path) + "\\config.ini");
 	EnableCDMetalSonic = config->getBool("Characters", "EnableCDMetalSonic", true);
-	SaturnSkyChase = config->getBool("SkyChase", "DisableSaturnSkyChase", true);
+	DisableSaturnSkyChase = config->getBool("SkyChase", "DisableSaturnSkyChase", false);
 
 	std::string MSHover_String = "Normal";
 	MSHover_String = config->getString("Characters", "MetalSonicHoverBehavior", "Normal");
@@ -4321,7 +4321,7 @@ extern "C" __declspec(dllexport) void __cdecl Init(const char *path, const Helpe
 	ReplacePVM("EV_EGGMOBLE0", "EV_EGGMOBLE0_DC");
 
 	//Sky Chase
-	if (SaturnSkyChase)
+	if (DisableSaturnSkyChase)
 	{
 		WriteData((NJS_OBJECT**)0x0028B7A0C, &Tornado1_Object);
 		WriteData((NJS_OBJECT**)0x0028BA71C, &Tornado1_Object);

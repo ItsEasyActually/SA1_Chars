@@ -23,16 +23,27 @@
 
 #define ReplacePVM(a)  helperFunctions.ReplaceFile("system\\" a ".PVM", "system\\" a "_DC.PVM");
 
+//Customization Options
 enum MSHoverBehavior { Normal, Swap, Always };
 enum StretchyShoesBehavior { Regular, LSShoeMorphs, Disable };
 
+static bool EnableSonic = true;
+static bool EnableMiles = true;
+static bool EnableKnuckles = true;
+static bool EnableAmy = true;
+static bool EnableBig = true;
+static bool EnableGamma = true;
+static bool EnableTikal = true;
+static bool EnableEggman = true;
+static bool EnableSkychase = true;
 static bool DisableSaturnSkyChase = false;
 static int StretchyShoes = Regular;
 static int MSHover = Normal;
 static bool EnableCDMetalSonic = true;
+static bool EnableExtras = false;
 
+//Additional Data Bits
 DataPointer(int, EVENT_ID, 0x03B2C570);
-
 DataArray(WeldInfo, NPCSonicWeldInfo, 0x03C56B50, 0x10);
 DataArray(WeldInfo, TailsWeldInfo, 0x03C4A610, 0x1E);
 DataArray(WeldInfo, NPCTailsWeldInfo, 0x03C4A938, 0x19);
@@ -3269,67 +3280,9 @@ bool ForceDiffuse2Specular3(NJS_MATERIAL* material, Uint32 flags)
 	return true;
 }
 
-extern "C" __declspec(dllexport) void __cdecl Init(const char *path, const HelperFunctions &helperFunctions)
+//Character Init Functions
+void Init_Sonic()
 {
-	if (helperFunctions.Version < 6) {
-		PrintDebug("Hey you need to update or something\n");
-	};
-	HMODULE adv02dll = GetModuleHandle(L"ADV02MODELS");
-	HMODULE adv03dll = GetModuleHandle(L"ADV03MODELS");
-
-	//Lantern API Export
-	HMODULE Lantern = GetModuleHandle(L"sadx-dc-lighting");
-	if (Lantern != nullptr)
-	{
-		material_register(Specular0, LengthOfArray(Specular0), &ForceDiffuse0Specular0);
-		material_register(Specular1, LengthOfArray(Specular1), &ForceDiffuse0Specular1);
-		material_register(Specular2, LengthOfArray(Specular2), &ForceDiffuse2Specular2);
-		material_register(Specular3, LengthOfArray(Specular3), &ForceDiffuse2Specular3);
-		material_register(TailsBody, LengthOfArray(TailsBody), &ForceDiffuse0Specular0_Tails);
-		material_register(TailsShoes, LengthOfArray(TailsShoes), &ForceDiffuse0Specular1_Tails);
-	}
-
-	//Ini Configuration
-	const IniFile *config = new IniFile(std::string(path) + "\\config.ini");
-	EnableCDMetalSonic = config->getBool("Characters", "EnableCDMetalSonic", true);
-	DisableSaturnSkyChase = config->getBool("SkyChase", "DisableSaturnSkyChase", false);
-
-	std::string MSHover_String = "Normal";
-	MSHover_String = config->getString("Characters", "MetalSonicHoverBehavior", "Normal");
-	std::string StretchyShoes_String = "Regular";
-	StretchyShoes_String = config->getString("Characters", "StretchyShoes", "Regular");
-	if (MSHover_String == "Normal") MSHover = Normal;
-	if (MSHover_String == "Swap") MSHover = Swap;
-	if (MSHover_String == "Always") MSHover = Always;
-	if (StretchyShoes_String == "Regular") StretchyShoes = Regular;
-	if (StretchyShoes_String == "LSShoeMorphs") StretchyShoes = LSShoeMorphs;
-	if (StretchyShoes_String == "Disable") StretchyShoes = Disable;
-	delete config;
-
-	//Functions
-	if (StretchyShoes == LSShoeMorphs)
-	{
-		WriteJump((void*)0x00493500, Sonic_MorphStretchyFeet_asm);
-	}
-	if (StretchyShoes == Disable)
-	{
-		WriteData((char*)0x00493500, (char)0xC3);
-	}
-	WriteData<2>((void*)0x004916A5, 0x90u);
-	if (MSHover == Swap)
-	{
-		WriteJump((void*)0x00495BE0, Sonic_Run2Ani_swap);
-		WriteJump((void*)0x00495B00, Sonic_Run1Ani_swap);
-	}
-	if (MSHover == Always)
-	{
-		WriteJump((void*)0x00495BE0, Sonic_Run2Ani_swap);
-		WriteJump((void*)0x00495B00, Sonic_Run1Ani_origasm);
-	}
-
-	//Sonic Data for DLL Export
-	//ResizeTextureList((NJS_TEXLIST *)0x91CB58, 28);
-
 	SONIC_OBJECTS[0] = &object_0056AF50;
 	SONIC_OBJECTS[1] = &object_00563B7C;
 	SONIC_OBJECTS[2] = &object_00563D0C;
@@ -3516,6 +3469,7 @@ extern "C" __declspec(dllexport) void __cdecl Init(const char *path, const Helpe
 	SONIC_ACTIONS[139]->object = &object_0062DE88;
 	SONIC_ACTIONS[140]->object = &object_0062DE88;
 	SONIC_ACTIONS[141]->object = &object_0062DE88;
+	SONIC_ACTIONS[142]->object = &object_0062FE6C;
 	SONIC_ACTIONS[143]->object = &object_0062DE88;
 	SONIC_ACTIONS[144]->object = &object_0062DE88;
 	SONIC_ACTIONS[145]->object = &object_0056AF50;
@@ -3539,22 +3493,21 @@ extern "C" __declspec(dllexport) void __cdecl Init(const char *path, const Helpe
 	WriteData((NJS_OBJECT**)0x0069E24B, &OBJECT_SonicPointingFinger);
 	WriteData((NJS_OBJECT**)0x006D010C, &OBJECT_SonicPointingFinger);
 	WriteData((NJS_OBJECT**)0x006D711E, &OBJECT_SonicPointingFinger);
-	ReplacePVM("SONIC", "SONIC_DC");
-	ReplacePVM("SON_EFF", "SON_EFF_DC");
-	ReplacePVM("SUPERSONIC", "SUPERSONIC_DC");
+	WriteData((NJS_TEXLIST**)0x55E65C, SSAura01);
+	WriteData((NJS_TEXLIST**)0x55E751, SSAura01);
+	WriteData((NJS_TEXLIST**)0x55E712, SSAura02);
+	WriteData((NJS_TEXLIST**)0x55E7CD, SSWaterThing);
+	WriteData((NJS_TEXLIST**)0x55F2B3, SSHomingTex1);
+	WriteData((NJS_TEXLIST**)0x55F1D1, SSHomingTex1);
+	WriteData((NJS_TEXLIST**)0x55F1DC, SSHomingTex2);
+	WriteData((NJS_TEXLIST**)0x55F2BE, SSHomingTex2);
+	WriteData((NJS_TEXLIST**)0x55F677, SSHomingTex2);
+	WriteData((NJS_TEXLIST**)0x55F669, SSHomingTex3);
+	SUPERSONIC_TEXLIST = SS_PVM;
+}
 
-	if (EnableCDMetalSonic)
-	{
-		SONIC_OBJECTS[68] = &object_00591068;
-		SONIC_OBJECTS[69] = &object_0059C234;
-		SONIC_OBJECTS[70] = &object_0059E254;
-		WriteJump((void*)0x007D18F0, InitMetalSonicWeldInfo);
-		ReplacePVM("METALSONIC", "METALSONIC_DC");
-	}
-
-	//Tails Model Data
-	//ResizeTextureList((NJS_TEXLIST *)0x91A9C8, 24);
-
+void Init_Miles()
+{
 	MILES_OBJECTS[0] = &object_0042AD54;
 	MILES_OBJECTS[1] = &object_00437C44;
 	MILES_OBJECTS[2] = &object_0043F4B4;
@@ -3760,8 +3713,6 @@ extern "C" __declspec(dllexport) void __cdecl Init(const char *path, const Helpe
 	((NJS_OBJECT*)0x317178C)->basicdxmodel->mats[1].attrflags &= ~NJD_FLAG_USE_ALPHA;
 	((NJS_OBJECT*)0x31708E4)->basicdxmodel->mats[1].attrflags &= ~NJD_FLAG_USE_ALPHA;
 	//Tails Upgrades
-	NJS_OBJECT **___ADV03_OBJECTS = (NJS_OBJECT **)GetProcAddress(adv03dll, "___ADV03_OBJECTS");
-	___ADV03_OBJECTS[31] = &WarriorFeather_Upgrade;
 	WriteData((NJS_OBJECT**)0x03342074, &EV_TailsProtoPlane);
 	WriteData((NJS_OBJECT**)0x03344EAC, &EV_TailsProtoPlane);
 	WriteData((NJS_OBJECT**)0x03347734, &EV_TailsProtoPlane);
@@ -3774,13 +3725,10 @@ extern "C" __declspec(dllexport) void __cdecl Init(const char *path, const Helpe
 	WriteData((NJS_MOTION**)0x03375D98, &EV_Tails01);
 	WriteData((NJS_MOTION**)0x03375DA8, &EV_Tails01);
 	WriteData((NJS_MOTION**)0x03375DB8, &EV_Tails00);
-	ReplacePVM("MILES", "MILES_DC");
-	ReplacePVM("M_HEAD_1", "M_HEAD_1_DC");
-	ReplacePVM("M_TR_P", "M_TR_P_DC");
+}
 
-	//Knuckles
-	//ResizeTextureList((NJS_TEXLIST *)0x0091BD20, 22);
-
+void Init_Knux()
+{
 	KNUCKLES_OBJECTS[0] = &object_002E23B0;
 	KNUCKLES_OBJECTS[1] = &object_002EEE50;
 	KNUCKLES_OBJECTS[2] = &object_002DB8A4;
@@ -3971,16 +3919,10 @@ extern "C" __declspec(dllexport) void __cdecl Init(const char *path, const Helpe
 	WriteData((uint16_t**)0x0472CAC, (uint16_t*)&Knuckles_ShovelClawIndices);
 	WriteData((uint16_t**)0x0472B2C, (uint16_t*)&Knuckles_HandIndices);
 	WriteData((uint16_t**)0x0472835, (uint16_t*)&Knuckles_HandIndices);
-	ReplacePVM("KNUCKLES", "KNUCKLES_DC");
-	
-	//Knuckles Upgrades
-	NJS_OBJECT **___ADV02_OBJECTS = (NJS_OBJECT **)GetProcAddress(adv02dll, "___ADV02_OBJECTS");
-	___ADV02_OBJECTS[116] = &FightGloves_Upgrade;
-	___ADV02_OBJECTS[117] = &ShovelClaw_Upgrade;
-	
-	//Amy
-	//ResizeTextureList((NJS_TEXLIST *)0x0091C800, 53);
+}
 
+void Init_Amy()
+{
 	AMY_OBJECTS[0] = &object_00016460;
 	AMY_OBJECTS[1] = &object_00016E7C;
 	AMY_OBJECTS[2] = &object_0000FB34;
@@ -4108,15 +4050,10 @@ extern "C" __declspec(dllexport) void __cdecl Init(const char *path, const Helpe
 	WriteData((NJS_OBJECT**)0x009858A4, &object_00584EE0);
 	WriteJump((void*)0x007CCB90, InitAmyWeldInfo_mod);
 	WriteJump((void*)0x007CD000, InitNPCAmyWeldInfo_mod);
-	ReplacePVM("AMY", "AMY_DC");
-	ReplacePVM("A_HEAD", "A_HEAD_DC");
-	ReplacePVM("AMY_EFF", "AMY_EFF_DC");
-	ReplacePVM("AMY_EGGROBO", "AMY_EGGROBO_DC");
-	ReplacePVM("AMYROB_WING", "AMYROB_WING_DC");
-	
+}
 
-	//Big
-
+void Init_Big()
+{
 	BIG_OBJECTS[0] = &object_0012541C;
 	BIG_OBJECTS[1] = &object_0012CA3C;
 	BIG_OBJECTS[2] = &object_00120834;
@@ -4235,18 +4172,10 @@ extern "C" __declspec(dllexport) void __cdecl Init(const char *path, const Helpe
 	BIG_MODELS[3] = &attach_001291A8;
 	BIG_MOTIONS[0] = &BigEV_Motion;
 	WriteJump((void*)0x007CE860, InitBigWeldInfo_mod);
-	ReplacePVM("BIG", "BIG_DC");
+}
 
-	//Gamma
-	materials_00200D48[7]->attrflags |= NJD_FLAG_IGNORE_LIGHT;
-	materials_002009C0[2]->attrflags |= NJD_FLAG_IGNORE_LIGHT;
-	materials_0020052C[1]->attrflags |= NJD_FLAG_IGNORE_LIGHT;
-	materials_0020052C[2]->attrflags |= NJD_FLAG_IGNORE_LIGHT;
-	materials_00204EC8[2]->attrflags |= NJD_FLAG_IGNORE_LIGHT;
-	materials_002062D8[3]->attrflags |= NJD_FLAG_IGNORE_LIGHT;
-	materials_0020B9B8[3]->attrflags |= NJD_FLAG_IGNORE_LIGHT;
-
-	//Tikal
+void Init_Tikal()
+{
 	WriteData((NJS_OBJECT**)0x008CEBF8, &object_000038CC); //Left Palm
 	WriteData((NJS_OBJECT**)0x008CE084, &object_000036C0); //Left Thumb
 	WriteData((NJS_OBJECT**)0x008CEB5C, &object_00003BD8); //Left Fingers
@@ -4261,10 +4190,10 @@ extern "C" __declspec(dllexport) void __cdecl Init(const char *path, const Helpe
 	TikalWeldInfo[1].ModelB = &object_00002B38;
 	TikalWeldInfo[1].VertexPairCount = 4;
 	TikalWeldInfo[1].VertIndexes = (unsigned short *)&Tikal_RightHandIndices;
-	ReplacePVM("TIKAL", "TIKAL_DC");
+}
 
-
-	//Eggman
+void Init_Eggman()
+{
 	WriteData((NJS_OBJECT**)0x0089E254, &Eggman_Object);
 	WriteData((NJS_OBJECT**)0x008A094C, &Eggman_Object);
 	WriteData((NJS_OBJECT**)0x008A3564, &Eggman_Object);
@@ -4295,7 +4224,7 @@ extern "C" __declspec(dllexport) void __cdecl Init(const char *path, const Helpe
 	WriteData((NJS_OBJECT**)0x03141254, &Eggman_Object);
 	WriteData((NJS_OBJECT**)0x03142C4C, &Eggman_Object);
 	WriteData((WeldInfo**)0x007B4FBF, (WeldInfo*)&EggmanWeldList);
-	ReplacePVM("EGGMAN", "EGGMAN_DC");
+
 
 	//Eggman in Eggmobile for cutscenes (EV_EGGMOBLE0)
 	WriteData((NJS_OBJECT**)0x2CD393C, &Eggmobile0_Object);
@@ -4318,83 +4247,321 @@ extern "C" __declspec(dllexport) void __cdecl Init(const char *path, const Helpe
 	WriteData((NJS_OBJECT**)0x30220EC, &Eggmobile0_Object);
 	WriteData((NJS_OBJECT**)0x321A55C, &Eggmobile0_Object);
 	WriteData((WeldInfo**)0x006F08FB, (WeldInfo*)&Eggmobile0WeldList);
-	ReplacePVM("EV_EGGMOBLE0", "EV_EGGMOBLE0_DC");
-
-	//Sky Chase
-	if (DisableSaturnSkyChase)
-	{
-		WriteData((NJS_OBJECT**)0x0028B7A0C, &Tornado1_Object);
-		WriteData((NJS_OBJECT**)0x0028BA71C, &Tornado1_Object);
-		WriteData((NJS_OBJECT**)0x0028BDDBC, &Tornado1_Object);
-		WriteData((NJS_OBJECT**)0x0028C09FC, &Tornado1_Object);
-		WriteData((NJS_OBJECT**)0x0027EFDDC, &Tornado2Before_Object);
-		WriteData((NJS_OBJECT**)0x0027F2AA4, &Tornado2Before_Object);
-		WriteData((NJS_OBJECT**)0x0027F612C, &Tornado2Before_Object);
-		WriteData((NJS_OBJECT**)0x0027F8974, &Tornado2Before_Object);
-		WriteData((NJS_OBJECT**)0x00280F23C, &Tornado2Change_Object);
-		WriteData((NJS_OBJECT**)0x002811CE4, &Tornado2Change_Object);
-		WriteData((NJS_OBJECT**)0x002814D9C, &Tornado2Change_Object);
-		WriteData((NJS_OBJECT**)0x002817514, &Tornado2Change_Object);
-	}
-	else
-	{
-		WriteData((NJS_OBJECT**)0x0028B7A0C, &Tornado1_Saturn);
-		WriteData((NJS_OBJECT**)0x0028BA71C, &Tornado1_Saturn);
-		WriteData((NJS_OBJECT**)0x0028BDDBC, &Tornado1_Saturn);
-		WriteData((NJS_OBJECT**)0x0028C09FC, &Tornado1_Saturn);
-		WriteData((NJS_OBJECT**)0x0027EFDDC, &Tornado2Before_Saturn);
-		WriteData((NJS_OBJECT**)0x0027F2AA4, &Tornado2Before_Saturn);
-		WriteData((NJS_OBJECT**)0x0027F612C, &Tornado2Before_Saturn);
-		WriteData((NJS_OBJECT**)0x0027F8974, &Tornado2Before_Saturn);
-		WriteData((NJS_OBJECT**)0x00280F23C, &Tornado2Change_Saturn);
-		WriteData((NJS_OBJECT**)0x002811CE4, &Tornado2Change_Saturn);
-		WriteData((NJS_OBJECT**)0x002814D9C, &Tornado2Change_Saturn);
-		WriteData((NJS_OBJECT**)0x002817514, &Tornado2Change_Saturn);
-	}
-	WriteData((NJS_OBJECT**)0x002935DFC, &TornadoDestroyed_Object);
-	WriteData((NJS_OBJECT**)0x0028988FC, &Tornado2Transformation_Object);
-	WriteData((NJS_OBJECT**)0x028E2C88, &object_0009153C); //Beam in Act 1
-	WriteData((NJS_OBJECT**)0x28E596C, &object_0009153C); //Beam in Act 1
-	WriteData((char*)0x0062751B, 0x00, 1); //Force Tornado light type
-	WriteData((char*)0x0062AC1F, 0x00, 1); //Force Tornado light type (transformation cutscene)
-	WriteData((NJS_ACTION**)0x006BF039, &EV_TR1_Action);
-	WriteData((NJS_ACTION**)0x006BF3AA, &EV_TR1_Action);
-	WriteData((NJS_ACTION**)0x006BF6B7, &EV_TR1_Action);
-	WriteData((NJS_ACTION**)0x006DF5F4, &EV_TR1_Action);
-	WriteData((NJS_ACTION**)0x006DFE45, &EV_TR1_Action);
-	WriteData((NJS_OBJECT***)0x006BEE81, &EV_TR1_Object.child);
-	WriteData((NJS_OBJECT***)0x006BEEA1, &EV_TR1_Object.child);
-	WriteData((NJS_OBJECT***)0x006BEEC1, &EV_TR1_Object.child);
-	WriteData((NJS_OBJECT***)0x006BEF11, &EV_TR1_Object.child);
-	WriteData((NJS_OBJECT***)0x006DF421, &EV_TR1_Object.child);
-	WriteData((NJS_OBJECT***)0x006DF441, &EV_TR1_Object.child);
-	WriteData((NJS_OBJECT***)0x007D7BE1, &EV_TR1_Object.child);
-	WriteData((NJS_OBJECT***)0x007D7C11, &EV_TR1_Object.child);
-	WriteData((NJS_OBJECT***)0x007D7D01, &EV_TR1_Object.child);
-	WriteData((NJS_ACTION**)0x006B9527, &EV_TR2BEFORE_Action);
-	WriteData((NJS_ACTION**)0x006BA8B6, &EV_TR2BEFORE_Action);
-	WriteData((NJS_ACTION**)0x006BA9E1, &EV_TR2BEFORE_Action);
-	WriteData((NJS_ACTION**)0x006BABEB, &EV_TR2BEFORE_Action);
-	WriteData((NJS_ACTION**)0x006BACF8, &EV_TR2BEFORE_Action);
-	WriteData((NJS_ACTION**)0x006DA505, &EV_TR2BEFORE_Action);
-	WriteData((NJS_OBJECT***)0x006B9281, &EV_TR2BEFORE_Object.child);
-	WriteData((NJS_OBJECT***)0x006B9291, &EV_TR2BEFORE_Object.child);
-	WriteData((NJS_OBJECT***)0x006BA0A1, &EV_TR2BEFORE_Object.child);
-	WriteData((NJS_OBJECT***)0x006BA0B1, &EV_TR2BEFORE_Object.child);
-	WriteData((NJS_OBJECT***)0x006DA2B1, &EV_TR2BEFORE_Object.child);
-	WriteData((NJS_OBJECT***)0x006DA2C1, &EV_TR2BEFORE_Object.child);
-	WriteData((NJS_OBJECT***)0x007D7B41, &EV_TR2BEFORE_Object.child);
-	WriteData((NJS_OBJECT***)0x007D7B71, &EV_TR2BEFORE_Object.child);
-	WriteData((NJS_OBJECT***)0x007D7B91, &EV_TR2BEFORE_Object.child);
-	WriteData((NJS_OBJECT***)0x007D7BC1, &EV_TR2BEFORE_Object.child);
-	WriteData((NJS_OBJECT***)0x007D7CB1, &EV_TR2BEFORE_Object.child);
-	WriteData((NJS_OBJECT***)0x007D7CE1, &EV_TR2BEFORE_Object.child);
-	WriteData((NJS_OBJECT**)0x032ECE0C, &EV_TR2CHANGE_Object);
-	ReplacePVM("SHOOTING1", "SHOOTING1_DC");
-	ReplacePVM("SHOOTING2", "SHOOTING2_DC");
-	ReplacePVM("EV_TR1_WITH_SONIC", "EV_TR1_WITH_SONIC_DC");
-	ReplacePVM("EV_TR2BEFORE_WITH_SONIC", "EV_TR2BEFORE_WITH_SONIC_DC");
-	ReplacePVM("EV_TR2CHANGE_WITH_SONIC", "EV_TR2CHANGE_WITH_SONIC_DC");
 }
 
-extern "C" __declspec(dllexport) const ModInfo SADXModInfo = { ModLoaderVer };
+void Init_Metal()
+{
+	SONIC_OBJECTS[68] = &object_00591068;
+	SONIC_OBJECTS[69] = &object_0059C234;
+	SONIC_OBJECTS[70] = &object_0059E254;
+	WriteJump((void*)0x007D18F0, InitMetalSonicWeldInfo);
+}
+
+extern "C"
+{
+	__declspec(dllexport) ModInfo SADXModInfo = { ModLoaderVer };
+
+	__declspec(dllexport) void __cdecl Init(const char *path, const HelperFunctions &helperFunctions)
+	{
+		if (helperFunctions.Version < 6) {
+			PrintDebug("Hey you need to update or something\n");
+		};
+		HMODULE adv02dll = GetModuleHandle(L"ADV02MODELS");
+		HMODULE adv03dll = GetModuleHandle(L"ADV03MODELS");
+
+		//Lantern API Export
+		HMODULE Lantern = GetModuleHandle(L"sadx-dc-lighting");
+		if (Lantern != nullptr)
+		{
+			material_register(Specular0, LengthOfArray(Specular0), &ForceDiffuse0Specular0);
+			material_register(Specular1, LengthOfArray(Specular1), &ForceDiffuse0Specular1);
+			material_register(Specular2, LengthOfArray(Specular2), &ForceDiffuse2Specular2);
+			material_register(Specular3, LengthOfArray(Specular3), &ForceDiffuse2Specular3);
+			material_register(TailsBody, LengthOfArray(TailsBody), &ForceDiffuse0Specular0_Tails);
+			material_register(TailsShoes, LengthOfArray(TailsShoes), &ForceDiffuse0Specular1_Tails);
+		}
+
+		//Ini Configuration
+		const IniFile *config = new IniFile(std::string(path) + "\\config.ini");
+		EnableSonic = config->getBool("Characters", "EnableSonic", true);
+		EnableMiles = config->getBool("Characters", "EnableMiles", true);
+		EnableKnuckles = config->getBool("Characters", "EnableKnuckles", true);
+		EnableAmy = config->getBool("Characters", "EnableAmy", true);
+		EnableBig = config->getBool("Characters", "EnableBig", true);
+		EnableGamma = config->getBool("Characters", "EnableGamma", true);
+		EnableTikal = config->getBool("Characters", "EnableTikal", true);
+		EnableEggman = config->getBool("Characters", "EnableEggman", true);
+		EnableCDMetalSonic = config->getBool("Characters", "EnableCDMetalSonic", true);
+		EnableSkychase = config->getBool("Characters", "EnableSkychase", true);
+
+		DisableSaturnSkyChase = config->getBool("Extras", "DisableSaturnSkyChase", false);
+		EnableExtras = config->getBool("Extras", "EnableExtras", false);
+		std::string MSHover_String = "Normal";
+		MSHover_String = config->getString("Extras", "MetalSonicHoverBehavior", "Normal");
+		std::string StretchyShoes_String = "Regular";
+		StretchyShoes_String = config->getString("Extras", "StretchyShoes", "Regular");
+		if (MSHover_String == "Normal") MSHover = Normal;
+		if (MSHover_String == "Swap") MSHover = Swap;
+		if (MSHover_String == "Always") MSHover = Always;
+		if (StretchyShoes_String == "Regular") StretchyShoes = Regular;
+		if (StretchyShoes_String == "LSShoeMorphs") StretchyShoes = LSShoeMorphs;
+		if (StretchyShoes_String == "Disable") StretchyShoes = Disable;
+		delete config;
+
+		//Functions
+		if (EnableSonic && StretchyShoes == LSShoeMorphs)
+		{
+			WriteJump((void*)0x00493500, Sonic_MorphStretchyFeet_asm);
+		}
+		if (EnableSonic && StretchyShoes == Disable)
+		{
+			WriteData((char*)0x00493500, (char)0xC3);
+		}
+		WriteData<2>((void*)0x004916A5, 0x90u);
+		if (MSHover == Swap)
+		{
+			WriteJump((void*)0x00495BE0, Sonic_Run2Ani_swap);
+			WriteJump((void*)0x00495B00, Sonic_Run1Ani_swap);
+		}
+		if (MSHover == Always)
+		{
+			WriteJump((void*)0x00495BE0, Sonic_Run2Ani_swap);
+			WriteJump((void*)0x00495B00, Sonic_Run1Ani_origasm);
+		}
+
+		//Sonic
+		if (EnableSonic)
+		{
+			Init_Sonic();
+			//ResizeTextureList((NJS_TEXLIST*)0x0142272C, 80);
+			ReplacePVM("SONIC", "SONIC_DC");
+			ReplacePVM("SON_EFF", "SON_EFF_DC");
+			ReplacePVM("SUPERSONIC", "SUPERSONIC_DC");
+		}
+
+		if (EnableCDMetalSonic)
+		{
+			Init_Metal();
+			ReplacePVM("METALSONIC", "METALSONIC_DC");
+		}
+
+		//Tails
+		if (EnableMiles)
+		{
+			Init_Miles();
+			NJS_OBJECT **___ADV03_OBJECTS = (NJS_OBJECT **)GetProcAddress(adv03dll, "___ADV03_OBJECTS");
+			___ADV03_OBJECTS[31] = &WarriorFeather_Upgrade;
+			ReplacePVM("MILES", "MILES_DC");
+			ReplacePVM("M_HEAD_1", "M_HEAD_1_DC");
+			ReplacePVM("M_TR_P", "M_TR_P_DC");
+		}
+
+		//Knuckles
+		if (EnableKnuckles)
+		{
+			Init_Knux();
+			NJS_OBJECT **___ADV02_OBJECTS = (NJS_OBJECT **)GetProcAddress(adv02dll, "___ADV02_OBJECTS");
+			___ADV02_OBJECTS[116] = &FightGloves_Upgrade;
+			___ADV02_OBJECTS[117] = &ShovelClaw_Upgrade;
+			ReplacePVM("KNUCKLES", "KNUCKLES_DC");
+		}
+
+		//Amy
+		if (EnableAmy)
+		{
+			Init_Amy();
+			ReplacePVM("AMY", "AMY_DC");
+			ReplacePVM("A_HEAD", "A_HEAD_DC");
+			ReplacePVM("AMY_EFF", "AMY_EFF_DC");
+			ReplacePVM("AMY_EGGROBO", "AMY_EGGROBO_DC");
+			ReplacePVM("AMYROB_WING", "AMYROB_WING_DC");
+		}
+
+		//Big
+		if (EnableBig)
+		{
+			Init_Big();
+			ReplacePVM("BIG", "BIG_DC");
+		}
+
+		//Gamma
+		if (EnableGamma)
+		{
+			materials_00200D48[7]->attrflags |= NJD_FLAG_IGNORE_LIGHT;
+			materials_002009C0[2]->attrflags |= NJD_FLAG_IGNORE_LIGHT;
+			materials_0020052C[1]->attrflags |= NJD_FLAG_IGNORE_LIGHT;
+			materials_0020052C[2]->attrflags |= NJD_FLAG_IGNORE_LIGHT;
+			materials_00204EC8[2]->attrflags |= NJD_FLAG_IGNORE_LIGHT;
+			materials_002062D8[3]->attrflags |= NJD_FLAG_IGNORE_LIGHT;
+			materials_0020B9B8[3]->attrflags |= NJD_FLAG_IGNORE_LIGHT;
+		}
+
+		//Tikal
+		if (EnableTikal)
+		{
+			Init_Tikal();
+			ReplacePVM("TIKAL", "TIKAL_DC");
+		}
+
+		//Eggman
+		if (EnableEggman)
+		{
+			Init_Eggman();
+			ReplacePVM("EGGMAN", "EGGMAN_DC");
+			ReplacePVM("EV_EGGMOBLE0", "EV_EGGMOBLE0_DC");
+		}
+
+		//Sky Chase
+		if (EnableSkychase)
+		{
+			if (DisableSaturnSkyChase)
+			{
+				WriteData((NJS_OBJECT**)0x0028B7A0C, &Tornado1_Object);
+				WriteData((NJS_OBJECT**)0x0028BA71C, &Tornado1_Object);
+				WriteData((NJS_OBJECT**)0x0028BDDBC, &Tornado1_Object);
+				WriteData((NJS_OBJECT**)0x0028C09FC, &Tornado1_Object);
+				WriteData((NJS_OBJECT**)0x0027EFDDC, &Tornado2Before_Object);
+				WriteData((NJS_OBJECT**)0x0027F2AA4, &Tornado2Before_Object);
+				WriteData((NJS_OBJECT**)0x0027F612C, &Tornado2Before_Object);
+				WriteData((NJS_OBJECT**)0x0027F8974, &Tornado2Before_Object);
+				WriteData((NJS_OBJECT**)0x00280F23C, &Tornado2Change_Object);
+				WriteData((NJS_OBJECT**)0x002811CE4, &Tornado2Change_Object);
+				WriteData((NJS_OBJECT**)0x002814D9C, &Tornado2Change_Object);
+				WriteData((NJS_OBJECT**)0x002817514, &Tornado2Change_Object);
+			}
+			else
+			{
+				WriteData((NJS_OBJECT**)0x0028B7A0C, &Tornado1_Saturn);
+				WriteData((NJS_OBJECT**)0x0028BA71C, &Tornado1_Saturn);
+				WriteData((NJS_OBJECT**)0x0028BDDBC, &Tornado1_Saturn);
+				WriteData((NJS_OBJECT**)0x0028C09FC, &Tornado1_Saturn);
+				WriteData((NJS_OBJECT**)0x0027EFDDC, &Tornado2Before_Saturn);
+				WriteData((NJS_OBJECT**)0x0027F2AA4, &Tornado2Before_Saturn);
+				WriteData((NJS_OBJECT**)0x0027F612C, &Tornado2Before_Saturn);
+				WriteData((NJS_OBJECT**)0x0027F8974, &Tornado2Before_Saturn);
+				WriteData((NJS_OBJECT**)0x00280F23C, &Tornado2Change_Saturn);
+				WriteData((NJS_OBJECT**)0x002811CE4, &Tornado2Change_Saturn);
+				WriteData((NJS_OBJECT**)0x002814D9C, &Tornado2Change_Saturn);
+				WriteData((NJS_OBJECT**)0x002817514, &Tornado2Change_Saturn);
+			}
+			WriteData((NJS_OBJECT**)0x002935DFC, &TornadoDestroyed_Object);
+			WriteData((NJS_OBJECT**)0x0028988FC, &Tornado2Transformation_Object);
+			WriteData((NJS_OBJECT**)0x028E2C88, &object_0009153C); //Beam in Act 1
+			WriteData((NJS_OBJECT**)0x28E596C, &object_0009153C); //Beam in Act 1
+			WriteData((char*)0x0062751B, 0x00, 1); //Force Tornado light type
+			WriteData((char*)0x0062AC1F, 0x00, 1); //Force Tornado light type (transformation cutscene)
+			WriteData((NJS_ACTION**)0x006BF039, &EV_TR1_Action);
+			WriteData((NJS_ACTION**)0x006BF3AA, &EV_TR1_Action);
+			WriteData((NJS_ACTION**)0x006BF6B7, &EV_TR1_Action);
+			WriteData((NJS_ACTION**)0x006DF5F4, &EV_TR1_Action);
+			WriteData((NJS_ACTION**)0x006DFE45, &EV_TR1_Action);
+			WriteData((NJS_OBJECT***)0x006BEE81, &EV_TR1_Object.child);
+			WriteData((NJS_OBJECT***)0x006BEEA1, &EV_TR1_Object.child);
+			WriteData((NJS_OBJECT***)0x006BEEC1, &EV_TR1_Object.child);
+			WriteData((NJS_OBJECT***)0x006BEF11, &EV_TR1_Object.child);
+			WriteData((NJS_OBJECT***)0x006DF421, &EV_TR1_Object.child);
+			WriteData((NJS_OBJECT***)0x006DF441, &EV_TR1_Object.child);
+			WriteData((NJS_OBJECT***)0x007D7BE1, &EV_TR1_Object.child);
+			WriteData((NJS_OBJECT***)0x007D7C11, &EV_TR1_Object.child);
+			WriteData((NJS_OBJECT***)0x007D7D01, &EV_TR1_Object.child);
+			WriteData((NJS_ACTION**)0x006B9527, &EV_TR2BEFORE_Action);
+			WriteData((NJS_ACTION**)0x006BA8B6, &EV_TR2BEFORE_Action);
+			WriteData((NJS_ACTION**)0x006BA9E1, &EV_TR2BEFORE_Action);
+			WriteData((NJS_ACTION**)0x006BABEB, &EV_TR2BEFORE_Action);
+			WriteData((NJS_ACTION**)0x006BACF8, &EV_TR2BEFORE_Action);
+			WriteData((NJS_ACTION**)0x006DA505, &EV_TR2BEFORE_Action);
+			WriteData((NJS_OBJECT***)0x006B9281, &EV_TR2BEFORE_Object.child);
+			WriteData((NJS_OBJECT***)0x006B9291, &EV_TR2BEFORE_Object.child);
+			WriteData((NJS_OBJECT***)0x006BA0A1, &EV_TR2BEFORE_Object.child);
+			WriteData((NJS_OBJECT***)0x006BA0B1, &EV_TR2BEFORE_Object.child);
+			WriteData((NJS_OBJECT***)0x006DA2B1, &EV_TR2BEFORE_Object.child);
+			WriteData((NJS_OBJECT***)0x006DA2C1, &EV_TR2BEFORE_Object.child);
+			WriteData((NJS_OBJECT***)0x007D7B41, &EV_TR2BEFORE_Object.child);
+			WriteData((NJS_OBJECT***)0x007D7B71, &EV_TR2BEFORE_Object.child);
+			WriteData((NJS_OBJECT***)0x007D7B91, &EV_TR2BEFORE_Object.child);
+			WriteData((NJS_OBJECT***)0x007D7BC1, &EV_TR2BEFORE_Object.child);
+			WriteData((NJS_OBJECT***)0x007D7CB1, &EV_TR2BEFORE_Object.child);
+			WriteData((NJS_OBJECT***)0x007D7CE1, &EV_TR2BEFORE_Object.child);
+			WriteData((NJS_OBJECT**)0x032ECE0C, &EV_TR2CHANGE_Object);
+			ReplacePVM("SHOOTING1", "SHOOTING1_DC");
+			ReplacePVM("SHOOTING2", "SHOOTING2_DC");
+			ReplacePVM("EV_TR1_WITH_SONIC", "EV_TR1_WITH_SONIC_DC");
+			ReplacePVM("EV_TR2BEFORE_WITH_SONIC", "EV_TR2BEFORE_WITH_SONIC_DC");
+			ReplacePVM("EV_TR2CHANGE_WITH_SONIC", "EV_TR2CHANGE_WITH_SONIC_DC");
+		}
+	}
+
+	__declspec(dllexport) void __cdecl OnFrame()
+	{
+		//Sonic OnFrame Checks
+		if (EnableSonic && EnableExtras)
+		{
+			if (SONIC_OBJECTS[19]->sibling == SONIC_OBJECTS[58]) //LSShoe Check for Jumpball
+			{
+				SONIC_OBJECTS[66] = &object_LShoeSpin;
+				SONIC_ACTIONS[14]->object = &object_LShoeSpin;
+				attach_0057BC18.mats->attr_texId = 28;
+				attach_0062FE40.mats->attr_texId = 79;
+			}
+			
+			if ((EntityData1Ptrs[0]) && SONIC_OBJECTS[19]->sibling != SONIC_OBJECTS[58])//Shoe check for Super Sonic
+			{
+				SONIC_OBJECTS[41]->model = object_SShoeHeelL.model; //Super Sonic Left Heel
+				SONIC_OBJECTS[42]->model = object_SShoeToeL.model; //Super Sonic Left Toe
+				SONIC_OBJECTS[36]->model = object_SShoeHeelR.model; //Super Sonic Right Heel
+				SONIC_OBJECTS[37]->model = object_SShoeToeR.model; //Super Sonic Right Toe
+			}
+
+			if (SONIC_OBJECTS[62]->sibling == SONIC_OBJECTS[63])
+			{
+				SONIC_OBJECTS[25]->model = object_SSCrystalRing.model;
+				SonicWeldInfo[23].VertIndexes = SS_CrystalRingIndices;
+			}
+		}
+
+		//Miles OnFrame Checks
+		if (EnableMiles && EnableExtras)
+		{
+			if (MILES_OBJECTS[31]->sibling == MILES_OBJECTS[64])
+			{
+				object_00439824.model = object_0046EE44.model;
+				object_0043A634.model = object_0046FC84.model;
+				attach_00441460.mats->attr_texId = 24;
+			}
+		}
+
+		//Knuckles OnFrame Checks
+		if (EnableKnuckles && EnableExtras)
+		{
+			if (KNUCKLES_OBJECTS[60]->model == KNUCKLES_MODELS[17]) //Fighting Gloves Check
+			{
+				object_002F70C0.model = KNUCKLES_MODELS[15]; //Left Wrist
+				object_002F6C70.model = KNUCKLES_MODELS[16]; //Left Hand
+				object_002F6A98.model = KNUCKLES_MODELS[17]; //Left Fingers
+				object_002F6634.model = KNUCKLES_MODELS[18]; //Left Thumb
+				object_002F81F0.model = KNUCKLES_MODELS[19]; //Right Wrist
+				object_002F7DB8.model = KNUCKLES_MODELS[20]; //Right Hand
+				object_002F7BE8.model = KNUCKLES_MODELS[21]; //Right Fingers
+				object_002F7774.model = KNUCKLES_MODELS[22]; //Right Thumb
+				attach_002F0DF8.mats->attr_texId = 22;
+			}
+			else if (KNUCKLES_OBJECTS[60]->model == KNUCKLES_MODELS[0]) //Shovel Claw Check
+			{
+				object_002F6A98.model = KNUCKLES_MODELS[0]; //Left Fingers
+				object_002F7BE8.model = KNUCKLES_MODELS[2]; //Right Fingers
+			}
+			else if (KNUCKLES_OBJECTS[60]->model == KNUCKLES_MODELS[1]) //Fighting Claws Check
+			{
+				object_002F70C0.model = KNUCKLES_MODELS[15]; //Left Wrist
+				object_002F6C70.model = KNUCKLES_MODELS[16]; //Left Hand
+				object_002F6A98.model = KNUCKLES_MODELS[1]; //Left Fingers
+				object_002F6634.model = KNUCKLES_MODELS[18]; //Left Thumb
+				object_002F81F0.model = KNUCKLES_MODELS[19]; //Right Wrist
+				object_002F7DB8.model = KNUCKLES_MODELS[20]; //Right Hand
+				object_002F7BE8.model = KNUCKLES_MODELS[3]; //Right Fingers
+				object_002F7774.model = KNUCKLES_MODELS[21]; //Right Thumb
+				attach_002F0DF8.mats->attr_texId = 22;
+			}
+		}
+	}
+}

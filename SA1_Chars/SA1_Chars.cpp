@@ -54,8 +54,19 @@ DataArray(WeldInfo, BigWeldInfo, 0x03C55500, 0x11);
 DataArray(WeldInfo, MetalSonicWeldInfo, 0x03C55D68, 8);
 DataArray(WeldInfo, TikalWeldInfo, 0x038F3AB8, 14);
 DataArray(WeldInfo, EggmanWeldInfo, 0x038F3F28, 15);
+FunctionPointer(void, PlaySonicIdleVoice, (int a1), 0x442360);
 
 //Replacement Functions
+
+void PlaySonicIdleVoice_r(int a1)
+{
+	if (MetalSonicFlag)
+	{
+		PlayVoice(2044 + rand() % 5);
+	}
+	else PlaySonicIdleVoice(a1);
+}
+
 void __cdecl Sonic_MorphStretchyFeet_c(CharObj2* a1)
 {
 	float a4; // ST10_4@3
@@ -3268,7 +3279,6 @@ bool ForceDiffuse2Specular2(NJS_MATERIAL* material, Uint32 flags)
 {
 	set_diffuse(2, false);
 	set_specular(2, false);
-	use_default_diffuse(true);
 	return true;
 }
 
@@ -3276,7 +3286,6 @@ bool ForceDiffuse2Specular3(NJS_MATERIAL* material, Uint32 flags)
 {
 	set_diffuse(2, false);
 	set_specular(3, false);
-	use_default_diffuse(true);
 	return true;
 }
 
@@ -4255,6 +4264,7 @@ void Init_Metal()
 	SONIC_OBJECTS[69] = &object_0059C234;
 	SONIC_OBJECTS[70] = &object_0059E254;
 	WriteJump((void*)0x007D18F0, InitMetalSonicWeldInfo);
+	WriteCall((void*)0x491701, PlaySonicIdleVoice_r);
 }
 
 extern "C"

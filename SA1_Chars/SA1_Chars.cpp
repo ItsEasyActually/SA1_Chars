@@ -2379,9 +2379,7 @@ static void __declspec(naked) Sonic_Run1Ani_origasm()
 
 //Lantern API Fixes
 NJS_MATERIAL* Specular0[] = {
-	//Tails fixes red
-	&matlist_02F37A50[9],
-	//Gamma Material Fixes
+	//Part of Gamma's laser scope
 	materials_0020B9B8[0],
 	materials_0020B9B8[1],
 	materials_0020B9B8[2],
@@ -2428,7 +2426,7 @@ NJS_MATERIAL* Specular0[] = {
 };
 
 NJS_MATERIAL* Specular1[] = {
-	//Gamma Material Fixes
+	//Gamma's Jet Booster and Laser Scope
 	materials_0020ABF0[0],
 	materials_0020ABF0[1],
 	materials_0020ABF0[2],
@@ -2472,32 +2470,6 @@ NJS_MATERIAL* Specular1[] = {
 	//Tornado 2 Changed (Event)
 	&material_8D4714ACE7FAE0BE986[0],
 	&material_8D4714ACE7FAE0BE986[1],
-
-	//Tails' plane when Sonic sees him crash (Event)
-	((NJS_MATERIAL*)0x03176DC0),
-	((NJS_MATERIAL*)0x03176DD4),
-	((NJS_MATERIAL*)0x03176DE8),
-	((NJS_MATERIAL*)0x03176DFC),
-	((NJS_MATERIAL*)0x03176E10),
-	((NJS_MATERIAL*)0x03176E24),
-	((NJS_MATERIAL*)0x03176E38),
-	((NJS_MATERIAL*)0x03176E4C),
-	((NJS_MATERIAL*)0x03176E60),
-	((NJS_MATERIAL*)0x03176E74),
-	((NJS_MATERIAL*)0x03176E88),
-	((NJS_MATERIAL*)0x03176E9C),
-	((NJS_MATERIAL*)0x03176EB0),
-	((NJS_MATERIAL*)0x03176EC4),
-	((NJS_MATERIAL*)0x03176ED8),
-	((NJS_MATERIAL*)0x03176EEC),
-	((NJS_MATERIAL*)0x03176F00),
-	((NJS_MATERIAL*)0x03176F14),
-	((NJS_MATERIAL*)0x0317661C),
-	((NJS_MATERIAL*)0x03176630),
-	((NJS_MATERIAL*)0x03175E90),
-	((NJS_MATERIAL*)0x03175EA4),
-	((NJS_MATERIAL*)0x03175EB8),
-	((NJS_MATERIAL*)0x03175ECC),
 };
 
 NJS_MATERIAL* Specular2[] = {
@@ -3002,6 +2974,33 @@ NJS_MATERIAL* Specular3[] = {
 	//Tornado 2 Change
 	&material_8D4714ACE7FAE0BE986[0],
 	&material_8D4714ACE7FAE0BE986[1],
+
+	//EV Eggmobile 0
+	&matlist_0006D138[0],
+	&matlist_0006D138[1],
+	&matlist_0006D138[2],
+	&matlist_0006D138[3],
+	&matlist_0006D138[4],
+	&matlist_0006D138[5],
+	&matlist_0006D138[6],
+	&matlist_0006D138[7],
+	&matlist_0006D138[8],
+	&matlist_0006D138[9],
+	&matlist_0006D138[10],
+	&matlist_0006D138[11],
+	&matlist_0006D138[12],
+	&matlist_0006D138[13],
+	&matlist_0006D138[14],
+	&matlist_0006D138[15],
+	&matlist_0006D138[16],
+	&matlist_0006D138[17],
+	&matlist_0006D138[18],
+	&matlist_0006D138[19],
+	&matlist_0006D138[20],
+	&matlist_0006D138[21],
+	&matlist_0006D138[22],
+	&matlist_0006D138[23],
+	&matlist_0006D138[24],
 };
 
 NJS_MATERIAL* TailsBody[] = {
@@ -3287,6 +3286,21 @@ bool ForceDiffuse2Specular3(NJS_MATERIAL* material, Uint32 flags)
 	set_diffuse(2, false);
 	set_specular(3, false);
 	return true;
+}
+
+void RemoveMaterialColors(NJS_OBJECT *obj)
+{
+	if (obj->basicdxmodel)
+	{
+		for (int q = 0; q < obj->basicdxmodel->nbMat; ++q)
+		{
+			obj->basicdxmodel->mats[q].diffuse.argb.r = 0xFF;
+			obj->basicdxmodel->mats[q].diffuse.argb.g = 0xFF;
+			obj->basicdxmodel->mats[q].diffuse.argb.b = 0xFF;
+		}
+	}
+	if (obj->child) RemoveMaterialColors(obj->child);
+	if (obj->sibling) RemoveMaterialColors(obj->sibling);
 }
 
 //Character Init Functions
@@ -3708,19 +3722,12 @@ void Init_Miles()
 	WriteJump((void*)0x007C6D80, InitTailsWeldInfo_mod);
 	WriteJump((void*)0x007C7560, InitNPCTailsWeldInfo_mod);
 	//Material fixes for the cutscene where Sonic sees Tails crash
-	((NJS_MATERIAL*)0x03171BD0)->diffuse.color = 0xFFB2B2B2;
-	((NJS_MATERIAL*)0x03171BE4)->diffuse.color = 0xFFB2B2B2;
-	((NJS_MATERIAL*)0x03171BF8)->diffuse.color = 0xFFB2B2B2;
-	((NJS_MATERIAL*)0x03171C0C)->diffuse.color = 0xFFB2B2B2;
-	((NJS_MATERIAL*)0x03171C20)->diffuse.color = 0xFFB2B2B2;
-	((NJS_MATERIAL*)0x03171C34)->diffuse.color = 0xFFB2B2B2;
-	((NJS_MATERIAL*)0x03171C48)->diffuse.color = 0xFFB2B2B2;
-	((NJS_MATERIAL*)0x03171C5C)->diffuse.color = 0xFFB2B2B2;
-	((NJS_MATERIAL*)0x03171C70)->diffuse.color = 0xFFB2B2B2;
-	((NJS_MATERIAL*)0x03171A48)->diffuse.color = 0xFFB2B2B2;
-	((NJS_MATERIAL*)0x031718C4)->diffuse.color = 0xFFB2B2B2;
-	((NJS_OBJECT*)0x317178C)->basicdxmodel->mats[1].attrflags &= ~NJD_FLAG_USE_ALPHA;
-	((NJS_OBJECT*)0x31708E4)->basicdxmodel->mats[1].attrflags &= ~NJD_FLAG_USE_ALPHA;
+	RemoveMaterialColors((NJS_OBJECT*)0x3175528); //Tails' model
+	((NJS_OBJECT*)0x317178C)->basicdxmodel->mats[1].attrflags &= ~NJD_FLAG_USE_ALPHA; //Unnecessary alpha in Tails' arm
+	((NJS_OBJECT*)0x31708E4)->basicdxmodel->mats[1].attrflags &= ~NJD_FLAG_USE_ALPHA; //Unnecessary alpha in Tails' arm
+	((NJS_OBJECT*)0x31793C0)->basicdxmodel->mats[3].attrflags &= ~NJD_FLAG_IGNORE_SPECULAR; //Plane
+	((NJS_OBJECT*)0x31793C0)->basicdxmodel->mats[5].attrflags &= ~NJD_FLAG_IGNORE_SPECULAR; //Plane
+	((NJS_OBJECT*)0x31793C0)->basicdxmodel->mats[9].attrflags &= ~NJD_FLAG_IGNORE_SPECULAR; //Plane
 	//Tails Upgrades
 	WriteData((NJS_OBJECT**)0x03342074, &EV_TailsProtoPlane);
 	WriteData((NJS_OBJECT**)0x03344EAC, &EV_TailsProtoPlane);

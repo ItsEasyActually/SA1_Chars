@@ -22,6 +22,7 @@
 #include "MetalSonic.h"
 
 #define ReplacePVM(a)  helperFunctions.ReplaceFile("system\\" a ".PVM", "system\\" a "_DC.PVM");
+NJS_MATERIAL *TemporaryMaterialArray[] = { nullptr };
 
 //Customization Options
 enum MSHoverBehavior { Normal, Swap, Always };
@@ -3303,6 +3304,23 @@ void RemoveMaterialColors(NJS_OBJECT *obj)
 	if (obj->sibling) RemoveMaterialColors(obj->sibling);
 }
 
+void ForceDiffuse2Specular2_Object(NJS_OBJECT *obj)
+{
+	if (obj->basicdxmodel)
+	{
+		for (int q = 0; q < obj->basicdxmodel->nbMat; ++q)
+		{
+			if (!(obj->basicdxmodel->mats[q].attrflags & NJD_FLAG_IGNORE_LIGHT))
+			{
+				TemporaryMaterialArray[0] = &obj->basicdxmodel->mats[q];
+				material_register(TemporaryMaterialArray, 1, ForceDiffuse2Specular2);
+			}
+		}
+	}
+	if (obj->child) ForceDiffuse2Specular2_Object(obj->child);
+	if (obj->sibling) ForceDiffuse2Specular2_Object(obj->sibling);
+}
+
 //Character Init Functions
 void Init_Sonic()
 {
@@ -3492,7 +3510,7 @@ void Init_Sonic()
 	SONIC_ACTIONS[139]->object = &object_0062DE88;
 	SONIC_ACTIONS[140]->object = &object_0062DE88;
 	SONIC_ACTIONS[141]->object = &object_0062DE88;
-	SONIC_ACTIONS[142]->object = &object_0062FE6C;
+	SONIC_ACTIONS[142]->object = &object_0062FE6C; //Super Sonic jumpball
 	SONIC_ACTIONS[143]->object = &object_0062DE88;
 	SONIC_ACTIONS[144]->object = &object_0062DE88;
 	SONIC_ACTIONS[145]->object = &object_0056AF50;
@@ -4286,17 +4304,6 @@ extern "C"
 		HMODULE adv02dll = GetModuleHandle(L"ADV02MODELS");
 		HMODULE adv03dll = GetModuleHandle(L"ADV03MODELS");
 
-		//Lantern API Export
-		HMODULE Lantern = GetModuleHandle(L"sadx-dc-lighting");
-		if (Lantern != nullptr)
-		{
-			material_register(Specular0, LengthOfArray(Specular0), &ForceDiffuse0Specular0);
-			material_register(Specular1, LengthOfArray(Specular1), &ForceDiffuse0Specular1);
-			material_register(Specular2, LengthOfArray(Specular2), &ForceDiffuse2Specular2);
-			material_register(Specular3, LengthOfArray(Specular3), &ForceDiffuse2Specular3);
-			material_register(TailsBody, LengthOfArray(TailsBody), &ForceDiffuse0Specular0_Tails);
-			material_register(TailsShoes, LengthOfArray(TailsShoes), &ForceDiffuse0Specular1_Tails);
-		}
 
 		//Ini Configuration
 		const IniFile *config = new IniFile(std::string(path) + "\\config.ini");
@@ -4505,6 +4512,31 @@ extern "C"
 			ReplacePVM("EV_TR1_WITH_SONIC", "EV_TR1_WITH_SONIC_DC");
 			ReplacePVM("EV_TR2BEFORE_WITH_SONIC", "EV_TR2BEFORE_WITH_SONIC_DC");
 			ReplacePVM("EV_TR2CHANGE_WITH_SONIC", "EV_TR2CHANGE_WITH_SONIC_DC");
+
+			//Lantern API Export
+			HMODULE Lantern = GetModuleHandle(L"sadx-dc-lighting");
+			if (Lantern != nullptr)
+			{
+				material_register(Specular0, LengthOfArray(Specular0), &ForceDiffuse0Specular0);
+				material_register(Specular1, LengthOfArray(Specular1), &ForceDiffuse0Specular1);
+				material_register(Specular2, LengthOfArray(Specular2), &ForceDiffuse2Specular2);
+				material_register(Specular3, LengthOfArray(Specular3), &ForceDiffuse2Specular3);
+				material_register(TailsBody, LengthOfArray(TailsBody), &ForceDiffuse0Specular0_Tails);
+				material_register(TailsShoes, LengthOfArray(TailsShoes), &ForceDiffuse0Specular1_Tails);
+				if (EnableSonic)
+				{
+					ForceDiffuse2Specular2_Object(&object_0062FE6C); //Super Sonic jumpball
+					if (EnableExtras)
+					{
+						ForceDiffuse2Specular2_Object(&object_LShoeSpin); //Sonic jumpball with LS shoes
+						ForceDiffuse2Specular2_Object(&object_SShoeHeelL); //Super Sonic Left Heel
+						ForceDiffuse2Specular2_Object(&object_SShoeToeL); //Super Sonic Left Toe
+						ForceDiffuse2Specular2_Object(&object_SShoeHeelR); //Super Sonic Right Heel
+						ForceDiffuse2Specular2_Object(&object_SShoeToeR); //Super Sonic Right Toe
+						ForceDiffuse2Specular2_Object(&object_SSCrystalRing); //Super Sonic arm with Crystal Ring
+					}
+				}
+			}
 		}
 	}
 

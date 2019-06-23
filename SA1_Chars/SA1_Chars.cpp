@@ -4388,6 +4388,7 @@ extern "C"
 			___ADV02_OBJECTS[116] = &FightGloves_Upgrade;
 			___ADV02_OBJECTS[117] = &ShovelClaw_Upgrade;
 			ReplacePVM("KNUCKLES", "KNUCKLES_DC");
+			ReplacePVM("KNU_EFF", "KNU_EFF_DC");
 		}
 
 		//Amy
@@ -4571,7 +4572,7 @@ extern "C"
 		//Miles OnFrame Checks
 		if (EnableMiles && EnableExtras)
 		{
-			if (MILES_OBJECTS[31]->sibling == MILES_OBJECTS[64])
+			if (MILES_OBJECTS[28]->sibling == MILES_OBJECTS[65])
 			{
 				object_00439824.model = object_0046EE44.model;
 				object_0043A634.model = object_0046FC84.model;

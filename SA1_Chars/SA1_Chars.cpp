@@ -4589,12 +4589,19 @@ extern "C"
 					object_002F7DB8.model = KNUCKLES_MODELS[20]; //Right Hand
 					object_002F7BE8.model = KNUCKLES_MODELS[21]; //Right Fingers
 					object_002F7774.model = KNUCKLES_MODELS[22]; //Right Thumb
-					attach_002F0DF8.mats->attr_texId = 22;
+					attach_002F0DF8.mats->attr_texId = 22; //Replaced texture
 				}
 				else if (KNUCKLES_OBJECTS[60]->model == KNUCKLES_MODELS[0]) //Shovel Claw Check
 				{
-					object_002F6A98.model = KNUCKLES_MODELS[0]; //Left Fingers
-					object_002F7BE8.model = KNUCKLES_MODELS[2]; //Right Fingers
+					object_002F70C0.model = &attach_002F7094; //Left Wrist (original)
+					object_002F6C70.model = &attach_002F6C44; //Left Hand (original)
+					object_002F6634.model = &attach_002F6608; //Left Thumb (original)
+					object_002F6A98.model = KNUCKLES_MODELS[0]; //Left Fingers (replaced)
+					object_002F81F0.model = &attach_002F81C4; //Right Wrist (original)
+					object_002F7DB8.model = &attach_002F7D8C; //Right Hand (original)
+					object_002F7BE8.model = KNUCKLES_MODELS[2]; //Right Fingers (replaced)
+					object_002F7774.model = &attach_002F7748; //Right Thumb (original)
+					attach_002F0DF8.mats->attr_texId = 9; //Original texture
 				}
 				else if (KNUCKLES_OBJECTS[60]->model == KNUCKLES_MODELS[1]) //Fighting Claws Check
 				{
@@ -4606,19 +4613,19 @@ extern "C"
 					object_002F7DB8.model = KNUCKLES_MODELS[20]; //Right Hand
 					object_002F7BE8.model = KNUCKLES_MODELS[3]; //Right Fingers
 					object_002F7774.model = KNUCKLES_MODELS[21]; //Right Thumb
-					attach_002F0DF8.mats->attr_texId = 22;
+					attach_002F0DF8.mats->attr_texId = 22; //Replaced texture
 				}
 				else
 				{
-					object_002F70C0.model = &attach_002F7094; //Left Wrist
-					object_002F6C70.model = &attach_002F6C44; //Left Hand
-					object_002F6A98.model = &attach_002F6A6C; //Left Fingers
-					object_002F6634.model = &attach_002F6608; //Left Thumb
-					object_002F81F0.model = &attach_002F81C4; //Right Wrist
-					object_002F7DB8.model = &attach_002F7D8C; //Right Hand
-					object_002F7BE8.model = &attach_002F7BBC; //Right Fingers
-					object_002F7774.model = &attach_002F7748; //Right Thumb
-					attach_002F0DF8.mats->attr_texId = 9;
+					object_002F70C0.model = &attach_002F7094; //Left Wrist (original)
+					object_002F6C70.model = &attach_002F6C44; //Left Hand (original)
+					object_002F6A98.model = &attach_002F6A6C; //Left Fingers (original)
+					object_002F6634.model = &attach_002F6608; //Left Thumb (original)
+					object_002F81F0.model = &attach_002F81C4; //Right Wrist (original)
+					object_002F7DB8.model = &attach_002F7D8C; //Right Hand (original)
+					object_002F7BE8.model = &attach_002F7BBC; //Right Fingers (original)
+					object_002F7774.model = &attach_002F7748; //Right Thumb (original)
+					attach_002F0DF8.mats->attr_texId = 9; //Original texture
 				}
 			}
 		}

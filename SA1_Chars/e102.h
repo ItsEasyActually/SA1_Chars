@@ -55,28 +55,4 @@ NJS_MATERIAL* materials_0020B9B8[] = {
 	(NJS_MATERIAL*)(((size_t)chr_handle + 0x0020BA08)),
 };
 
-NJS_MATERIAL* materials_0020B70C[] = {
-	(NJS_MATERIAL*)(((size_t)chr_handle + 0x0020B70C)),
-	(NJS_MATERIAL*)(((size_t)chr_handle + 0x0020B720)),
-	(NJS_MATERIAL*)(((size_t)chr_handle + 0x0020B734)),
-}; //Laser Sight Handle
-
-NJS_MATERIAL* materials_0020B1D0[] = {
-	(NJS_MATERIAL*)(((size_t)chr_handle + 0x0020B1D0)),
-	(NJS_MATERIAL*)(((size_t)chr_handle + 0x0020B1E4)),
-	(NJS_MATERIAL*)(((size_t)chr_handle + 0x0020B1F8)),
-	(NJS_MATERIAL*)(((size_t)chr_handle + 0x0020B20C)),
-	(NJS_MATERIAL*)(((size_t)chr_handle + 0x0020B220)),
-}; //Laser Sight
-
-NJS_MATERIAL* materials_0020ABF0[] = {
-	(NJS_MATERIAL*)(((size_t)chr_handle + 0x0020ABF0)),
-	(NJS_MATERIAL*)(((size_t)chr_handle + 0x0020AC04)),
-	(NJS_MATERIAL*)(((size_t)chr_handle + 0x0020AC18)),
-	(NJS_MATERIAL*)(((size_t)chr_handle + 0x0020AC2C)),
-	(NJS_MATERIAL*)(((size_t)chr_handle + 0x0020AC40)),
-	(NJS_MATERIAL*)(((size_t)chr_handle + 0x0020AC54)),
-	(NJS_MATERIAL*)(((size_t)chr_handle + 0x0020AC68)),
-}; //Hover Upgrade
-
 #pragma warning(pop)

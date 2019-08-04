@@ -2370,12 +2370,6 @@ static void __declspec(naked) Sonic_Run1Ani_origasm()
 
 //Lantern API Fixes
 NJS_MATERIAL* Specular0[] = {
-	//Part of Gamma's laser scope
-	materials_0020B9B8[0],
-	materials_0020B9B8[1],
-	materials_0020B9B8[2],
-	materials_0020B9B8[3],
-	materials_0020B9B8[4],
 
 	//Birdie Material Fixes
 	&material_8D4CAF2CC2D2CC7B1B5[0],
@@ -2417,22 +2411,6 @@ NJS_MATERIAL* Specular0[] = {
 };
 
 NJS_MATERIAL* Specular1[] = {
-	//Gamma's Jet Booster and Laser Scope
-	materials_0020ABF0[0],
-	materials_0020ABF0[1],
-	materials_0020ABF0[2],
-	materials_0020ABF0[3],
-	materials_0020ABF0[4],
-	materials_0020ABF0[5],
-	materials_0020ABF0[6],
-	materials_0020B70C[0],
-	materials_0020B70C[1],
-	materials_0020B70C[2],
-	materials_0020B1D0[0],
-	materials_0020B1D0[1],
-	materials_0020B1D0[2],
-	materials_0020B1D0[3],
-	materials_0020B1D0[4],
 
 	//Tails Jet Anklet
 	&matlist_001B197C[0],

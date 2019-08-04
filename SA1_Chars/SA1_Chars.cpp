@@ -4535,107 +4535,110 @@ extern "C"
 
 	__declspec(dllexport) void __cdecl OnFrame()
 	{
-		//Sonic OnFrame Checks
-		if (EnableSonic && EnableExtras)
+		if (EnableExtras)
 		{
-			if (SONIC_OBJECTS[19]->sibling == SONIC_OBJECTS[58]) //LSShoe Check for Jumpball
+			//Sonic OnFrame Checks
+			if (EnableSonic)
 			{
-				SONIC_OBJECTS[66] = &object_LShoeSpin;
-				SONIC_ACTIONS[14]->object = &object_LShoeSpin;
-				attach_0057BC18.mats->attr_texId = 28;
-				attach_0062FE40.mats->attr_texId = 79;
+				if (SONIC_OBJECTS[19]->sibling == SONIC_OBJECTS[58]) //LSShoe Check for Jumpball
+				{
+					SONIC_OBJECTS[66] = &object_LShoeSpin;
+					SONIC_ACTIONS[14]->object = &object_LShoeSpin;
+					attach_0057BC18.mats->attr_texId = 28;
+					attach_0062FE40.mats->attr_texId = 79;
+				}
+				else
+				{
+					SONIC_OBJECTS[66] = &object_005729CC;
+					SONIC_ACTIONS[14]->object = &object_005729CC;
+					attach_0057BC18.mats->attr_texId = 18;
+					attach_0062FE40.mats->attr_texId = 15;
+				}
+				if ((EntityData1Ptrs[0]) && SONIC_OBJECTS[19]->sibling != SONIC_OBJECTS[58])//Shoe check for Super Sonic
+				{
+					SONIC_OBJECTS[41]->model = object_SShoeHeelL.model; //Super Sonic Left Heel
+					SONIC_OBJECTS[42]->model = object_SShoeToeL.model; //Super Sonic Left Toe
+					SONIC_OBJECTS[36]->model = object_SShoeHeelR.model; //Super Sonic Right Heel
+					SONIC_OBJECTS[37]->model = object_SShoeToeR.model; //Super Sonic Right Toe
+				}
+				else
+				{
+					SONIC_OBJECTS[41]->model = object_00622970.model; //Super Sonic Left Heel
+					SONIC_OBJECTS[42]->model = object_00622254.model; //Super Sonic Left Toe
+					SONIC_OBJECTS[36]->model = object_00624308.model; //Super Sonic Right Heel
+					SONIC_OBJECTS[37]->model = object_00623C14.model; //Super Sonic Right Toe
+				}
+				if (SONIC_OBJECTS[62]->sibling == SONIC_OBJECTS[63])
+				{
+					SONIC_OBJECTS[25]->model = object_SSCrystalRing.model;
+					SonicWeldInfo[23].VertIndexes = SS_CrystalRingIndices_DC;
+				}
+				else
+				{
+					SONIC_OBJECTS[25]->model = object_0062840C.model;
+					SonicWeldInfo[23].VertIndexes = Sonic_LowerArmIndices_DC;
+				}
 			}
-			else
+			//Miles OnFrame Checks
+			if (EnableMiles)
 			{
-				SONIC_OBJECTS[66] = &object_005729CC;
-				SONIC_ACTIONS[14]->object = &object_005729CC;
-				attach_0057BC18.mats->attr_texId = 18;
-				attach_0062FE40.mats->attr_texId = 15;
+				if (MILES_OBJECTS[28]->sibling == MILES_OBJECTS[65])
+				{
+					object_00439824.model = object_0046EE44.model;
+					object_0043A634.model = object_0046FC84.model;
+					attach_00441460.mats->attr_texId = 24;
+				}
+				else
+				{
+					object_00439824.model = &attach_004397F8;
+					object_0043A634.model = &attach_0043A608;
+					attach_00441460.mats->attr_texId = 14;
+				}
 			}
-			if ((EntityData1Ptrs[0]) && SONIC_OBJECTS[19]->sibling != SONIC_OBJECTS[58])//Shoe check for Super Sonic
+			//Knuckles OnFrame Checks
+			if (EnableKnuckles)
 			{
-				SONIC_OBJECTS[41]->model = object_SShoeHeelL.model; //Super Sonic Left Heel
-				SONIC_OBJECTS[42]->model = object_SShoeToeL.model; //Super Sonic Left Toe
-				SONIC_OBJECTS[36]->model = object_SShoeHeelR.model; //Super Sonic Right Heel
-				SONIC_OBJECTS[37]->model = object_SShoeToeR.model; //Super Sonic Right Toe
-			}
-			else
-			{
-				SONIC_OBJECTS[41]->model = object_00622970.model; //Super Sonic Left Heel
-				SONIC_OBJECTS[42]->model = object_00622254.model; //Super Sonic Left Toe
-				SONIC_OBJECTS[36]->model = object_00624308.model; //Super Sonic Right Heel
-				SONIC_OBJECTS[37]->model = object_00623C14.model; //Super Sonic Right Toe
-			}
-			if (SONIC_OBJECTS[62]->sibling == SONIC_OBJECTS[63])
-			{
-				SONIC_OBJECTS[25]->model = object_SSCrystalRing.model;
-				SonicWeldInfo[23].VertIndexes = SS_CrystalRingIndices_DC;
-			}
-			else
-			{
-				SONIC_OBJECTS[25]->model = object_0062840C.model;
-				SonicWeldInfo[23].VertIndexes = Sonic_LowerArmIndices_DC;
-			}
-		}
-		//Miles OnFrame Checks
-		if (EnableMiles && EnableExtras)
-		{
-			if (MILES_OBJECTS[28]->sibling == MILES_OBJECTS[65])
-			{
-				object_00439824.model = object_0046EE44.model;
-				object_0043A634.model = object_0046FC84.model;
-				attach_00441460.mats->attr_texId = 24;
-			}
-			else
-			{
-				object_00439824.model = &attach_004397F8;
-				object_0043A634.model = &attach_0043A608;
-				attach_00441460.mats->attr_texId = 14;
-			}
-		}
-		//Knuckles OnFrame Checks
-		if (EnableKnuckles && EnableExtras)
-		{
-			if (KNUCKLES_OBJECTS[60]->model == KNUCKLES_MODELS[17]) //Fighting Gloves Check
-			{
-				object_002F70C0.model = KNUCKLES_MODELS[15]; //Left Wrist
-				object_002F6C70.model = KNUCKLES_MODELS[16]; //Left Hand
-				object_002F6A98.model = KNUCKLES_MODELS[17]; //Left Fingers
-				object_002F6634.model = KNUCKLES_MODELS[18]; //Left Thumb
-				object_002F81F0.model = KNUCKLES_MODELS[19]; //Right Wrist
-				object_002F7DB8.model = KNUCKLES_MODELS[20]; //Right Hand
-				object_002F7BE8.model = KNUCKLES_MODELS[21]; //Right Fingers
-				object_002F7774.model = KNUCKLES_MODELS[22]; //Right Thumb
-				attach_002F0DF8.mats->attr_texId = 22;
-			}
-			else if (KNUCKLES_OBJECTS[60]->model == KNUCKLES_MODELS[0]) //Shovel Claw Check
-			{
-				object_002F6A98.model = KNUCKLES_MODELS[0]; //Left Fingers
-				object_002F7BE8.model = KNUCKLES_MODELS[2]; //Right Fingers
-			}
-			else if (KNUCKLES_OBJECTS[60]->model == KNUCKLES_MODELS[1]) //Fighting Claws Check
-			{
-				object_002F70C0.model = KNUCKLES_MODELS[15]; //Left Wrist
-				object_002F6C70.model = KNUCKLES_MODELS[16]; //Left Hand
-				object_002F6A98.model = KNUCKLES_MODELS[1]; //Left Fingers
-				object_002F6634.model = KNUCKLES_MODELS[18]; //Left Thumb
-				object_002F81F0.model = KNUCKLES_MODELS[19]; //Right Wrist
-				object_002F7DB8.model = KNUCKLES_MODELS[20]; //Right Hand
-				object_002F7BE8.model = KNUCKLES_MODELS[3]; //Right Fingers
-				object_002F7774.model = KNUCKLES_MODELS[21]; //Right Thumb
-				attach_002F0DF8.mats->attr_texId = 22;
-			}
-			else
-			{
-				object_002F70C0.model = &attach_002F7094; //Left Wrist
-				object_002F6C70.model = &attach_002F6C44; //Left Hand
-				object_002F6A98.model = &attach_002F6A6C; //Left Fingers
-				object_002F6634.model = &attach_002F6608; //Left Thumb
-				object_002F81F0.model = &attach_002F81C4; //Right Wrist
-				object_002F7DB8.model = &attach_002F7D8C; //Right Hand
-				object_002F7BE8.model = &attach_002F7BBC; //Right Fingers
-				object_002F7774.model = &attach_002F7748; //Right Thumb
-				attach_002F0DF8.mats->attr_texId = 9;
+				if (KNUCKLES_OBJECTS[60]->model == KNUCKLES_MODELS[17]) //Fighting Gloves Check
+				{
+					object_002F70C0.model = KNUCKLES_MODELS[15]; //Left Wrist
+					object_002F6C70.model = KNUCKLES_MODELS[16]; //Left Hand
+					object_002F6A98.model = KNUCKLES_MODELS[17]; //Left Fingers
+					object_002F6634.model = KNUCKLES_MODELS[18]; //Left Thumb
+					object_002F81F0.model = KNUCKLES_MODELS[19]; //Right Wrist
+					object_002F7DB8.model = KNUCKLES_MODELS[20]; //Right Hand
+					object_002F7BE8.model = KNUCKLES_MODELS[21]; //Right Fingers
+					object_002F7774.model = KNUCKLES_MODELS[22]; //Right Thumb
+					attach_002F0DF8.mats->attr_texId = 22;
+				}
+				else if (KNUCKLES_OBJECTS[60]->model == KNUCKLES_MODELS[0]) //Shovel Claw Check
+				{
+					object_002F6A98.model = KNUCKLES_MODELS[0]; //Left Fingers
+					object_002F7BE8.model = KNUCKLES_MODELS[2]; //Right Fingers
+				}
+				else if (KNUCKLES_OBJECTS[60]->model == KNUCKLES_MODELS[1]) //Fighting Claws Check
+				{
+					object_002F70C0.model = KNUCKLES_MODELS[15]; //Left Wrist
+					object_002F6C70.model = KNUCKLES_MODELS[16]; //Left Hand
+					object_002F6A98.model = KNUCKLES_MODELS[1]; //Left Fingers
+					object_002F6634.model = KNUCKLES_MODELS[18]; //Left Thumb
+					object_002F81F0.model = KNUCKLES_MODELS[19]; //Right Wrist
+					object_002F7DB8.model = KNUCKLES_MODELS[20]; //Right Hand
+					object_002F7BE8.model = KNUCKLES_MODELS[3]; //Right Fingers
+					object_002F7774.model = KNUCKLES_MODELS[21]; //Right Thumb
+					attach_002F0DF8.mats->attr_texId = 22;
+				}
+				else
+				{
+					object_002F70C0.model = &attach_002F7094; //Left Wrist
+					object_002F6C70.model = &attach_002F6C44; //Left Hand
+					object_002F6A98.model = &attach_002F6A6C; //Left Fingers
+					object_002F6634.model = &attach_002F6608; //Left Thumb
+					object_002F81F0.model = &attach_002F81C4; //Right Wrist
+					object_002F7DB8.model = &attach_002F7D8C; //Right Hand
+					object_002F7BE8.model = &attach_002F7BBC; //Right Fingers
+					object_002F7774.model = &attach_002F7748; //Right Thumb
+					attach_002F0DF8.mats->attr_texId = 9;
+				}
 			}
 		}
 	}

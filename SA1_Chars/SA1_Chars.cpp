@@ -21,7 +21,7 @@
 #include "lanternapi.h"
 #include "MetalSonic.h"
 
-#define ReplacePVM(a)  helperFunctions.ReplaceFile("system\\" a ".PVM", "system\\" a "_DC.PVM");
+#define ReplacePVM(a, b) helperFunctions.ReplaceFile("system\\" a ".PVM", "system\\" b "_DC.PVM");
 NJS_MATERIAL *TemporaryMaterialArray[] = { nullptr };
 
 //Customization Options

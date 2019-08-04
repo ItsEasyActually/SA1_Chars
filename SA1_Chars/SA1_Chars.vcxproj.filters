@@ -16,9 +16,6 @@
     <Filter Include="Header Files\external">
       <UniqueIdentifier>{a5b60be9-6a32-420c-9a8a-2eb6ce8c730f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\external">
-      <UniqueIdentifier>{981f1e0c-4850-4d3d-bb9f-6362c00235ef}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -85,12 +82,6 @@
     </ClCompile>
     <ClCompile Include="SA1_Chars.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\sadx-mod-loader\mod-loader-common\ModLoaderCommon\IniFile.cpp">
-      <Filter>Source Files\external</Filter>
-    </ClCompile>
-    <ClCompile Include="..\sadx-mod-loader\mod-loader-common\ModLoaderCommon\TextConv.cpp">
-      <Filter>Source Files\external</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

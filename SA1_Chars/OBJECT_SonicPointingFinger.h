@@ -1,5 +1,8 @@
 #pragma once
 
+#pragma warning(push)
+#pragma warning(disable: 4267 4838)
+
 #include "SADXModLoader.h"
 
 NJS_MATERIAL matlist_0000B68C[] = {
@@ -139,3 +142,5 @@ NJS_VECTOR normal_0000B9A4[] = {
 NJS_MODEL_SADX attach_0000BAF4 = { vertex_0000B854, normal_0000B9A4, LengthOfArray(vertex_0000B854), meshlist_0000B80C, matlist_0000B68C, LengthOfArray(meshlist_0000B80C), LengthOfArray(matlist_0000B68C), { 0.355112f, -0.000493f, 0.06275f }, 0.845475f, NULL };
 
 NJS_OBJECT OBJECT_SonicPointingFinger = { NJD_EVAL_UNIT_ANG | NJD_EVAL_UNIT_SCL | NJD_EVAL_BREAK, &attach_0000BAF4, 1.035896f, 0.033785f, -0.042846f, 0, 0, 0, 1, 1, 1, NULL, NULL };
+
+#pragma warning(pop)

@@ -1,5 +1,8 @@
 #pragma once
 
+#pragma warning(push)
+#pragma warning(disable: 4267 4838)
+
 #include "SADXModLoader.h"
 
 NJS_MATERIAL material_8D4D123E5CCFF67AF8D[] = {
@@ -12708,3 +12711,5 @@ WeldInfo Eggmobile0WeldList_DC[] = {
 	{ &Eggmobile0_Object, &object_00066FEC, &object_00066B2C, (uint8_t)(LengthOfArray(Eggman_HandIndices_DC) / 2), 3, 0, nullptr, Eggman_HandIndices_DC },
 	{ 0 }
 };
+
+#pragma warning(pop)

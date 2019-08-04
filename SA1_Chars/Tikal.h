@@ -1,5 +1,8 @@
 #pragma once
 
+#pragma warning(push)
+#pragma warning(disable: 4267 4838)
+
 #include "SADXModLoader.h"
 
 NJS_OBJECT object_0000181C = { NJD_EVAL_UNIT_ANG | NJD_EVAL_UNIT_SCL | NJD_EVAL_HIDE | NJD_EVAL_BREAK, NULL, 3.069789f, -3.719649f, 0.001906f, 0, 0, 0, 1, 1, 1, NULL, NULL };
@@ -1153,3 +1156,5 @@ uint16_t Tikal_RightHandIndices_DC[] = {
 	4, 10,
 	0, 5,
 };
+
+#pragma warning(pop)

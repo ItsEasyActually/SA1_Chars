@@ -1,5 +1,8 @@
 #pragma once
 
+#pragma warning(push)
+#pragma warning(disable: 4267 4838)
+
 #include "SADXModLoader.h"
 
 NJS_VECTOR head00_00[] = {
@@ -9448,3 +9451,5 @@ NJS_OBJECT object_02F3A068 = { NJD_EVAL_UNIT_POS | NJD_EVAL_UNIT_SCL, &attach_02
 NJS_OBJECT object_02F3A09C = { NJD_EVAL_UNIT_POS | NJD_EVAL_UNIT_ANG | NJD_EVAL_UNIT_SCL | NJD_EVAL_HIDE, NULL, 0, 0, 0, 0, 0, 0, 1, 1, 1, &object_02F3A068, NULL };
 
 NJS_OBJECT EV_TailsProtoPlane = { NJD_EVAL_UNIT_POS | NJD_EVAL_UNIT_ANG | NJD_EVAL_UNIT_SCL | NJD_EVAL_HIDE, NULL, 0, 0, 0, 0, 0, 0, 1, 1, 1, &object_02F3A09C, NULL };
+
+#pragma warning(pop)

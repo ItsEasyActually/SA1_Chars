@@ -4554,19 +4554,22 @@ extern "C"
 					attach_0057BC18.mats->attr_texId = 18;
 					attach_0062FE40.mats->attr_texId = 15;
 				}
-				if ((EntityData1Ptrs[0]) && SONIC_OBJECTS[19]->sibling != SONIC_OBJECTS[58])//Shoe check for Super Sonic
+				if (EntityData1Ptrs[0])
 				{
-					SONIC_OBJECTS[41]->model = object_SShoeHeelL.model; //Super Sonic Left Heel
-					SONIC_OBJECTS[42]->model = object_SShoeToeL.model; //Super Sonic Left Toe
-					SONIC_OBJECTS[36]->model = object_SShoeHeelR.model; //Super Sonic Right Heel
-					SONIC_OBJECTS[37]->model = object_SShoeToeR.model; //Super Sonic Right Toe
-				}
-				else
-				{
-					SONIC_OBJECTS[41]->model = object_00622970.model; //Super Sonic Left Heel
-					SONIC_OBJECTS[42]->model = object_00622254.model; //Super Sonic Left Toe
-					SONIC_OBJECTS[36]->model = object_00624308.model; //Super Sonic Right Heel
-					SONIC_OBJECTS[37]->model = object_00623C14.model; //Super Sonic Right Toe
+					if (SONIC_OBJECTS[19]->sibling != SONIC_OBJECTS[58]) //Shoe check for Super Sonic
+					{
+						SONIC_OBJECTS[41]->model = object_SShoeHeelL.model; //Super Sonic Left Heel
+						SONIC_OBJECTS[42]->model = object_SShoeToeL.model; //Super Sonic Left Toe
+						SONIC_OBJECTS[36]->model = object_SShoeHeelR.model; //Super Sonic Right Heel
+						SONIC_OBJECTS[37]->model = object_SShoeToeR.model; //Super Sonic Right Toe
+					}
+					else
+					{
+						SONIC_OBJECTS[41]->model = object_00622970.model; //Super Sonic Left Heel
+						SONIC_OBJECTS[42]->model = object_00622254.model; //Super Sonic Left Toe
+						SONIC_OBJECTS[36]->model = object_00624308.model; //Super Sonic Right Heel
+						SONIC_OBJECTS[37]->model = object_00623C14.model; //Super Sonic Right Toe
+					}
 				}
 				if (SONIC_OBJECTS[62]->sibling == SONIC_OBJECTS[63])
 				{

@@ -2961,6 +2961,8 @@ NJS_MATERIAL* Specular3[] = {
 	&matlist_00016068[0],
 	&matlist_00016068[1],
 	&matlist_000159C8[0],
+	&matlist_000159C8[1],
+	&matlist_000159C8[2],
 
 	//Tornado 2 Change
 	&material_8D4714ACE7FAE0BE986[0],

@@ -25727,28 +25727,28 @@ AnimFrame_2 TailsCineHeadArray[] = {
 
 NJS_MOTION TailsCinematicHead = { &TailsCineHeadArray, 0x14, 0x30, 2 };
 
-uint16_t Tails_UpperArmIndices[] = {
+uint16_t Tails_UpperArmIndices_DC[] = {
 	0, 2,
 	1, 3,
 	4, 6,
 	5, 7,
 };
 
-uint16_t Tails_LowerArmIndices[] = {
+uint16_t Tails_LowerArmIndices_DC[] = {
 	0, 10,
 	1, 11,
 	4, 14,
 	5, 15,
 };
 
-uint16_t Tails_LegIndices[] = {
+uint16_t Tails_LegIndices_DC[] = {
 	0, 2,
 	1, 3,
 	4, 6,
 	5, 7,
 };
 
-uint16_t Tails_ShoeIndices[] = {
+uint16_t Tails_ShoeIndices_DC[] = {
 	2, 3,
 	12, 8,
 	0, 1,
@@ -25757,7 +25757,7 @@ uint16_t Tails_ShoeIndices[] = {
 	3, 2,
 };
 
-uint16_t Tails_HandIndices[] = {
+uint16_t Tails_HandIndices_DC[] = {
 	4, 14,
 	0, 15,
 	1, 13,

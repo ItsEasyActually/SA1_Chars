@@ -27069,35 +27069,35 @@ AnimFrame_2 CinematicHeadArray[] = {
 
 NJS_MOTION CinematicHead = { &CinematicHeadArray, 20, 0x30, 2 };
 
-uint16_t Sonic_UpperArmIndices[] = {
+uint16_t Sonic_UpperArmIndices_DC[] = {
 	0, 2,
 	1, 3,
 	4, 6,
 	5, 7,
 };
 
-uint16_t Sonic_LowerArmIndices[] = {
+uint16_t Sonic_LowerArmIndices_DC[] = {
 	0, 10,
 	1, 11,
 	4, 14,
 	5, 15,
 };
 
-uint16_t Sonic_UpperLegIndices[] = {
+uint16_t Sonic_UpperLegIndices_DC[] = {
 	0, 2,
 	1, 3,
 	4, 6,
 	5, 7,
 };
 
-uint16_t Sonic_LowerLegIndices[] = {
+uint16_t Sonic_LowerLegIndices_DC[] = {
 	0, 2,
 	1, 3,
 	4, 6,
 	5, 7,
 };
 
-uint16_t Sonic_ShoeIndices[] = {
+uint16_t Sonic_ShoeIndices_DC[] = {
 	2, 3,
 	12, 8,
 	0, 1,
@@ -27106,7 +27106,7 @@ uint16_t Sonic_ShoeIndices[] = {
 	3, 2,
 };
 
-uint16_t Sonic_HandIndices[] = {
+uint16_t Sonic_HandIndices_DC[] = {
 	4, 15,
 	0, 14,
 	1, 13,
@@ -36688,7 +36688,7 @@ NJS_MODEL_SADX attach_8D6D598D0C648377023 = { vertex_8D6D5997198645A6172, normal
 
 NJS_OBJECT object_SSCrystalRing = { NJD_EVAL_UNIT_POS | NJD_EVAL_UNIT_ANG | NJD_EVAL_UNIT_SCL | NJD_EVAL_BREAK | NJD_EVAL_SKIP | NJD_EVAL_SHAPE_SKIP, &attach_8D6D598D0C648377023, 0, 0, 0, 0, 0, 0, 1, 1, 1, NULL, NULL };
 
-uint16_t SS_CrystalRingIndices[] = {
+uint16_t SS_CrystalRingIndices_DC[] = {
 	0, 21,
 	1, 15,
 	4, 19,

@@ -17724,28 +17724,28 @@ NJS_MODEL_SADX attach_0032CCA8 = { vertex_8D49E323BBD0E7F9DF4, normal_8D49E323BB
 
 NJS_OBJECT object_8D43F2494AF872C2AD9 = { NJD_EVAL_UNIT_POS | NJD_EVAL_UNIT_ANG | NJD_EVAL_UNIT_SCL | NJD_EVAL_BREAK | NJD_EVAL_SKIP | NJD_EVAL_SHAPE_SKIP, &attach_0032CCA8, 0, 0, 0, 0, 0, 0, 1, 1, 1, NULL, NULL };
 
-uint16_t Knuckles_UpperArmIndices[] = {
+uint16_t Knuckles_UpperArmIndices_DC[] = {
 	0, 2,
 	1, 3,
 	4, 6,
 	5, 7,
 };
 
-uint16_t Knuckles_LowerArmIndices[] = {
+uint16_t Knuckles_LowerArmIndices_DC[] = {
 	0, 10,
 	1, 11,
 	4, 14,
 	5, 15,
 };
 
-uint16_t Knuckles_LegIndices[] = {
+uint16_t Knuckles_LegIndices_DC[] = {
 	0, 2,
 	1, 3,
 	4, 6,
 	5, 7,
 };
 
-uint16_t Knuckles_ShoeIndices[] = {
+uint16_t Knuckles_ShoeIndices_DC[] = {
 	2, 3,
 	12, 8,
 	0, 1,
@@ -17754,7 +17754,7 @@ uint16_t Knuckles_ShoeIndices[] = {
 	3, 2,
 };
 
-uint16_t Knuckles_HandIndices[] = {
+uint16_t Knuckles_HandIndices_DC[] = {
 	8, 24,
 	0, 11,
 	1, 13,
@@ -17762,7 +17762,7 @@ uint16_t Knuckles_HandIndices[] = {
 	4, 10,
 };
 
-uint16_t Knuckles_ShovelClawIndices[] = {
+uint16_t Knuckles_ShovelClawIndices_DC[] = {
 	8, 14,
 	0, 1,
 	1, 3,

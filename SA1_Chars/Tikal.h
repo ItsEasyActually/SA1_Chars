@@ -1140,14 +1140,14 @@ NJS_MODEL_SADX attach_00003BB0 = { vertex_00003A60, normal_00003B08, LengthOfArr
 
 NJS_OBJECT object_00003BD8 = { NJD_EVAL_UNIT_SCL | NJD_EVAL_BREAK, &attach_00003BB0, 0.029387f, 0.121036f, 0.024618f, 0x3FFF, 0xFFFFFFFE, 0xFFFFD3AC, 1, 1, 1, NULL, NULL };
 
-uint16_t Tikal_LeftHandIndices[] = {
+uint16_t Tikal_LeftHandIndices_DC[] = {
 	0, 13,
 	1, 1,
 	5, 3,
 	4, 12,
 };
 
-uint16_t Tikal_RightHandIndices[] = {
+uint16_t Tikal_RightHandIndices_DC[] = {
 	1, 4,
 	5, 11,
 	4, 10,

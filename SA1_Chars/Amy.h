@@ -16103,35 +16103,35 @@ AnimFrame_2 AmyEVHeadArray[] = {
 
 NJS_MOTION AmyEVHead_Motion = { &AmyEVHeadArray, 20, 0x30, 2 };
 
-uint16_t Amy_UpperArmIndices[] = {
+uint16_t Amy_UpperArmIndices_DC[] = {
 	0, 2,
 	1, 3,
 	4, 6,
 	5, 7,
 };
 
-uint16_t Amy_LowerArmIndices[] = {
+uint16_t Amy_LowerArmIndices_DC[] = {
 	0, 10,
 	1, 11,
 	4, 14,
 	5, 15,
 };
 
-uint16_t Amy_LegIndices[] = {
+uint16_t Amy_LegIndices_DC[] = {
 	0, 2,
 	1, 3,
 	4, 6,
 	5, 7,
 };
 
-uint16_t Amy_ShoeIndices[] = {
+uint16_t Amy_ShoeIndices_DC[] = {
 	3, 2,
 	1, 0,
 	0, 1,
 	2, 3,
 };
 
-uint16_t Amy_HandIndices[] = {
+uint16_t Amy_HandIndices_DC[] = {
 	4, 12,
 	0, 13,
 	1, 1,

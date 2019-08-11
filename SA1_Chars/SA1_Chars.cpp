@@ -46,6 +46,7 @@ static bool EnableExtras = false;
 //Additional Data Bits
 DataPointer(int, EVENT_ID, 0x03B2C570);
 FunctionPointer(void, PlaySonicIdleVoice, (int a1), 0x442360);
+static bool BigRodIgnoresSpecular = false;
 
 //Replacement Functions
 
@@ -3195,6 +3196,42 @@ NJS_MATERIAL* TailsShoes[] = {
 	&matlist_0043F4E8[0], //Jumpball
 };
 
+void ForceIgnoreSpecular_Object(NJS_OBJECT *obj, bool recursive)
+{
+	if (obj)
+	{
+		if (obj->basicdxmodel)
+		{
+			for (int k = 0; k < obj->basicdxmodel->nbMat; ++k)
+			{
+				if (!(obj->basicdxmodel->mats[k].attrflags & NJD_FLAG_IGNORE_SPECULAR)) obj->basicdxmodel->mats[k].attrflags |= NJD_FLAG_IGNORE_SPECULAR;
+			}
+		}
+		if (recursive && obj->child) ForceIgnoreSpecular_Object(obj->child, true);
+		if (recursive && obj->sibling) ForceIgnoreSpecular_Object(obj->sibling, true);
+	}
+}
+
+void ForceSpecular_Object(NJS_OBJECT *obj, bool recursive)
+{
+	if (obj)
+	{
+		if (obj->basicdxmodel)
+		{
+			for (int k = 0; k < obj->basicdxmodel->nbMat; ++k)
+			{
+				obj->basicdxmodel->mats[k].specular.color = 0xFFFFFFFF;
+				if (obj->basicdxmodel->mats[k].attrflags & NJD_FLAG_IGNORE_SPECULAR)
+				{
+					obj->basicdxmodel->mats[k].attrflags &= ~NJD_FLAG_IGNORE_SPECULAR;
+				}
+			}
+		}
+		if (recursive && obj->child) ForceSpecular_Object(obj->child, true);
+		if (recursive && obj->sibling) ForceSpecular_Object(obj->sibling, true);
+	}
+}
+
 bool ForceDiffuse0Specular0(NJS_MATERIAL* material, Uint32 flags)
 {
 	set_diffuse(0, false);
@@ -4508,6 +4545,11 @@ extern "C"
 
 	__declspec(dllexport) void __cdecl OnFrame()
 	{
+		//Big's rod upgrade lighting - basically make it ignore specular when it's part of Big's model (upgrade attained), otherwise don't (field model)
+		if (BigRodIgnoresSpecular && !(BIG_OBJECTS[19]->child->basicdxmodel->mats[0].attrflags & NJD_FLAG_IGNORE_SPECULAR)) ForceIgnoreSpecular_Object(BIG_OBJECTS[19]->child, true);
+		if (!BigRodIgnoresSpecular && BIG_OBJECTS[19]->child->basicdxmodel->mats[0].attrflags & NJD_FLAG_IGNORE_SPECULAR) ForceSpecular_Object(BIG_OBJECTS[19]->child, true);
+		if (EventFlagArray[EventFlags_Big_PowerRod] == 1) BigRodIgnoresSpecular = true; else BigRodIgnoresSpecular = false;
+		//Consistency additions
 		if (EnableExtras)
 		{
 			//Sonic OnFrame Checks

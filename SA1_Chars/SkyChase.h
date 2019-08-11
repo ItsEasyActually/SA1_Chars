@@ -1,8 +1,11 @@
 #pragma once
 
-#include "SADXModLoader.h"
-//Beam act 1
+#pragma warning(push)
+#pragma warning(disable: 4267 4838)
 
+#include "SADXModLoader.h"
+
+//Beam act 1
 
 NJS_MATERIAL matlist_0008F90C[] = {
 	{ { 0xFFB2B2B2 },{ 0xFFFFFFFF }, 11, 15, NJD_D_100 | NJD_FILTER_BILINEAR | NJD_FLAG_CLAMP_V | NJD_FLAG_CLAMP_U | NJD_FLAG_USE_ALPHA | NJD_FLAG_USE_TEXTURE | NJD_FLAG_DOUBLE_SIDE | NJD_FLAG_IGNORE_LIGHT | NJD_DA_ONE | NJD_SA_SRC }
@@ -16171,9 +16174,9 @@ NJS_TEX uv_0245CAC8[] = {
 };
 
 NJS_MESHSET_SADX meshlist_0245CB38[] = {
-	{ NJD_MESHSET_TRIMESH | 1, 4, poly_0245C900, NULL, NULL, NULL, uv_0245C9D8, NULL },
 	{ NJD_MESHSET_TRIMESH | 2, 8, poly_0245C948, NULL, NULL, NULL, uv_0245CA58, NULL },
-	{ NJD_MESHSET_TRIMESH | 3, 8, poly_0245C990, NULL, NULL, NULL, uv_0245CAC8, NULL }
+	{ NJD_MESHSET_TRIMESH | 3, 8, poly_0245C990, NULL, NULL, NULL, uv_0245CAC8, NULL },
+	{ NJD_MESHSET_TRIMESH | 1, 4, poly_0245C900, NULL, NULL, NULL, uv_0245C9D8, NULL },
 };
 
 NJS_VECTOR vertex_0245CB90[] = {
@@ -54411,3 +54414,5 @@ NJS_VECTOR normal_0240B7D8[] = {
 NJS_MODEL_SADX attach_0240C12C = { vertex_0240AE80, normal_0240B7D8, LengthOfArray<Sint32>(vertex_0240AE80), meshlist_0240AC88, matlist_02409E78, LengthOfArray<Uint16>(meshlist_0240AC88), LengthOfArray<Uint16>(matlist_02409E78),{ -0.390629f, -0.020666f, -4.68074f }, 18.94498f, NULL };
 
 NJS_OBJECT Tornado2Change_Object = { NJD_EVAL_UNIT_POS | NJD_EVAL_UNIT_ANG | NJD_EVAL_UNIT_SCL, &attach_0240C12C, 0, 0, 0, 0, 0, 0, 1, 1, 1, &object_02409E44, NULL };
+
+#pragma warning(pop)

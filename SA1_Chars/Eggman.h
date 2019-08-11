@@ -1,5 +1,8 @@
 #pragma once
 
+#pragma warning(push)
+#pragma warning(disable: 4267 4838)
+
 #include "SADXModLoader.h"
 
 NJS_MATERIAL material_8D4D123E5CCFF67AF8D[] = {
@@ -6112,7 +6115,7 @@ NJS_MODEL_SADX attach_0049C804 = { vertex_0049C7A4, normal_0049C7D4, LengthOfArr
 
 NJS_OBJECT Eggman_Object = { NJD_EVAL_UNIT_POS | NJD_EVAL_UNIT_ANG | NJD_EVAL_UNIT_SCL, &attach_0049C804, 0, 0, 0, 0, 0, 0, 1, 1, 1, &object_0049C734, NULL };
 
-uint16_t Eggman_ArmIndices[] = {
+uint16_t Eggman_ArmIndices_DC[] = {
 	20, 5,
 	21, 6,
 	22, 3,
@@ -6120,14 +6123,14 @@ uint16_t Eggman_ArmIndices[] = {
 	24, 8,
 };
 
-uint16_t Eggman_HandIndices[] = {
+uint16_t Eggman_HandIndices_DC[] = {
 	0, 14,
 	1, 13,
 	5, 12,
 	4, 15,
 };
 
-uint16_t Eggman_LegIndices[] = {
+uint16_t Eggman_LegIndices_DC[] = {
 	15, 4,
 	16, 7,
 	17, 10,
@@ -6135,7 +6138,7 @@ uint16_t Eggman_LegIndices[] = {
 	19, 0,
 };
 
-uint16_t Eggman_AnkleIndices[] = {
+uint16_t Eggman_AnkleIndices_DC[] = {
 	2, 18,
 	5, 15,
 	11, 17,
@@ -6143,7 +6146,7 @@ uint16_t Eggman_AnkleIndices[] = {
 	9, 22,
 };
 
-uint16_t Eggman_ToeIndices[] = {
+uint16_t Eggman_ToeIndices_DC[] = {
 	33, 8,
 	26, 9,
 	27, 10,
@@ -6154,17 +6157,17 @@ uint16_t Eggman_ToeIndices[] = {
 	34, 15,
 };
 
-WeldInfo EggmanWeldList[] = {
-	{ &Eggman_Object, &object_00498F28, &object_00498A44, (uint8_t)(LengthOfArray(Eggman_ArmIndices) / 2), 1, 0, nullptr, Eggman_ArmIndices },
-	{ &Eggman_Object, &object_00497318, &object_00496E34, (uint8_t)(LengthOfArray(Eggman_ArmIndices) / 2), 1, 0, nullptr, Eggman_ArmIndices },
-	{ &Eggman_Object, &object_00498320, &object_00497DE0, (uint8_t)(LengthOfArray(Eggman_HandIndices) / 2), 1, 0, nullptr, Eggman_HandIndices },
-	{ &Eggman_Object, &object_00496710, &object_004961E0, (uint8_t)(LengthOfArray(Eggman_HandIndices) / 2), 1, 0, nullptr, Eggman_HandIndices },
-	{ &Eggman_Object, &object_00494A04, &object_004946C0, (uint8_t)(LengthOfArray(Eggman_LegIndices) / 2), 1, 0, nullptr, Eggman_LegIndices },
-	{ &Eggman_Object, &object_00493A04, &object_004936C0, (uint8_t)(LengthOfArray(Eggman_LegIndices) / 2), 1, 0, nullptr, Eggman_LegIndices },
-	{ &Eggman_Object, &object_004946C0, &object_004943E0, (uint8_t)(LengthOfArray(Eggman_AnkleIndices) / 2), 1, 0, nullptr, Eggman_AnkleIndices },
-	{ &Eggman_Object, &object_004936C0, &object_004933D0, (uint8_t)(LengthOfArray(Eggman_AnkleIndices) / 2), 1, 0, nullptr, Eggman_AnkleIndices },
-	{ &Eggman_Object, &object_004943E0, &object_00493DBC, (uint8_t)(LengthOfArray(Eggman_ToeIndices) / 2), 1, 0, nullptr, Eggman_ToeIndices },
-	{ &Eggman_Object, &object_004933D0, &object_00492DAC, (uint8_t)(LengthOfArray(Eggman_ToeIndices) / 2), 1, 0, nullptr,Eggman_ToeIndices },
+WeldInfo EggmanWeldList_DC[] = {
+	{ &Eggman_Object, &object_00498F28, &object_00498A44, (uint8_t)(LengthOfArray(Eggman_ArmIndices_DC) / 2), 1, 0, nullptr, Eggman_ArmIndices_DC },
+	{ &Eggman_Object, &object_00497318, &object_00496E34, (uint8_t)(LengthOfArray(Eggman_ArmIndices_DC) / 2), 1, 0, nullptr, Eggman_ArmIndices_DC },
+	{ &Eggman_Object, &object_00498320, &object_00497DE0, (uint8_t)(LengthOfArray(Eggman_HandIndices_DC) / 2), 1, 0, nullptr, Eggman_HandIndices_DC },
+	{ &Eggman_Object, &object_00496710, &object_004961E0, (uint8_t)(LengthOfArray(Eggman_HandIndices_DC) / 2), 1, 0, nullptr, Eggman_HandIndices_DC },
+	{ &Eggman_Object, &object_00494A04, &object_004946C0, (uint8_t)(LengthOfArray(Eggman_LegIndices_DC) / 2), 1, 0, nullptr, Eggman_LegIndices_DC },
+	{ &Eggman_Object, &object_00493A04, &object_004936C0, (uint8_t)(LengthOfArray(Eggman_LegIndices_DC) / 2), 1, 0, nullptr, Eggman_LegIndices_DC },
+	{ &Eggman_Object, &object_004946C0, &object_004943E0, (uint8_t)(LengthOfArray(Eggman_AnkleIndices_DC) / 2), 1, 0, nullptr, Eggman_AnkleIndices_DC },
+	{ &Eggman_Object, &object_004936C0, &object_004933D0, (uint8_t)(LengthOfArray(Eggman_AnkleIndices_DC) / 2), 1, 0, nullptr, Eggman_AnkleIndices_DC },
+	{ &Eggman_Object, &object_004943E0, &object_00493DBC, (uint8_t)(LengthOfArray(Eggman_ToeIndices_DC) / 2), 1, 0, nullptr, Eggman_ToeIndices_DC },
+	{ &Eggman_Object, &object_004933D0, &object_00492DAC, (uint8_t)(LengthOfArray(Eggman_ToeIndices_DC) / 2), 1, 0, nullptr,Eggman_ToeIndices_DC },
 	{ &Eggman_Object, &object_004961E0, nullptr, 2, 4, 0, nullptr, nullptr },
 	{ &Eggman_Object, &object_00497DE0, nullptr, 2, 5, 0, nullptr, nullptr },
 	{ &Eggman_Object, &object_004933D0, nullptr, 0, 6, 0, nullptr, nullptr },
@@ -12701,10 +12704,12 @@ NJS_MODEL_SADX attach_000707FC = { vertex_0006EC3C, normal_0006FA1C, LengthOfArr
 
 NJS_OBJECT Eggmobile0_Object = { NJD_EVAL_UNIT_ANG | NJD_EVAL_UNIT_SCL, &attach_000707FC, 0, 0.176446f, 0, 0, 0, 0, 1, 1, 1, &object_0006D104, NULL };
 
-WeldInfo Eggmobile0WeldList[] = {
-	{ &Eggmobile0_Object, &object_00069208, &object_00068CD4, (uint8_t)(LengthOfArray(Eggman_ArmIndices) / 2), 3, 0, nullptr, Eggman_ArmIndices },
-	{ &Eggmobile0_Object, &object_00067CE4, &object_000677B0, (uint8_t)(LengthOfArray(Eggman_ArmIndices) / 2), 3, 0, nullptr, Eggman_ArmIndices },
-	{ &Eggmobile0_Object, &object_00068510, &object_00068050, (uint8_t)(LengthOfArray(Eggman_HandIndices) / 2), 3, 0, nullptr, Eggman_HandIndices },
-	{ &Eggmobile0_Object, &object_00066FEC, &object_00066B2C, (uint8_t)(LengthOfArray(Eggman_HandIndices) / 2), 3, 0, nullptr, Eggman_HandIndices },
+WeldInfo Eggmobile0WeldList_DC[] = {
+	{ &Eggmobile0_Object, &object_00069208, &object_00068CD4, (uint8_t)(LengthOfArray(Eggman_ArmIndices_DC) / 2), 3, 0, nullptr, Eggman_ArmIndices_DC },
+	{ &Eggmobile0_Object, &object_00067CE4, &object_000677B0, (uint8_t)(LengthOfArray(Eggman_ArmIndices_DC) / 2), 3, 0, nullptr, Eggman_ArmIndices_DC },
+	{ &Eggmobile0_Object, &object_00068510, &object_00068050, (uint8_t)(LengthOfArray(Eggman_HandIndices_DC) / 2), 3, 0, nullptr, Eggman_HandIndices_DC },
+	{ &Eggmobile0_Object, &object_00066FEC, &object_00066B2C, (uint8_t)(LengthOfArray(Eggman_HandIndices_DC) / 2), 3, 0, nullptr, Eggman_HandIndices_DC },
 	{ 0 }
 };
+
+#pragma warning(pop)

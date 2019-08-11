@@ -21,7 +21,7 @@
 #include "lanternapi.h"
 #include "MetalSonic.h"
 
-#define ReplacePVM(a)  helperFunctions.ReplaceFile("system\\" a ".PVM", "system\\" a "_DC.PVM");
+#define ReplacePVM(a, b) helperFunctions.ReplaceFile("system\\" a ".PVM", "system\\" b ".PVM");
 NJS_MATERIAL *TemporaryMaterialArray[] = { nullptr };
 
 //Customization Options
@@ -45,17 +45,8 @@ static bool EnableExtras = false;
 
 //Additional Data Bits
 DataPointer(int, EVENT_ID, 0x03B2C570);
-DataArray(WeldInfo, NPCSonicWeldInfo, 0x03C56B50, 0x10);
-DataArray(WeldInfo, TailsWeldInfo, 0x03C4A610, 0x1E);
-DataArray(WeldInfo, NPCTailsWeldInfo, 0x03C4A938, 0x19);
-DataArray(WeldInfo, NPCKnucklesWeldInfo, 0x03C53038, 0x19);
-DataArray(WeldInfo, AmyWeldInfo, 0x03C546D0, 0x12);
-DataArray(WeldInfo, NPCAmyWeldInfo, 0x03C54EE0, 0x0D);
-DataArray(WeldInfo, BigWeldInfo, 0x03C55500, 0x11);
-DataArray(WeldInfo, MetalSonicWeldInfo, 0x03C55D68, 8);
-DataArray(WeldInfo, TikalWeldInfo, 0x038F3AB8, 14);
-DataArray(WeldInfo, EggmanWeldInfo, 0x038F3F28, 15);
 FunctionPointer(void, PlaySonicIdleVoice, (int a1), 0x442360);
+static bool BigRodIgnoresSpecular = false;
 
 //Replacement Functions
 
@@ -390,124 +381,124 @@ void __cdecl InitSonicWeldInfo_mod()
 	SonicWeldInfo[0].ModelB = SONIC_OBJECTS[2];
 	SonicWeldInfo[0].anonymous_5 = 0;
 	SonicWeldInfo[0].VertexBuffer = 0;
-	SonicWeldInfo[0].VertexPairCount = (uint8_t)(LengthOfArray(Sonic_UpperArmIndices) / 2);
+	SonicWeldInfo[0].VertexPairCount = (uint8_t)(LengthOfArray(Sonic_UpperArmIndices_DC) / 2);
 	SonicWeldInfo[0].WeldType = 2;
-	SonicWeldInfo[0].VertIndexes = Sonic_UpperArmIndices;
+	SonicWeldInfo[0].VertIndexes = Sonic_UpperArmIndices_DC;
 	SonicWeldInfo[1].BaseModel = SONIC_OBJECTS[0];
 	SonicWeldInfo[1].ModelA = SONIC_OBJECTS[2];
 	SonicWeldInfo[1].ModelB = SONIC_OBJECTS[3];
-	SonicWeldInfo[1].VertexPairCount = (uint8_t)(LengthOfArray(Sonic_LowerArmIndices) / 2);
+	SonicWeldInfo[1].VertexPairCount = (uint8_t)(LengthOfArray(Sonic_LowerArmIndices_DC) / 2);
 	SonicWeldInfo[1].WeldType = 2;
 	SonicWeldInfo[1].anonymous_5 = 0;
 	SonicWeldInfo[1].VertexBuffer = 0;
-	SonicWeldInfo[1].VertIndexes = Sonic_LowerArmIndices;
+	SonicWeldInfo[1].VertIndexes = Sonic_LowerArmIndices_DC;
 	SonicWeldInfo[2].BaseModel = SONIC_OBJECTS[0];
 	SonicWeldInfo[2].ModelA = SONIC_OBJECTS[7];
 	SonicWeldInfo[2].ModelB = SONIC_OBJECTS[8];
-	SonicWeldInfo[2].VertexPairCount = (uint8_t)(LengthOfArray(Sonic_UpperArmIndices) / 2);
+	SonicWeldInfo[2].VertexPairCount = (uint8_t)(LengthOfArray(Sonic_UpperArmIndices_DC) / 2);
 	SonicWeldInfo[2].WeldType = 2;
 	SonicWeldInfo[2].anonymous_5 = 0;
 	SonicWeldInfo[2].VertexBuffer = 0;
-	SonicWeldInfo[2].VertIndexes = Sonic_UpperArmIndices;
+	SonicWeldInfo[2].VertIndexes = Sonic_UpperArmIndices_DC;
 	SonicWeldInfo[3].BaseModel = SONIC_OBJECTS[0];
 	SonicWeldInfo[3].ModelA = SONIC_OBJECTS[8];
 	v0 = SONIC_OBJECTS[9];
-	SonicWeldInfo[3].VertIndexes = Sonic_LowerArmIndices;
+	SonicWeldInfo[3].VertIndexes = Sonic_LowerArmIndices_DC;
 	SonicWeldInfo[3].ModelB = v0;
-	SonicWeldInfo[3].VertexPairCount = (uint8_t)(LengthOfArray(Sonic_LowerArmIndices) / 2);
+	SonicWeldInfo[3].VertexPairCount = (uint8_t)(LengthOfArray(Sonic_LowerArmIndices_DC) / 2);
 	SonicWeldInfo[3].WeldType = 2;
 	SonicWeldInfo[3].anonymous_5 = 0;
 	SonicWeldInfo[3].VertexBuffer = 0;
 	SonicWeldInfo[4].BaseModel = SONIC_OBJECTS[0];
 	SonicWeldInfo[4].ModelA = SONIC_OBJECTS[12];
 	SonicWeldInfo[4].ModelB = SONIC_OBJECTS[13];
-	SonicWeldInfo[4].VertexPairCount = (uint8_t)(LengthOfArray(Sonic_UpperLegIndices) / 2);
+	SonicWeldInfo[4].VertexPairCount = (uint8_t)(LengthOfArray(Sonic_UpperLegIndices_DC) / 2);
 	SonicWeldInfo[4].WeldType = 2;
 	SonicWeldInfo[4].anonymous_5 = 0;
 	SonicWeldInfo[4].VertexBuffer = 0;
-	SonicWeldInfo[4].VertIndexes = Sonic_UpperLegIndices;
+	SonicWeldInfo[4].VertIndexes = Sonic_UpperLegIndices_DC;
 	SonicWeldInfo[5].BaseModel = SONIC_OBJECTS[0];
 	SonicWeldInfo[5].ModelA = SONIC_OBJECTS[13];
 	SonicWeldInfo[5].ModelB = SONIC_OBJECTS[14];
-	SonicWeldInfo[5].VertexPairCount = (uint8_t)(LengthOfArray(Sonic_LowerLegIndices) / 2);
+	SonicWeldInfo[5].VertexPairCount = (uint8_t)(LengthOfArray(Sonic_LowerLegIndices_DC) / 2);
 	SonicWeldInfo[5].WeldType = 2;
 	SonicWeldInfo[5].anonymous_5 = 0;
 	SonicWeldInfo[5].VertexBuffer = 0;
-	SonicWeldInfo[5].VertIndexes = Sonic_LowerLegIndices;
+	SonicWeldInfo[5].VertIndexes = Sonic_LowerLegIndices_DC;
 	SonicWeldInfo[6].BaseModel = SONIC_OBJECTS[0];
 	SonicWeldInfo[6].ModelA = SONIC_OBJECTS[17];
 	v1 = SONIC_OBJECTS[18];
-	SonicWeldInfo[6].VertIndexes = Sonic_UpperLegIndices;
+	SonicWeldInfo[6].VertIndexes = Sonic_UpperLegIndices_DC;
 	SonicWeldInfo[6].ModelB = v1;
-	SonicWeldInfo[6].VertexPairCount = (uint8_t)(LengthOfArray(Sonic_UpperLegIndices) / 2);
+	SonicWeldInfo[6].VertexPairCount = (uint8_t)(LengthOfArray(Sonic_UpperLegIndices_DC) / 2);
 	SonicWeldInfo[6].WeldType = 2;
 	SonicWeldInfo[6].anonymous_5 = 0;
 	SonicWeldInfo[6].VertexBuffer = 0;
 	SonicWeldInfo[7].BaseModel = SONIC_OBJECTS[0];
 	SonicWeldInfo[7].ModelA = SONIC_OBJECTS[18];
 	SonicWeldInfo[7].ModelB = SONIC_OBJECTS[19];
-	SonicWeldInfo[7].VertexPairCount = (uint8_t)(LengthOfArray(Sonic_LowerLegIndices) / 2);
+	SonicWeldInfo[7].VertexPairCount = (uint8_t)(LengthOfArray(Sonic_LowerLegIndices_DC) / 2);
 	SonicWeldInfo[7].WeldType = 2;
 	SonicWeldInfo[7].anonymous_5 = 0;
 	SonicWeldInfo[7].VertexBuffer = 0;
-	SonicWeldInfo[7].VertIndexes = Sonic_LowerLegIndices;
+	SonicWeldInfo[7].VertIndexes = Sonic_LowerLegIndices_DC;
 	SonicWeldInfo[8].BaseModel = SONIC_OBJECTS[0];
 	SonicWeldInfo[8].ModelA = SONIC_OBJECTS[15];
 	SonicWeldInfo[8].ModelB = SONIC_OBJECTS[16];
-	SonicWeldInfo[8].VertexPairCount = (uint8_t)(LengthOfArray(Sonic_ShoeIndices) / 2);
+	SonicWeldInfo[8].VertexPairCount = (uint8_t)(LengthOfArray(Sonic_ShoeIndices_DC) / 2);
 	SonicWeldInfo[8].WeldType = 2;
 	SonicWeldInfo[8].anonymous_5 = 0;
 	SonicWeldInfo[8].VertexBuffer = 0;
-	SonicWeldInfo[8].VertIndexes = Sonic_ShoeIndices;
+	SonicWeldInfo[8].VertIndexes = Sonic_ShoeIndices_DC;
 	SonicWeldInfo[9].BaseModel = SONIC_OBJECTS[0];
 	SonicWeldInfo[9].ModelA = SONIC_OBJECTS[20];
 	v2 = SONIC_OBJECTS[21];
-	SonicWeldInfo[9].VertIndexes = Sonic_ShoeIndices;
+	SonicWeldInfo[9].VertIndexes = Sonic_ShoeIndices_DC;
 	SonicWeldInfo[9].ModelB = v2;
-	SonicWeldInfo[9].VertexPairCount = (uint8_t)(LengthOfArray(Sonic_ShoeIndices) / 2);
+	SonicWeldInfo[9].VertexPairCount = (uint8_t)(LengthOfArray(Sonic_ShoeIndices_DC) / 2);
 	SonicWeldInfo[9].WeldType = 2;
 	SonicWeldInfo[9].anonymous_5 = 0;
 	SonicWeldInfo[9].VertexBuffer = 0;
 	SonicWeldInfo[10].BaseModel = SONIC_OBJECTS[0];
 	SonicWeldInfo[10].ModelA = SONIC_OBJECTS[10];
 	SonicWeldInfo[10].ModelB = SONIC_OBJECTS[11];
-	SonicWeldInfo[10].VertexPairCount = (uint8_t)(LengthOfArray(Sonic_HandIndices) / 2);
+	SonicWeldInfo[10].VertexPairCount = (uint8_t)(LengthOfArray(Sonic_HandIndices_DC) / 2);
 	SonicWeldInfo[10].WeldType = 2;
 	SonicWeldInfo[10].anonymous_5 = 0;
 	SonicWeldInfo[10].VertexBuffer = 0;
-	SonicWeldInfo[10].VertIndexes = Sonic_HandIndices;
+	SonicWeldInfo[10].VertIndexes = Sonic_HandIndices_DC;
 	SonicWeldInfo[11].BaseModel = SONIC_OBJECTS[0];
 	SonicWeldInfo[11].ModelA = SONIC_OBJECTS[4];
 	SonicWeldInfo[11].ModelB = SONIC_OBJECTS[5];
-	SonicWeldInfo[11].VertexPairCount = (uint8_t)(LengthOfArray(Sonic_HandIndices) / 2);
+	SonicWeldInfo[11].VertexPairCount = (uint8_t)(LengthOfArray(Sonic_HandIndices_DC) / 2);
 	SonicWeldInfo[11].WeldType = 2;
 	SonicWeldInfo[11].anonymous_5 = 0;
 	SonicWeldInfo[11].VertexBuffer = 0;
-	SonicWeldInfo[11].VertIndexes = Sonic_HandIndices;
+	SonicWeldInfo[11].VertIndexes = Sonic_HandIndices_DC;
 	SonicWeldInfo[12].BaseModel = SONIC_OBJECTS[0];
 	SonicWeldInfo[12].ModelA = SONIC_OBJECTS[58];
 	SonicWeldInfo[12].ModelB = SONIC_OBJECTS[59];
-	SonicWeldInfo[12].VertexPairCount = (uint8_t)(LengthOfArray(Sonic_ShoeIndices) / 2);
+	SonicWeldInfo[12].VertexPairCount = (uint8_t)(LengthOfArray(Sonic_ShoeIndices_DC) / 2);
 	SonicWeldInfo[12].WeldType = 2;
 	SonicWeldInfo[12].anonymous_5 = 0;
 	SonicWeldInfo[12].VertexBuffer = 0;
-	SonicWeldInfo[12].VertIndexes = Sonic_ShoeIndices;
+	SonicWeldInfo[12].VertIndexes = Sonic_ShoeIndices_DC;
 	SonicWeldInfo[13].BaseModel = SONIC_OBJECTS[0];
 	SonicWeldInfo[13].ModelA = SONIC_OBJECTS[60];
 	SonicWeldInfo[13].ModelB = SONIC_OBJECTS[61];
-	SonicWeldInfo[13].VertexPairCount = (uint8_t)(LengthOfArray(Sonic_ShoeIndices) / 2);
+	SonicWeldInfo[13].VertexPairCount = (uint8_t)(LengthOfArray(Sonic_ShoeIndices_DC) / 2);
 	SonicWeldInfo[13].WeldType = 2;
 	SonicWeldInfo[13].anonymous_5 = 0;
 	SonicWeldInfo[13].VertexBuffer = 0;
-	SonicWeldInfo[13].VertIndexes = Sonic_ShoeIndices;
+	SonicWeldInfo[13].VertIndexes = Sonic_ShoeIndices_DC;
 	SonicWeldInfo[14].BaseModel = SONIC_OBJECTS[0];
 	SonicWeldInfo[14].ModelA = SONIC_OBJECTS[2];
 	SonicWeldInfo[14].ModelB = SONIC_OBJECTS[63];
-	SonicWeldInfo[14].VertexPairCount = (uint8_t)(LengthOfArray(Sonic_LowerArmIndices) / 2);
+	SonicWeldInfo[14].VertexPairCount = (uint8_t)(LengthOfArray(Sonic_LowerArmIndices_DC) / 2);
 	SonicWeldInfo[14].WeldType = 2;
 	SonicWeldInfo[14].anonymous_5 = 0;
 	SonicWeldInfo[14].VertexBuffer = 0;
-	SonicWeldInfo[14].VertIndexes = Sonic_LowerArmIndices;
+	SonicWeldInfo[14].VertIndexes = Sonic_LowerArmIndices_DC;
 	SonicWeldInfo[15].BaseModel = SONIC_OBJECTS[0];
 	SonicWeldInfo[15].ModelA = SONIC_OBJECTS[5];
 	SonicWeldInfo[15].ModelB = 0;
@@ -569,100 +560,100 @@ void __cdecl InitSonicWeldInfo_mod()
 	SonicWeldInfo[22].BaseModel = SONIC_OBJECTS[22];
 	SonicWeldInfo[22].ModelA = SONIC_OBJECTS[23];
 	SonicWeldInfo[22].ModelB = SONIC_OBJECTS[24];
-	SonicWeldInfo[22].VertexPairCount = (uint8_t)(LengthOfArray(Sonic_UpperArmIndices) / 2);
+	SonicWeldInfo[22].VertexPairCount = (uint8_t)(LengthOfArray(Sonic_UpperArmIndices_DC) / 2);
 	SonicWeldInfo[22].WeldType = 2;
 	SonicWeldInfo[22].anonymous_5 = 0;
 	SonicWeldInfo[22].VertexBuffer = 0;
-	SonicWeldInfo[22].VertIndexes = Sonic_UpperArmIndices;
+	SonicWeldInfo[22].VertIndexes = Sonic_UpperArmIndices_DC;
 	SonicWeldInfo[23].BaseModel = SONIC_OBJECTS[22];
 	SonicWeldInfo[23].ModelA = SONIC_OBJECTS[24];
 	SonicWeldInfo[23].ModelB = SONIC_OBJECTS[25];
-	SonicWeldInfo[23].VertexPairCount = (uint8_t)(LengthOfArray(Sonic_LowerArmIndices) / 2);
+	SonicWeldInfo[23].VertexPairCount = (uint8_t)(LengthOfArray(Sonic_LowerArmIndices_DC) / 2);
 	SonicWeldInfo[23].WeldType = 2;
 	SonicWeldInfo[23].anonymous_5 = 0;
 	SonicWeldInfo[23].VertexBuffer = 0;
-	SonicWeldInfo[23].VertIndexes = Sonic_LowerArmIndices;
+	SonicWeldInfo[23].VertIndexes = Sonic_LowerArmIndices_DC;
 	SonicWeldInfo[24].BaseModel = SONIC_OBJECTS[22];
 	SonicWeldInfo[24].ModelA = SONIC_OBJECTS[28];
 	SonicWeldInfo[24].ModelB = SONIC_OBJECTS[29];
-	SonicWeldInfo[24].VertexPairCount = (uint8_t)(LengthOfArray(Sonic_UpperArmIndices) / 2);
+	SonicWeldInfo[24].VertexPairCount = (uint8_t)(LengthOfArray(Sonic_UpperArmIndices_DC) / 2);
 	SonicWeldInfo[24].WeldType = 2;
 	SonicWeldInfo[24].anonymous_5 = 0;
 	SonicWeldInfo[24].VertexBuffer = 0;
-	SonicWeldInfo[24].VertIndexes = Sonic_UpperArmIndices;
+	SonicWeldInfo[24].VertIndexes = Sonic_UpperArmIndices_DC;
 	SonicWeldInfo[25].BaseModel = SONIC_OBJECTS[22];
 	SonicWeldInfo[25].ModelA = SONIC_OBJECTS[29];
 	SonicWeldInfo[25].ModelB = SONIC_OBJECTS[30];
-	SonicWeldInfo[25].VertexPairCount = (uint8_t)(LengthOfArray(Sonic_LowerArmIndices) / 2);
+	SonicWeldInfo[25].VertexPairCount = (uint8_t)(LengthOfArray(Sonic_LowerArmIndices_DC) / 2);
 	SonicWeldInfo[25].WeldType = 2;
 	SonicWeldInfo[25].anonymous_5 = 0;
 	SonicWeldInfo[25].VertexBuffer = 0;
-	SonicWeldInfo[25].VertIndexes = Sonic_LowerArmIndices;
+	SonicWeldInfo[25].VertIndexes = Sonic_LowerArmIndices_DC;
 	SonicWeldInfo[26].BaseModel = SONIC_OBJECTS[22];
 	SonicWeldInfo[26].ModelA = SONIC_OBJECTS[33];
 	SonicWeldInfo[26].ModelB = SONIC_OBJECTS[34];
-	SonicWeldInfo[26].VertexPairCount = (uint8_t)(LengthOfArray(Sonic_UpperLegIndices) / 2);
+	SonicWeldInfo[26].VertexPairCount = (uint8_t)(LengthOfArray(Sonic_UpperLegIndices_DC) / 2);
 	SonicWeldInfo[26].WeldType = 2;
 	SonicWeldInfo[26].anonymous_5 = 0;
 	SonicWeldInfo[26].VertexBuffer = 0;
-	SonicWeldInfo[26].VertIndexes = Sonic_UpperLegIndices;
+	SonicWeldInfo[26].VertIndexes = Sonic_UpperLegIndices_DC;
 	SonicWeldInfo[27].BaseModel = SONIC_OBJECTS[22];
 	SonicWeldInfo[27].ModelA = SONIC_OBJECTS[34];
 	SonicWeldInfo[27].ModelB = SONIC_OBJECTS[35];
-	SonicWeldInfo[27].VertexPairCount = (uint8_t)(LengthOfArray(Sonic_LowerLegIndices) / 2);
+	SonicWeldInfo[27].VertexPairCount = (uint8_t)(LengthOfArray(Sonic_LowerLegIndices_DC) / 2);
 	SonicWeldInfo[27].WeldType = 2;
 	SonicWeldInfo[27].anonymous_5 = 0;
 	SonicWeldInfo[27].VertexBuffer = 0;
-	SonicWeldInfo[27].VertIndexes = Sonic_LowerLegIndices;
+	SonicWeldInfo[27].VertIndexes = Sonic_LowerLegIndices_DC;
 	SonicWeldInfo[28].BaseModel = SONIC_OBJECTS[22];
 	SonicWeldInfo[28].ModelA = SONIC_OBJECTS[38];
 	v3 = SONIC_OBJECTS[39];
-	SonicWeldInfo[28].VertIndexes = Sonic_UpperLegIndices;
+	SonicWeldInfo[28].VertIndexes = Sonic_UpperLegIndices_DC;
 	SonicWeldInfo[28].ModelB = v3;
-	SonicWeldInfo[28].VertexPairCount = (uint8_t)(LengthOfArray(Sonic_UpperLegIndices) / 2);
+	SonicWeldInfo[28].VertexPairCount = (uint8_t)(LengthOfArray(Sonic_UpperLegIndices_DC) / 2);
 	SonicWeldInfo[28].WeldType = 2;
 	SonicWeldInfo[28].anonymous_5 = 0;
 	SonicWeldInfo[28].VertexBuffer = 0;
 	SonicWeldInfo[29].BaseModel = SONIC_OBJECTS[22];
 	SonicWeldInfo[29].ModelA = SONIC_OBJECTS[39];
 	SonicWeldInfo[29].ModelB = SONIC_OBJECTS[40];
-	SonicWeldInfo[29].VertexPairCount = (uint8_t)(LengthOfArray(Sonic_LowerLegIndices) / 2);
+	SonicWeldInfo[29].VertexPairCount = (uint8_t)(LengthOfArray(Sonic_LowerLegIndices_DC) / 2);
 	SonicWeldInfo[29].WeldType = 2;
 	SonicWeldInfo[29].anonymous_5 = 0;
 	SonicWeldInfo[29].VertexBuffer = 0;
-	SonicWeldInfo[29].VertIndexes = Sonic_LowerLegIndices;
+	SonicWeldInfo[29].VertIndexes = Sonic_LowerLegIndices_DC;
 	SonicWeldInfo[30].BaseModel = SONIC_OBJECTS[22];
 	SonicWeldInfo[30].ModelA = SONIC_OBJECTS[36];
 	SonicWeldInfo[30].ModelB = SONIC_OBJECTS[37];
-	SonicWeldInfo[30].VertexPairCount = (uint8_t)(LengthOfArray(Sonic_ShoeIndices) / 2);
+	SonicWeldInfo[30].VertexPairCount = (uint8_t)(LengthOfArray(Sonic_ShoeIndices_DC) / 2);
 	SonicWeldInfo[30].WeldType = 2;
 	SonicWeldInfo[30].anonymous_5 = 0;
 	SonicWeldInfo[30].VertexBuffer = 0;
-	SonicWeldInfo[30].VertIndexes = Sonic_ShoeIndices;
+	SonicWeldInfo[30].VertIndexes = Sonic_ShoeIndices_DC;
 	SonicWeldInfo[31].BaseModel = SONIC_OBJECTS[22];
 	SonicWeldInfo[31].ModelA = SONIC_OBJECTS[41];
 	SonicWeldInfo[31].ModelB = SONIC_OBJECTS[42];
-	SonicWeldInfo[31].VertexPairCount = (uint8_t)(LengthOfArray(Sonic_ShoeIndices) / 2);
+	SonicWeldInfo[31].VertexPairCount = (uint8_t)(LengthOfArray(Sonic_ShoeIndices_DC) / 2);
 	SonicWeldInfo[31].WeldType = 2;
 	SonicWeldInfo[31].anonymous_5 = 0;
 	SonicWeldInfo[31].VertexBuffer = 0;
-	SonicWeldInfo[31].VertIndexes = Sonic_ShoeIndices;
+	SonicWeldInfo[31].VertIndexes = Sonic_ShoeIndices_DC;
 	SonicWeldInfo[32].BaseModel = SONIC_OBJECTS[22];
 	SonicWeldInfo[32].ModelA = SONIC_OBJECTS[31];
 	SonicWeldInfo[32].ModelB = SONIC_OBJECTS[32];
-	SonicWeldInfo[32].VertexPairCount = (uint8_t)(LengthOfArray(Sonic_HandIndices) / 2);
+	SonicWeldInfo[32].VertexPairCount = (uint8_t)(LengthOfArray(Sonic_HandIndices_DC) / 2);
 	SonicWeldInfo[32].WeldType = 2;
 	SonicWeldInfo[32].anonymous_5 = 0;
 	SonicWeldInfo[32].VertexBuffer = 0;
-	SonicWeldInfo[32].VertIndexes = Sonic_HandIndices;
+	SonicWeldInfo[32].VertIndexes = Sonic_HandIndices_DC;
 	SonicWeldInfo[33].BaseModel = SONIC_OBJECTS[22];
 	SonicWeldInfo[33].ModelA = SONIC_OBJECTS[26];
 	v4 = SONIC_OBJECTS[27];
 	SonicWeldInfo[33].anonymous_5 = 0;
 	SonicWeldInfo[33].VertexBuffer = 0;
-	SonicWeldInfo[33].VertIndexes = Sonic_HandIndices;
+	SonicWeldInfo[33].VertIndexes = Sonic_HandIndices_DC;
 	SonicWeldInfo[33].ModelB = v4;
-	SonicWeldInfo[33].VertexPairCount = (uint8_t)(LengthOfArray(Sonic_HandIndices) / 2);
+	SonicWeldInfo[33].VertexPairCount = (uint8_t)(LengthOfArray(Sonic_HandIndices_DC) / 2);
 	SonicWeldInfo[33].WeldType = 2;
 	SonicWeldInfo[34].BaseModel = SONIC_OBJECTS[22];
 	SonicWeldInfo[34].ModelA = SONIC_OBJECTS[31];
@@ -670,7 +661,7 @@ void __cdecl InitSonicWeldInfo_mod()
 	SonicWeldInfo[34].anonymous_5 = 0;
 	SonicWeldInfo[34].VertexBuffer = 0;
 	SonicWeldInfo[34].VertexPairCount = 4;
-	SonicWeldInfo[34].VertIndexes = Sonic_HandIndices;
+	SonicWeldInfo[34].VertIndexes = Sonic_HandIndices_DC;
 	SonicWeldInfo[34].WeldType = 2;
 	SonicWeldInfo[35].BaseModel = SONIC_OBJECTS[22];
 	SonicWeldInfo[35].ModelA = SONIC_OBJECTS[26];
@@ -680,7 +671,7 @@ void __cdecl InitSonicWeldInfo_mod()
 	SonicWeldInfo[36].BaseModel = 0;
 	SonicWeldInfo[36].ModelA = 0;
 	SonicWeldInfo[36].ModelB = 0;
-	SonicWeldInfo[35].VertIndexes = Sonic_HandIndices;
+	SonicWeldInfo[35].VertIndexes = Sonic_HandIndices_DC;
 	SonicWeldInfo[36].VertexPairCount = 0;
 	SonicWeldInfo[36].VertexBuffer = 0;
 	SonicWeldInfo[35].VertexPairCount = 4;
@@ -702,116 +693,116 @@ void __cdecl InitNPCSonicWeldInfo_mod()
 	NPCSonicWeldInfo[0].ModelB = SONIC_OBJECTS[2];
 	NPCSonicWeldInfo[0].anonymous_5 = 0;
 	NPCSonicWeldInfo[0].VertexBuffer = 0;
-	NPCSonicWeldInfo[0].VertIndexes = Sonic_UpperArmIndices;
+	NPCSonicWeldInfo[0].VertIndexes = Sonic_UpperArmIndices_DC;
 	NPCSonicWeldInfo[0].WeldType = 2;
-	NPCSonicWeldInfo[0].VertexPairCount = (uint8_t)(LengthOfArray(Sonic_UpperArmIndices) / 2);
+	NPCSonicWeldInfo[0].VertexPairCount = (uint8_t)(LengthOfArray(Sonic_UpperArmIndices_DC) / 2);
 	NPCSonicWeldInfo[1].BaseModel = *SONIC_OBJECTS;
 	NPCSonicWeldInfo[1].ModelA = SONIC_OBJECTS[2];
 	NPCSonicWeldInfo[1].ModelB = SONIC_OBJECTS[3];
-	NPCSonicWeldInfo[1].VertexPairCount = (uint8_t)(LengthOfArray(Sonic_LowerArmIndices) / 2);
+	NPCSonicWeldInfo[1].VertexPairCount = (uint8_t)(LengthOfArray(Sonic_LowerArmIndices_DC) / 2);
 	NPCSonicWeldInfo[1].WeldType = 2;
 	NPCSonicWeldInfo[1].anonymous_5 = 0;
 	NPCSonicWeldInfo[1].VertexBuffer = 0;
-	NPCSonicWeldInfo[1].VertIndexes = Sonic_LowerArmIndices;
+	NPCSonicWeldInfo[1].VertIndexes = Sonic_LowerArmIndices_DC;
 	NPCSonicWeldInfo[2].BaseModel = *SONIC_OBJECTS;
 	NPCSonicWeldInfo[2].ModelA = SONIC_OBJECTS[7];
 	NPCSonicWeldInfo[2].ModelB = SONIC_OBJECTS[8];
-	NPCSonicWeldInfo[2].VertexPairCount = (uint8_t)(LengthOfArray(Sonic_UpperArmIndices) / 2);
+	NPCSonicWeldInfo[2].VertexPairCount = (uint8_t)(LengthOfArray(Sonic_UpperArmIndices_DC) / 2);
 	NPCSonicWeldInfo[2].WeldType = 2;
 	NPCSonicWeldInfo[2].anonymous_5 = 0;
 	NPCSonicWeldInfo[2].VertexBuffer = 0;
-	NPCSonicWeldInfo[2].VertIndexes = Sonic_UpperArmIndices;
+	NPCSonicWeldInfo[2].VertIndexes = Sonic_UpperArmIndices_DC;
 	NPCSonicWeldInfo[3].BaseModel = *SONIC_OBJECTS;
 	NPCSonicWeldInfo[3].ModelA = SONIC_OBJECTS[8];
 	v0 = SONIC_OBJECTS[9];
-	NPCSonicWeldInfo[3].VertIndexes = Sonic_LowerArmIndices;
+	NPCSonicWeldInfo[3].VertIndexes = Sonic_LowerArmIndices_DC;
 	NPCSonicWeldInfo[3].ModelB = v0;
-	NPCSonicWeldInfo[3].VertexPairCount = (uint8_t)(LengthOfArray(Sonic_LowerArmIndices) / 2);
+	NPCSonicWeldInfo[3].VertexPairCount = (uint8_t)(LengthOfArray(Sonic_LowerArmIndices_DC) / 2);
 	NPCSonicWeldInfo[3].WeldType = 2;
 	NPCSonicWeldInfo[3].anonymous_5 = 0;
 	NPCSonicWeldInfo[3].VertexBuffer = 0;
 	NPCSonicWeldInfo[4].BaseModel = *SONIC_OBJECTS;
 	NPCSonicWeldInfo[4].ModelA = SONIC_OBJECTS[12];
 	NPCSonicWeldInfo[4].ModelB = SONIC_OBJECTS[13];
-	NPCSonicWeldInfo[4].VertexPairCount = (uint8_t)(LengthOfArray(Sonic_UpperLegIndices) / 2);
+	NPCSonicWeldInfo[4].VertexPairCount = (uint8_t)(LengthOfArray(Sonic_UpperLegIndices_DC) / 2);
 	NPCSonicWeldInfo[4].WeldType = 2;
 	NPCSonicWeldInfo[4].anonymous_5 = 0;
 	NPCSonicWeldInfo[4].VertexBuffer = 0;
-	NPCSonicWeldInfo[4].VertIndexes = Sonic_UpperLegIndices;
+	NPCSonicWeldInfo[4].VertIndexes = Sonic_UpperLegIndices_DC;
 	NPCSonicWeldInfo[5].BaseModel = *SONIC_OBJECTS;
 	NPCSonicWeldInfo[5].ModelA = SONIC_OBJECTS[13];
 	NPCSonicWeldInfo[5].ModelB = SONIC_OBJECTS[14];
-	NPCSonicWeldInfo[5].VertexPairCount = (uint8_t)(LengthOfArray(Sonic_LowerLegIndices) / 2);
+	NPCSonicWeldInfo[5].VertexPairCount = (uint8_t)(LengthOfArray(Sonic_LowerLegIndices_DC) / 2);
 	NPCSonicWeldInfo[5].WeldType = 2;
 	NPCSonicWeldInfo[5].anonymous_5 = 0;
 	NPCSonicWeldInfo[5].VertexBuffer = 0;
-	NPCSonicWeldInfo[5].VertIndexes = Sonic_LowerLegIndices;
+	NPCSonicWeldInfo[5].VertIndexes = Sonic_LowerLegIndices_DC;
 	NPCSonicWeldInfo[6].BaseModel = *SONIC_OBJECTS;
 	NPCSonicWeldInfo[6].ModelA = SONIC_OBJECTS[17];
 	NPCSonicWeldInfo[6].ModelB = SONIC_OBJECTS[18];
-	NPCSonicWeldInfo[6].VertexPairCount = (uint8_t)(LengthOfArray(Sonic_UpperLegIndices) / 2);
+	NPCSonicWeldInfo[6].VertexPairCount = (uint8_t)(LengthOfArray(Sonic_UpperLegIndices_DC) / 2);
 	NPCSonicWeldInfo[6].WeldType = 2;
 	NPCSonicWeldInfo[6].anonymous_5 = 0;
 	NPCSonicWeldInfo[6].VertexBuffer = 0;
-	NPCSonicWeldInfo[6].VertIndexes = Sonic_UpperLegIndices;
+	NPCSonicWeldInfo[6].VertIndexes = Sonic_UpperLegIndices_DC;
 	NPCSonicWeldInfo[7].BaseModel = *SONIC_OBJECTS;
 	NPCSonicWeldInfo[7].ModelA = SONIC_OBJECTS[18];
 	v1 = SONIC_OBJECTS[19];
-	NPCSonicWeldInfo[7].VertIndexes = Sonic_LowerLegIndices;
+	NPCSonicWeldInfo[7].VertIndexes = Sonic_LowerLegIndices_DC;
 	NPCSonicWeldInfo[7].ModelB = v1;
-	NPCSonicWeldInfo[7].VertexPairCount = (uint8_t)(LengthOfArray(Sonic_LowerLegIndices) / 2);
+	NPCSonicWeldInfo[7].VertexPairCount = (uint8_t)(LengthOfArray(Sonic_LowerLegIndices_DC) / 2);
 	NPCSonicWeldInfo[7].WeldType = 2;
 	NPCSonicWeldInfo[7].anonymous_5 = 0;
 	NPCSonicWeldInfo[7].VertexBuffer = 0;
 	NPCSonicWeldInfo[8].BaseModel = *SONIC_OBJECTS;
 	NPCSonicWeldInfo[8].ModelA = SONIC_OBJECTS[15];
 	NPCSonicWeldInfo[8].ModelB = SONIC_OBJECTS[16];
-	NPCSonicWeldInfo[8].VertexPairCount = (uint8_t)(LengthOfArray(Sonic_ShoeIndices) / 2);
+	NPCSonicWeldInfo[8].VertexPairCount = (uint8_t)(LengthOfArray(Sonic_ShoeIndices_DC) / 2);
 	NPCSonicWeldInfo[8].WeldType = 2;
 	NPCSonicWeldInfo[8].anonymous_5 = 0;
 	NPCSonicWeldInfo[8].VertexBuffer = 0;
-	NPCSonicWeldInfo[8].VertIndexes = Sonic_ShoeIndices;
+	NPCSonicWeldInfo[8].VertIndexes = Sonic_ShoeIndices_DC;
 	NPCSonicWeldInfo[9].BaseModel = *SONIC_OBJECTS;
 	NPCSonicWeldInfo[9].ModelA = SONIC_OBJECTS[20];
 	v2 = SONIC_OBJECTS[21];
-	NPCSonicWeldInfo[9].VertIndexes = Sonic_ShoeIndices;
+	NPCSonicWeldInfo[9].VertIndexes = Sonic_ShoeIndices_DC;
 	NPCSonicWeldInfo[9].ModelB = v2;
-	NPCSonicWeldInfo[9].VertexPairCount = (uint8_t)(LengthOfArray(Sonic_ShoeIndices) / 2);
+	NPCSonicWeldInfo[9].VertexPairCount = (uint8_t)(LengthOfArray(Sonic_ShoeIndices_DC) / 2);
 	NPCSonicWeldInfo[9].WeldType = 2;
 	NPCSonicWeldInfo[9].anonymous_5 = 0;
 	NPCSonicWeldInfo[9].VertexBuffer = 0;
 	NPCSonicWeldInfo[10].BaseModel = *SONIC_OBJECTS;
 	NPCSonicWeldInfo[10].ModelA = SONIC_OBJECTS[10];
 	NPCSonicWeldInfo[10].ModelB = SONIC_OBJECTS[11];
-	NPCSonicWeldInfo[10].VertexPairCount = (uint8_t)(LengthOfArray(Sonic_HandIndices) / 2);
+	NPCSonicWeldInfo[10].VertexPairCount = (uint8_t)(LengthOfArray(Sonic_HandIndices_DC) / 2);
 	NPCSonicWeldInfo[10].WeldType = 2;
 	NPCSonicWeldInfo[10].anonymous_5 = 0;
 	NPCSonicWeldInfo[10].VertexBuffer = 0;
-	NPCSonicWeldInfo[10].VertIndexes = Sonic_HandIndices;
+	NPCSonicWeldInfo[10].VertIndexes = Sonic_HandIndices_DC;
 	NPCSonicWeldInfo[11].BaseModel = *SONIC_OBJECTS;
 	NPCSonicWeldInfo[11].ModelA = SONIC_OBJECTS[4];
 	NPCSonicWeldInfo[11].ModelB = SONIC_OBJECTS[5];
-	NPCSonicWeldInfo[11].VertexPairCount = (uint8_t)(LengthOfArray(Sonic_HandIndices) / 2);
+	NPCSonicWeldInfo[11].VertexPairCount = (uint8_t)(LengthOfArray(Sonic_HandIndices_DC) / 2);
 	NPCSonicWeldInfo[11].WeldType = 2;
 	NPCSonicWeldInfo[11].anonymous_5 = 0;
 	NPCSonicWeldInfo[11].VertexBuffer = 0;
-	NPCSonicWeldInfo[11].VertIndexes = Sonic_HandIndices;
+	NPCSonicWeldInfo[11].VertIndexes = Sonic_HandIndices_DC;
 	NPCSonicWeldInfo[12].BaseModel = *SONIC_OBJECTS;
 	NPCSonicWeldInfo[12].ModelA = SONIC_OBJECTS[58];
 	NPCSonicWeldInfo[12].ModelB = SONIC_OBJECTS[59];
-	NPCSonicWeldInfo[12].VertexPairCount = (uint8_t)(LengthOfArray(Sonic_ShoeIndices) / 2);
+	NPCSonicWeldInfo[12].VertexPairCount = (uint8_t)(LengthOfArray(Sonic_ShoeIndices_DC) / 2);
 	NPCSonicWeldInfo[12].anonymous_5 = 0;
 	NPCSonicWeldInfo[12].VertexBuffer = 0;
 	NPCSonicWeldInfo[12].WeldType = 2;
-	NPCSonicWeldInfo[12].VertIndexes = Sonic_ShoeIndices;
+	NPCSonicWeldInfo[12].VertIndexes = Sonic_ShoeIndices_DC;
 	NPCSonicWeldInfo[13].BaseModel = *SONIC_OBJECTS;
 	NPCSonicWeldInfo[13].ModelA = SONIC_OBJECTS[60];
 	v3 = SONIC_OBJECTS[61];
 	NPCSonicWeldInfo[13].anonymous_5 = 0;
 	NPCSonicWeldInfo[13].VertexBuffer = 0;
 	NPCSonicWeldInfo[13].ModelB = v3;
-	NPCSonicWeldInfo[13].VertIndexes = Sonic_ShoeIndices;
-	NPCSonicWeldInfo[13].VertexPairCount = (uint8_t)(LengthOfArray(Sonic_ShoeIndices) / 2);
+	NPCSonicWeldInfo[13].VertIndexes = Sonic_ShoeIndices_DC;
+	NPCSonicWeldInfo[13].VertexPairCount = (uint8_t)(LengthOfArray(Sonic_ShoeIndices_DC) / 2);
 	NPCSonicWeldInfo[13].WeldType = 2;
 	NPCSonicWeldInfo[14].BaseModel = *SONIC_OBJECTS;
 	NPCSonicWeldInfo[14].ModelA = SONIC_OBJECTS[2];
@@ -823,10 +814,10 @@ void __cdecl InitNPCSonicWeldInfo_mod()
 	NPCSonicWeldInfo[15].ModelB = 0;
 	NPCSonicWeldInfo[15].VertexPairCount = 0;
 	NPCSonicWeldInfo[15].VertexBuffer = 0;
-	NPCSonicWeldInfo[14].VertexPairCount = (uint8_t)(LengthOfArray(Sonic_UpperArmIndices) / 2);
+	NPCSonicWeldInfo[14].VertexPairCount = (uint8_t)(LengthOfArray(Sonic_UpperArmIndices_DC) / 2);
 	NPCSonicWeldInfo[14].ModelB = v4;
 	NPCSonicWeldInfo[14].WeldType = 2;
-	NPCSonicWeldInfo[14].VertIndexes = Sonic_UpperArmIndices;
+	NPCSonicWeldInfo[14].VertIndexes = Sonic_UpperArmIndices_DC;
 	NPCSonicWeldInfo[15].VertIndexes = 0;
 }
 
@@ -844,196 +835,196 @@ void __cdecl InitTailsWeldInfo_mod()
 	TailsWeldInfo[0].ModelB = MILES_OBJECTS[21];
 	TailsWeldInfo[0].anonymous_5 = 0;
 	TailsWeldInfo[0].VertexBuffer = 0;
-	TailsWeldInfo[0].VertexPairCount = (uint8_t)(LengthOfArray(Tails_UpperArmIndices) / 2);
+	TailsWeldInfo[0].VertexPairCount = (uint8_t)(LengthOfArray(Tails_UpperArmIndices_DC) / 2);
 	TailsWeldInfo[0].WeldType = 2;
-	TailsWeldInfo[0].VertIndexes = Tails_UpperArmIndices;
+	TailsWeldInfo[0].VertIndexes = Tails_UpperArmIndices_DC;
 	TailsWeldInfo[1].BaseModel = *MILES_OBJECTS;
 	TailsWeldInfo[1].ModelA = MILES_OBJECTS[21];
 	TailsWeldInfo[1].ModelB = MILES_OBJECTS[22];
-	TailsWeldInfo[1].VertexPairCount = (uint8_t)(LengthOfArray(Tails_LowerArmIndices) / 2);
+	TailsWeldInfo[1].VertexPairCount = (uint8_t)(LengthOfArray(Tails_LowerArmIndices_DC) / 2);
 	TailsWeldInfo[1].WeldType = 2;
 	TailsWeldInfo[1].anonymous_5 = 0;
 	TailsWeldInfo[1].VertexBuffer = 0;
-	TailsWeldInfo[1].VertIndexes = Tails_LowerArmIndices;
+	TailsWeldInfo[1].VertIndexes = Tails_LowerArmIndices_DC;
 	TailsWeldInfo[2].BaseModel = *MILES_OBJECTS;
 	TailsWeldInfo[2].ModelA = MILES_OBJECTS[23];
 	v0 = MILES_OBJECTS[24];
-	TailsWeldInfo[2].VertIndexes = Tails_UpperArmIndices;
+	TailsWeldInfo[2].VertIndexes = Tails_UpperArmIndices_DC;
 	TailsWeldInfo[2].ModelB = v0;
-	TailsWeldInfo[2].VertexPairCount = (uint8_t)(LengthOfArray(Tails_UpperArmIndices) / 2);
+	TailsWeldInfo[2].VertexPairCount = (uint8_t)(LengthOfArray(Tails_UpperArmIndices_DC) / 2);
 	TailsWeldInfo[2].WeldType = 2;
 	TailsWeldInfo[2].anonymous_5 = 0;
 	TailsWeldInfo[2].VertexBuffer = 0;
 	TailsWeldInfo[3].BaseModel = *MILES_OBJECTS;
 	TailsWeldInfo[3].ModelA = MILES_OBJECTS[24];
 	TailsWeldInfo[3].ModelB = MILES_OBJECTS[25];
-	TailsWeldInfo[3].VertexPairCount = (uint8_t)(LengthOfArray(Tails_LowerArmIndices) / 2);
+	TailsWeldInfo[3].VertexPairCount = (uint8_t)(LengthOfArray(Tails_LowerArmIndices_DC) / 2);
 	TailsWeldInfo[3].WeldType = 2;
 	TailsWeldInfo[3].anonymous_5 = 0;
 	TailsWeldInfo[3].VertexBuffer = 0;
-	TailsWeldInfo[3].VertIndexes = Tails_LowerArmIndices;
+	TailsWeldInfo[3].VertIndexes = Tails_LowerArmIndices_DC;
 	TailsWeldInfo[4].BaseModel = *MILES_OBJECTS;
 	TailsWeldInfo[4].ModelA = MILES_OBJECTS[26];
 	TailsWeldInfo[4].ModelB = MILES_OBJECTS[27];
-	TailsWeldInfo[4].VertexPairCount = (uint8_t)(LengthOfArray(Tails_LegIndices) / 2);
+	TailsWeldInfo[4].VertexPairCount = (uint8_t)(LengthOfArray(Tails_LegIndices_DC) / 2);
 	TailsWeldInfo[4].WeldType = 2;
 	TailsWeldInfo[4].anonymous_5 = 0;
 	TailsWeldInfo[4].VertexBuffer = 0;
-	TailsWeldInfo[4].VertIndexes = Tails_LegIndices;
+	TailsWeldInfo[4].VertIndexes = Tails_LegIndices_DC;
 	TailsWeldInfo[5].BaseModel = *MILES_OBJECTS;
 	TailsWeldInfo[5].ModelA = MILES_OBJECTS[27];
 	TailsWeldInfo[5].ModelB = MILES_OBJECTS[28];
-	TailsWeldInfo[5].VertexPairCount = (uint8_t)(LengthOfArray(Tails_LegIndices) / 2);
+	TailsWeldInfo[5].VertexPairCount = (uint8_t)(LengthOfArray(Tails_LegIndices_DC) / 2);
 	TailsWeldInfo[5].WeldType = 2;
 	TailsWeldInfo[5].anonymous_5 = 0;
 	TailsWeldInfo[5].VertexBuffer = 0;
-	TailsWeldInfo[5].VertIndexes = Tails_LegIndices;
+	TailsWeldInfo[5].VertIndexes = Tails_LegIndices_DC;
 	TailsWeldInfo[6].BaseModel = *MILES_OBJECTS;
 	TailsWeldInfo[6].ModelA = MILES_OBJECTS[29];
 	TailsWeldInfo[6].ModelB = MILES_OBJECTS[30];
-	TailsWeldInfo[6].VertexPairCount = (uint8_t)(LengthOfArray(Tails_LegIndices) / 2);
+	TailsWeldInfo[6].VertexPairCount = (uint8_t)(LengthOfArray(Tails_LegIndices_DC) / 2);
 	TailsWeldInfo[6].WeldType = 2;
 	TailsWeldInfo[6].anonymous_5 = 0;
 	TailsWeldInfo[6].VertexBuffer = 0;
-	TailsWeldInfo[6].VertIndexes = Tails_LegIndices;
+	TailsWeldInfo[6].VertIndexes = Tails_LegIndices_DC;
 	TailsWeldInfo[7].BaseModel = *MILES_OBJECTS;
 	TailsWeldInfo[7].ModelA = MILES_OBJECTS[30];
 	TailsWeldInfo[7].ModelB = MILES_OBJECTS[31];
-	TailsWeldInfo[7].VertexPairCount = (uint8_t)(LengthOfArray(Tails_LegIndices) / 2);
+	TailsWeldInfo[7].VertexPairCount = (uint8_t)(LengthOfArray(Tails_LegIndices_DC) / 2);
 	TailsWeldInfo[7].WeldType = 2;
 	TailsWeldInfo[7].anonymous_5 = 0;
 	TailsWeldInfo[7].VertexBuffer = 0;
-	TailsWeldInfo[7].VertIndexes = Tails_LegIndices;
+	TailsWeldInfo[7].VertIndexes = Tails_LegIndices_DC;
 	TailsWeldInfo[8].BaseModel = *MILES_OBJECTS;
 	TailsWeldInfo[8].ModelA = MILES_OBJECTS[32];
 	TailsWeldInfo[8].ModelB = MILES_OBJECTS[33];
-	TailsWeldInfo[8].VertexPairCount = (uint8_t)(LengthOfArray(Tails_ShoeIndices) / 2);
+	TailsWeldInfo[8].VertexPairCount = (uint8_t)(LengthOfArray(Tails_ShoeIndices_DC) / 2);
 	TailsWeldInfo[8].WeldType = 2;
 	TailsWeldInfo[8].anonymous_5 = 0;
 	TailsWeldInfo[8].VertexBuffer = 0;
-	TailsWeldInfo[8].VertIndexes = Tails_ShoeIndices;
+	TailsWeldInfo[8].VertIndexes = Tails_ShoeIndices_DC;
 	TailsWeldInfo[9].BaseModel = *MILES_OBJECTS;
 	TailsWeldInfo[9].ModelA = MILES_OBJECTS[34];
 	v1 = MILES_OBJECTS[35];
-	TailsWeldInfo[9].VertIndexes = Tails_ShoeIndices;
+	TailsWeldInfo[9].VertIndexes = Tails_ShoeIndices_DC;
 	TailsWeldInfo[9].ModelB = v1;
-	TailsWeldInfo[9].VertexPairCount = (uint8_t)(LengthOfArray(Tails_ShoeIndices) / 2);
+	TailsWeldInfo[9].VertexPairCount = (uint8_t)(LengthOfArray(Tails_ShoeIndices_DC) / 2);
 	TailsWeldInfo[9].WeldType = 2;
 	TailsWeldInfo[9].anonymous_5 = 0;
 	TailsWeldInfo[9].VertexBuffer = 0;
 	TailsWeldInfo[10].BaseModel = *MILES_OBJECTS;
 	TailsWeldInfo[10].ModelA = MILES_OBJECTS[36];
 	TailsWeldInfo[10].ModelB = MILES_OBJECTS[37];
-	TailsWeldInfo[10].VertexPairCount = (uint8_t)(LengthOfArray(Tails_HandIndices) / 2);
+	TailsWeldInfo[10].VertexPairCount = (uint8_t)(LengthOfArray(Tails_HandIndices_DC) / 2);
 	TailsWeldInfo[10].WeldType = 2;
 	TailsWeldInfo[10].anonymous_5 = 0;
 	TailsWeldInfo[10].VertexBuffer = 0;
-	TailsWeldInfo[10].VertIndexes = Tails_HandIndices;
+	TailsWeldInfo[10].VertIndexes = Tails_HandIndices_DC;
 	TailsWeldInfo[11].BaseModel = *MILES_OBJECTS;
 	TailsWeldInfo[11].ModelA = MILES_OBJECTS[38];
 	TailsWeldInfo[11].ModelB = MILES_OBJECTS[39];
-	TailsWeldInfo[11].VertexPairCount = (uint8_t)(LengthOfArray(Tails_HandIndices) / 2);
+	TailsWeldInfo[11].VertexPairCount = (uint8_t)(LengthOfArray(Tails_HandIndices_DC) / 2);
 	TailsWeldInfo[11].WeldType = 2;
 	TailsWeldInfo[11].anonymous_5 = 0;
 	TailsWeldInfo[11].VertexBuffer = 0;
-	TailsWeldInfo[11].VertIndexes = Tails_HandIndices;
+	TailsWeldInfo[11].VertIndexes = Tails_HandIndices_DC;
 	TailsWeldInfo[12].BaseModel = MILES_OBJECTS[1];
 	TailsWeldInfo[12].ModelA = MILES_OBJECTS[40];
 	TailsWeldInfo[12].ModelB = MILES_OBJECTS[41];
-	TailsWeldInfo[12].VertexPairCount = (uint8_t)(LengthOfArray(Tails_UpperArmIndices) / 2);
+	TailsWeldInfo[12].VertexPairCount = (uint8_t)(LengthOfArray(Tails_UpperArmIndices_DC) / 2);
 	TailsWeldInfo[12].WeldType = 2;
 	TailsWeldInfo[12].anonymous_5 = 0;
 	TailsWeldInfo[12].VertexBuffer = 0;
-	TailsWeldInfo[12].VertIndexes = Tails_UpperArmIndices;
+	TailsWeldInfo[12].VertIndexes = Tails_UpperArmIndices_DC;
 	TailsWeldInfo[13].BaseModel = MILES_OBJECTS[1];
 	TailsWeldInfo[13].ModelA = MILES_OBJECTS[41];
 	TailsWeldInfo[13].ModelB = MILES_OBJECTS[42];
-	TailsWeldInfo[13].VertexPairCount = (uint8_t)(LengthOfArray(Tails_LowerArmIndices) / 2);
+	TailsWeldInfo[13].VertexPairCount = (uint8_t)(LengthOfArray(Tails_LowerArmIndices_DC) / 2);
 	TailsWeldInfo[13].WeldType = 2;
 	TailsWeldInfo[13].anonymous_5 = 0;
 	TailsWeldInfo[13].VertexBuffer = 0;
-	TailsWeldInfo[13].VertIndexes = Tails_LowerArmIndices;
+	TailsWeldInfo[13].VertIndexes = Tails_LowerArmIndices_DC;
 	TailsWeldInfo[14].BaseModel = MILES_OBJECTS[1];
 	TailsWeldInfo[14].ModelA = MILES_OBJECTS[43];
 	TailsWeldInfo[14].ModelB = MILES_OBJECTS[44];
-	TailsWeldInfo[14].VertexPairCount = (uint8_t)(LengthOfArray(Tails_UpperArmIndices) / 2);
+	TailsWeldInfo[14].VertexPairCount = (uint8_t)(LengthOfArray(Tails_UpperArmIndices_DC) / 2);
 	TailsWeldInfo[14].WeldType = 2;
 	TailsWeldInfo[14].anonymous_5 = 0;
 	TailsWeldInfo[14].VertexBuffer = 0;
-	TailsWeldInfo[14].VertIndexes = Tails_UpperArmIndices;
+	TailsWeldInfo[14].VertIndexes = Tails_UpperArmIndices_DC;
 	TailsWeldInfo[15].BaseModel = MILES_OBJECTS[1];
 	TailsWeldInfo[15].ModelA = MILES_OBJECTS[44];
 	TailsWeldInfo[15].ModelB = MILES_OBJECTS[45];
-	TailsWeldInfo[15].VertexPairCount = (uint8_t)(LengthOfArray(Tails_LowerArmIndices) / 2);
+	TailsWeldInfo[15].VertexPairCount = (uint8_t)(LengthOfArray(Tails_LowerArmIndices_DC) / 2);
 	TailsWeldInfo[15].WeldType = 2;
 	TailsWeldInfo[15].anonymous_5 = 0;
 	TailsWeldInfo[15].VertexBuffer = 0;
-	TailsWeldInfo[15].VertIndexes = Tails_LowerArmIndices;
+	TailsWeldInfo[15].VertIndexes = Tails_LowerArmIndices_DC;
 	TailsWeldInfo[16].BaseModel = MILES_OBJECTS[1];
 	TailsWeldInfo[16].ModelA = MILES_OBJECTS[46];
 	TailsWeldInfo[16].ModelB = MILES_OBJECTS[47];
-	TailsWeldInfo[16].VertexPairCount = (uint8_t)(LengthOfArray(Tails_LegIndices) / 2);
+	TailsWeldInfo[16].VertexPairCount = (uint8_t)(LengthOfArray(Tails_LegIndices_DC) / 2);
 	TailsWeldInfo[16].WeldType = 2;
 	TailsWeldInfo[16].anonymous_5 = 0;
 	TailsWeldInfo[16].VertexBuffer = 0;
-	TailsWeldInfo[16].VertIndexes = Tails_LegIndices;
+	TailsWeldInfo[16].VertIndexes = Tails_LegIndices_DC;
 	TailsWeldInfo[17].BaseModel = MILES_OBJECTS[1];
 	TailsWeldInfo[17].ModelA = MILES_OBJECTS[47];
 	TailsWeldInfo[17].ModelB = MILES_OBJECTS[48];
-	TailsWeldInfo[17].VertexPairCount = (uint8_t)(LengthOfArray(Tails_LegIndices) / 2);
+	TailsWeldInfo[17].VertexPairCount = (uint8_t)(LengthOfArray(Tails_LegIndices_DC) / 2);
 	TailsWeldInfo[17].WeldType = 2;
 	TailsWeldInfo[17].anonymous_5 = 0;
 	TailsWeldInfo[17].VertexBuffer = 0;
-	TailsWeldInfo[17].VertIndexes = Tails_LegIndices;
+	TailsWeldInfo[17].VertIndexes = Tails_LegIndices_DC;
 	TailsWeldInfo[18].BaseModel = MILES_OBJECTS[1];
 	TailsWeldInfo[18].ModelA = MILES_OBJECTS[49];
 	TailsWeldInfo[18].ModelB = MILES_OBJECTS[50];
-	TailsWeldInfo[18].VertexPairCount = (uint8_t)(LengthOfArray(Tails_LegIndices) / 2);
+	TailsWeldInfo[18].VertexPairCount = (uint8_t)(LengthOfArray(Tails_LegIndices_DC) / 2);
 	TailsWeldInfo[18].WeldType = 2;
 	TailsWeldInfo[18].anonymous_5 = 0;
 	TailsWeldInfo[18].VertexBuffer = 0;
-	TailsWeldInfo[18].VertIndexes = Tails_LegIndices;
+	TailsWeldInfo[18].VertIndexes = Tails_LegIndices_DC;
 	TailsWeldInfo[19].BaseModel = MILES_OBJECTS[1];
 	TailsWeldInfo[19].ModelA = MILES_OBJECTS[50];
 	v2 = MILES_OBJECTS[51];
-	TailsWeldInfo[19].VertIndexes = Tails_LegIndices;
+	TailsWeldInfo[19].VertIndexes = Tails_LegIndices_DC;
 	TailsWeldInfo[19].ModelB = v2;
-	TailsWeldInfo[19].VertexPairCount = (uint8_t)(LengthOfArray(Tails_LegIndices) / 2);
+	TailsWeldInfo[19].VertexPairCount = (uint8_t)(LengthOfArray(Tails_LegIndices_DC) / 2);
 	TailsWeldInfo[19].WeldType = 2;
 	TailsWeldInfo[19].anonymous_5 = 0;
 	TailsWeldInfo[19].VertexBuffer = 0;
 	TailsWeldInfo[20].BaseModel = MILES_OBJECTS[1];
 	TailsWeldInfo[20].ModelA = MILES_OBJECTS[52];
 	TailsWeldInfo[20].ModelB = MILES_OBJECTS[53];
-	TailsWeldInfo[20].VertexPairCount = (uint8_t)(LengthOfArray(Tails_ShoeIndices) / 2);
+	TailsWeldInfo[20].VertexPairCount = (uint8_t)(LengthOfArray(Tails_ShoeIndices_DC) / 2);
 	TailsWeldInfo[20].WeldType = 2;
 	TailsWeldInfo[20].anonymous_5 = 0;
 	TailsWeldInfo[20].VertexBuffer = 0;
-	TailsWeldInfo[20].VertIndexes = Tails_ShoeIndices;
+	TailsWeldInfo[20].VertIndexes = Tails_ShoeIndices_DC;
 	TailsWeldInfo[21].BaseModel = MILES_OBJECTS[1];
 	TailsWeldInfo[21].ModelA = MILES_OBJECTS[54];
 	TailsWeldInfo[21].ModelB = MILES_OBJECTS[55];
-	TailsWeldInfo[21].VertexPairCount = (uint8_t)(LengthOfArray(Tails_ShoeIndices) / 2);
+	TailsWeldInfo[21].VertexPairCount = (uint8_t)(LengthOfArray(Tails_ShoeIndices_DC) / 2);
 	TailsWeldInfo[21].WeldType = 2;
 	TailsWeldInfo[21].anonymous_5 = 0;
 	TailsWeldInfo[21].VertexBuffer = 0;
-	TailsWeldInfo[21].VertIndexes = Tails_ShoeIndices;
+	TailsWeldInfo[21].VertIndexes = Tails_ShoeIndices_DC;
 	TailsWeldInfo[22].BaseModel = MILES_OBJECTS[1];
 	TailsWeldInfo[22].ModelA = MILES_OBJECTS[56];
 	TailsWeldInfo[22].ModelB = MILES_OBJECTS[57];
-	TailsWeldInfo[22].VertexPairCount = (uint8_t)(LengthOfArray(Tails_HandIndices) / 2);
+	TailsWeldInfo[22].VertexPairCount = (uint8_t)(LengthOfArray(Tails_HandIndices_DC) / 2);
 	TailsWeldInfo[22].WeldType = 2;
 	TailsWeldInfo[22].anonymous_5 = 0;
 	TailsWeldInfo[22].VertexBuffer = 0;
-	TailsWeldInfo[22].VertIndexes = Tails_HandIndices;
+	TailsWeldInfo[22].VertIndexes = Tails_HandIndices_DC;
 	TailsWeldInfo[23].BaseModel = MILES_OBJECTS[1];
 	TailsWeldInfo[23].ModelA = MILES_OBJECTS[58];
 	TailsWeldInfo[23].ModelB = MILES_OBJECTS[59];
-	TailsWeldInfo[23].VertexPairCount = (uint8_t)(LengthOfArray(Tails_HandIndices) / 2);
+	TailsWeldInfo[23].VertexPairCount = (uint8_t)(LengthOfArray(Tails_HandIndices_DC) / 2);
 	TailsWeldInfo[23].WeldType = 2;
 	TailsWeldInfo[23].anonymous_5 = 0;
 	TailsWeldInfo[23].VertexBuffer = 0;
-	TailsWeldInfo[23].VertIndexes = Tails_HandIndices;
+	TailsWeldInfo[23].VertIndexes = Tails_HandIndices_DC;
 	TailsWeldInfo[24].BaseModel = *MILES_OBJECTS;
 	TailsWeldInfo[24].ModelA = MILES_OBJECTS[37];
 	TailsWeldInfo[24].ModelB = 0;
@@ -1099,180 +1090,180 @@ void __cdecl InitNPCTailsWeldInfo_mod()
 	NPCTailsWeldInfo[0].ModelB = MILES_OBJECTS[21];
 	NPCTailsWeldInfo[0].anonymous_5 = 0;
 	NPCTailsWeldInfo[0].VertexBuffer = 0;
-	NPCTailsWeldInfo[0].VertexPairCount = (uint8_t)(LengthOfArray(Tails_UpperArmIndices) / 2);
+	NPCTailsWeldInfo[0].VertexPairCount = (uint8_t)(LengthOfArray(Tails_UpperArmIndices_DC) / 2);
 	NPCTailsWeldInfo[0].WeldType = 2;
-	NPCTailsWeldInfo[0].VertIndexes = Tails_UpperArmIndices;
+	NPCTailsWeldInfo[0].VertIndexes = Tails_UpperArmIndices_DC;
 	NPCTailsWeldInfo[1].BaseModel = *MILES_OBJECTS;
 	NPCTailsWeldInfo[1].ModelA = MILES_OBJECTS[21];
 	NPCTailsWeldInfo[1].ModelB = MILES_OBJECTS[22];
-	NPCTailsWeldInfo[1].VertexPairCount = (uint8_t)(LengthOfArray(Tails_LowerArmIndices) / 2);
+	NPCTailsWeldInfo[1].VertexPairCount = (uint8_t)(LengthOfArray(Tails_LowerArmIndices_DC) / 2);
 	NPCTailsWeldInfo[1].WeldType = 2;
 	NPCTailsWeldInfo[1].anonymous_5 = 0;
 	NPCTailsWeldInfo[1].VertexBuffer = 0;
-	NPCTailsWeldInfo[1].VertIndexes = Tails_LowerArmIndices;
+	NPCTailsWeldInfo[1].VertIndexes = Tails_LowerArmIndices_DC;
 	NPCTailsWeldInfo[2].BaseModel = *MILES_OBJECTS;
 	NPCTailsWeldInfo[2].ModelA = MILES_OBJECTS[23];
 	v0 = MILES_OBJECTS[24];
-	NPCTailsWeldInfo[2].VertIndexes = Tails_UpperArmIndices;
+	NPCTailsWeldInfo[2].VertIndexes = Tails_UpperArmIndices_DC;
 	NPCTailsWeldInfo[2].ModelB = v0;
-	NPCTailsWeldInfo[2].VertexPairCount = (uint8_t)(LengthOfArray(Tails_UpperArmIndices) / 2);
+	NPCTailsWeldInfo[2].VertexPairCount = (uint8_t)(LengthOfArray(Tails_UpperArmIndices_DC) / 2);
 	NPCTailsWeldInfo[2].WeldType = 2;
 	NPCTailsWeldInfo[2].anonymous_5 = 0;
 	NPCTailsWeldInfo[2].VertexBuffer = 0;
 	NPCTailsWeldInfo[3].BaseModel = *MILES_OBJECTS;
 	NPCTailsWeldInfo[3].ModelA = MILES_OBJECTS[24];
 	NPCTailsWeldInfo[3].ModelB = MILES_OBJECTS[25];
-	NPCTailsWeldInfo[3].VertexPairCount = (uint8_t)(LengthOfArray(Tails_LowerArmIndices) / 2);
+	NPCTailsWeldInfo[3].VertexPairCount = (uint8_t)(LengthOfArray(Tails_LowerArmIndices_DC) / 2);
 	NPCTailsWeldInfo[3].WeldType = 2;
 	NPCTailsWeldInfo[3].anonymous_5 = 0;
 	NPCTailsWeldInfo[3].VertexBuffer = 0;
-	NPCTailsWeldInfo[3].VertIndexes = Tails_LowerArmIndices;
+	NPCTailsWeldInfo[3].VertIndexes = Tails_LowerArmIndices_DC;
 	NPCTailsWeldInfo[4].BaseModel = *MILES_OBJECTS;
 	NPCTailsWeldInfo[4].ModelA = MILES_OBJECTS[26];
 	NPCTailsWeldInfo[4].ModelB = MILES_OBJECTS[27];
-	NPCTailsWeldInfo[4].VertexPairCount = (uint8_t)(LengthOfArray(Tails_LegIndices) / 2);
+	NPCTailsWeldInfo[4].VertexPairCount = (uint8_t)(LengthOfArray(Tails_LegIndices_DC) / 2);
 	NPCTailsWeldInfo[4].WeldType = 2;
 	NPCTailsWeldInfo[4].anonymous_5 = 0;
 	NPCTailsWeldInfo[4].VertexBuffer = 0;
-	NPCTailsWeldInfo[4].VertIndexes = Tails_LegIndices;
+	NPCTailsWeldInfo[4].VertIndexes = Tails_LegIndices_DC;
 	NPCTailsWeldInfo[5].BaseModel = *MILES_OBJECTS;
 	NPCTailsWeldInfo[5].ModelA = MILES_OBJECTS[27];
 	NPCTailsWeldInfo[5].ModelB = MILES_OBJECTS[28];
-	NPCTailsWeldInfo[5].VertexPairCount = (uint8_t)(LengthOfArray(Tails_LegIndices) / 2);
+	NPCTailsWeldInfo[5].VertexPairCount = (uint8_t)(LengthOfArray(Tails_LegIndices_DC) / 2);
 	NPCTailsWeldInfo[5].WeldType = 2;
 	NPCTailsWeldInfo[5].anonymous_5 = 0;
 	NPCTailsWeldInfo[5].VertexBuffer = 0;
-	NPCTailsWeldInfo[5].VertIndexes = Tails_LegIndices;
+	NPCTailsWeldInfo[5].VertIndexes = Tails_LegIndices_DC;
 	NPCTailsWeldInfo[6].BaseModel = *MILES_OBJECTS;
 	NPCTailsWeldInfo[6].ModelA = MILES_OBJECTS[29];
 	NPCTailsWeldInfo[6].ModelB = MILES_OBJECTS[30];
-	NPCTailsWeldInfo[6].VertexPairCount = (uint8_t)(LengthOfArray(Tails_LegIndices) / 2);
+	NPCTailsWeldInfo[6].VertexPairCount = (uint8_t)(LengthOfArray(Tails_LegIndices_DC) / 2);
 	NPCTailsWeldInfo[6].WeldType = 2;
 	NPCTailsWeldInfo[6].anonymous_5 = 0;
 	NPCTailsWeldInfo[6].VertexBuffer = 0;
-	NPCTailsWeldInfo[6].VertIndexes = Tails_LegIndices;
+	NPCTailsWeldInfo[6].VertIndexes = Tails_LegIndices_DC;
 	NPCTailsWeldInfo[7].BaseModel = *MILES_OBJECTS;
 	NPCTailsWeldInfo[7].ModelA = MILES_OBJECTS[30];
 	NPCTailsWeldInfo[7].ModelB = MILES_OBJECTS[31];
-	NPCTailsWeldInfo[7].VertexPairCount = (uint8_t)(LengthOfArray(Tails_LegIndices) / 2);
+	NPCTailsWeldInfo[7].VertexPairCount = (uint8_t)(LengthOfArray(Tails_LegIndices_DC) / 2);
 	NPCTailsWeldInfo[7].WeldType = 2;
 	NPCTailsWeldInfo[7].anonymous_5 = 0;
 	NPCTailsWeldInfo[7].VertexBuffer = 0;
-	NPCTailsWeldInfo[7].VertIndexes = Tails_LegIndices;
+	NPCTailsWeldInfo[7].VertIndexes = Tails_LegIndices_DC;
 	NPCTailsWeldInfo[8].BaseModel = *MILES_OBJECTS;
 	NPCTailsWeldInfo[8].ModelA = MILES_OBJECTS[32];
 	NPCTailsWeldInfo[8].ModelB = MILES_OBJECTS[33];
-	NPCTailsWeldInfo[8].VertexPairCount = (uint8_t)(LengthOfArray(Tails_ShoeIndices) / 2);
+	NPCTailsWeldInfo[8].VertexPairCount = (uint8_t)(LengthOfArray(Tails_ShoeIndices_DC) / 2);
 	NPCTailsWeldInfo[8].WeldType = 2;
 	NPCTailsWeldInfo[8].anonymous_5 = 0;
 	NPCTailsWeldInfo[8].VertexBuffer = 0;
-	NPCTailsWeldInfo[8].VertIndexes = Tails_ShoeIndices;
+	NPCTailsWeldInfo[8].VertIndexes = Tails_ShoeIndices_DC;
 	NPCTailsWeldInfo[9].BaseModel = *MILES_OBJECTS;
 	NPCTailsWeldInfo[9].ModelA = MILES_OBJECTS[34];
 	v1 = MILES_OBJECTS[35];
-	NPCTailsWeldInfo[9].VertIndexes = Tails_ShoeIndices;
+	NPCTailsWeldInfo[9].VertIndexes = Tails_ShoeIndices_DC;
 	NPCTailsWeldInfo[9].ModelB = v1;
-	NPCTailsWeldInfo[9].VertexPairCount = (uint8_t)(LengthOfArray(Tails_ShoeIndices) / 2);
+	NPCTailsWeldInfo[9].VertexPairCount = (uint8_t)(LengthOfArray(Tails_ShoeIndices_DC) / 2);
 	NPCTailsWeldInfo[9].WeldType = 2;
 	NPCTailsWeldInfo[9].anonymous_5 = 0;
 	NPCTailsWeldInfo[9].VertexBuffer = 0;
 	NPCTailsWeldInfo[10].BaseModel = *MILES_OBJECTS;
 	NPCTailsWeldInfo[10].ModelA = MILES_OBJECTS[36];
 	NPCTailsWeldInfo[10].ModelB = MILES_OBJECTS[37];
-	NPCTailsWeldInfo[10].VertexPairCount = (uint8_t)(LengthOfArray(Tails_HandIndices) / 2);
+	NPCTailsWeldInfo[10].VertexPairCount = (uint8_t)(LengthOfArray(Tails_HandIndices_DC) / 2);
 	NPCTailsWeldInfo[10].WeldType = 2;
 	NPCTailsWeldInfo[10].anonymous_5 = 0;
 	NPCTailsWeldInfo[10].VertexBuffer = 0;
-	NPCTailsWeldInfo[10].VertIndexes = Tails_HandIndices;
+	NPCTailsWeldInfo[10].VertIndexes = Tails_HandIndices_DC;
 	NPCTailsWeldInfo[11].BaseModel = *MILES_OBJECTS;
 	NPCTailsWeldInfo[11].ModelA = MILES_OBJECTS[38];
 	NPCTailsWeldInfo[11].ModelB = MILES_OBJECTS[39];
-	NPCTailsWeldInfo[11].VertexPairCount = (uint8_t)(LengthOfArray(Tails_HandIndices) / 2);
+	NPCTailsWeldInfo[11].VertexPairCount = (uint8_t)(LengthOfArray(Tails_HandIndices_DC) / 2);
 	NPCTailsWeldInfo[11].WeldType = 2;
 	NPCTailsWeldInfo[11].anonymous_5 = 0;
 	NPCTailsWeldInfo[11].VertexBuffer = 0;
-	NPCTailsWeldInfo[11].VertIndexes = Tails_HandIndices;
+	NPCTailsWeldInfo[11].VertIndexes = Tails_HandIndices_DC;
 	NPCTailsWeldInfo[12].BaseModel = MILES_OBJECTS[1];
 	NPCTailsWeldInfo[12].ModelA = MILES_OBJECTS[40];
 	NPCTailsWeldInfo[12].ModelB = MILES_OBJECTS[41];
-	NPCTailsWeldInfo[12].VertexPairCount = (uint8_t)(LengthOfArray(Tails_UpperArmIndices) / 2);
+	NPCTailsWeldInfo[12].VertexPairCount = (uint8_t)(LengthOfArray(Tails_UpperArmIndices_DC) / 2);
 	NPCTailsWeldInfo[12].WeldType = 2;
 	NPCTailsWeldInfo[12].anonymous_5 = 0;
 	NPCTailsWeldInfo[12].VertexBuffer = 0;
-	NPCTailsWeldInfo[12].VertIndexes = Tails_UpperArmIndices;
+	NPCTailsWeldInfo[12].VertIndexes = Tails_UpperArmIndices_DC;
 	NPCTailsWeldInfo[13].BaseModel = MILES_OBJECTS[1];
 	NPCTailsWeldInfo[13].ModelA = MILES_OBJECTS[41];
 	NPCTailsWeldInfo[13].ModelB = MILES_OBJECTS[42];
-	NPCTailsWeldInfo[13].VertexPairCount = (uint8_t)(LengthOfArray(Tails_LowerArmIndices) / 2);
+	NPCTailsWeldInfo[13].VertexPairCount = (uint8_t)(LengthOfArray(Tails_LowerArmIndices_DC) / 2);
 	NPCTailsWeldInfo[13].WeldType = 2;
 	NPCTailsWeldInfo[13].anonymous_5 = 0;
 	NPCTailsWeldInfo[13].VertexBuffer = 0;
-	NPCTailsWeldInfo[13].VertIndexes = Tails_LowerArmIndices;
+	NPCTailsWeldInfo[13].VertIndexes = Tails_LowerArmIndices_DC;
 	NPCTailsWeldInfo[14].BaseModel = MILES_OBJECTS[1];
 	NPCTailsWeldInfo[14].ModelA = MILES_OBJECTS[43];
 	NPCTailsWeldInfo[14].ModelB = MILES_OBJECTS[44];
-	NPCTailsWeldInfo[14].VertexPairCount = (uint8_t)(LengthOfArray(Tails_UpperArmIndices) / 2);
+	NPCTailsWeldInfo[14].VertexPairCount = (uint8_t)(LengthOfArray(Tails_UpperArmIndices_DC) / 2);
 	NPCTailsWeldInfo[14].WeldType = 2;
 	NPCTailsWeldInfo[14].anonymous_5 = 0;
 	NPCTailsWeldInfo[14].VertexBuffer = 0;
-	NPCTailsWeldInfo[14].VertIndexes = Tails_UpperArmIndices;
+	NPCTailsWeldInfo[14].VertIndexes = Tails_UpperArmIndices_DC;
 	NPCTailsWeldInfo[15].BaseModel = MILES_OBJECTS[1];
 	NPCTailsWeldInfo[15].ModelA = MILES_OBJECTS[44];
 	NPCTailsWeldInfo[15].ModelB = MILES_OBJECTS[45];
-	NPCTailsWeldInfo[15].VertexPairCount = (uint8_t)(LengthOfArray(Tails_LowerArmIndices) / 2);
+	NPCTailsWeldInfo[15].VertexPairCount = (uint8_t)(LengthOfArray(Tails_LowerArmIndices_DC) / 2);
 	NPCTailsWeldInfo[15].WeldType = 2;
 	NPCTailsWeldInfo[15].anonymous_5 = 0;
 	NPCTailsWeldInfo[15].VertexBuffer = 0;
-	NPCTailsWeldInfo[15].VertIndexes = Tails_LowerArmIndices;
+	NPCTailsWeldInfo[15].VertIndexes = Tails_LowerArmIndices_DC;
 	NPCTailsWeldInfo[16].BaseModel = MILES_OBJECTS[1];
 	NPCTailsWeldInfo[16].ModelA = MILES_OBJECTS[46];
 	NPCTailsWeldInfo[16].ModelB = MILES_OBJECTS[47];
-	NPCTailsWeldInfo[16].VertexPairCount = (uint8_t)(LengthOfArray(Tails_LegIndices) / 2);
+	NPCTailsWeldInfo[16].VertexPairCount = (uint8_t)(LengthOfArray(Tails_LegIndices_DC) / 2);
 	NPCTailsWeldInfo[16].WeldType = 2;
 	NPCTailsWeldInfo[16].anonymous_5 = 0;
 	NPCTailsWeldInfo[16].VertexBuffer = 0;
-	NPCTailsWeldInfo[16].VertIndexes = Tails_LegIndices;
+	NPCTailsWeldInfo[16].VertIndexes = Tails_LegIndices_DC;
 	NPCTailsWeldInfo[17].BaseModel = MILES_OBJECTS[1];
 	NPCTailsWeldInfo[17].ModelA = MILES_OBJECTS[47];
 	NPCTailsWeldInfo[17].ModelB = MILES_OBJECTS[48];
-	NPCTailsWeldInfo[17].VertexPairCount = (uint8_t)(LengthOfArray(Tails_LegIndices) / 2);
+	NPCTailsWeldInfo[17].VertexPairCount = (uint8_t)(LengthOfArray(Tails_LegIndices_DC) / 2);
 	NPCTailsWeldInfo[17].WeldType = 2;
 	NPCTailsWeldInfo[17].anonymous_5 = 0;
 	NPCTailsWeldInfo[17].VertexBuffer = 0;
-	NPCTailsWeldInfo[17].VertIndexes = Tails_LegIndices;
+	NPCTailsWeldInfo[17].VertIndexes = Tails_LegIndices_DC;
 	NPCTailsWeldInfo[18].BaseModel = MILES_OBJECTS[1];
 	NPCTailsWeldInfo[18].ModelA = MILES_OBJECTS[49];
 	NPCTailsWeldInfo[18].ModelB = MILES_OBJECTS[50];
-	NPCTailsWeldInfo[18].VertexPairCount = (uint8_t)(LengthOfArray(Tails_LegIndices) / 2);
+	NPCTailsWeldInfo[18].VertexPairCount = (uint8_t)(LengthOfArray(Tails_LegIndices_DC) / 2);
 	NPCTailsWeldInfo[18].WeldType = 2;
 	NPCTailsWeldInfo[18].anonymous_5 = 0;
 	NPCTailsWeldInfo[18].VertexBuffer = 0;
-	NPCTailsWeldInfo[18].VertIndexes = Tails_LegIndices;
+	NPCTailsWeldInfo[18].VertIndexes = Tails_LegIndices_DC;
 	NPCTailsWeldInfo[19].BaseModel = MILES_OBJECTS[1];
 	NPCTailsWeldInfo[19].ModelA = MILES_OBJECTS[50];
 	v2 = MILES_OBJECTS[51];
 	NPCTailsWeldInfo[19].anonymous_5 = 0;
 	NPCTailsWeldInfo[19].VertexBuffer = 0;
-	NPCTailsWeldInfo[19].VertIndexes = Tails_LegIndices;
+	NPCTailsWeldInfo[19].VertIndexes = Tails_LegIndices_DC;
 	NPCTailsWeldInfo[19].ModelB = v2;
-	NPCTailsWeldInfo[19].VertexPairCount = (uint8_t)(LengthOfArray(Tails_LegIndices) / 2);
+	NPCTailsWeldInfo[19].VertexPairCount = (uint8_t)(LengthOfArray(Tails_LegIndices_DC) / 2);
 	NPCTailsWeldInfo[19].WeldType = 2;
 	NPCTailsWeldInfo[20].BaseModel = MILES_OBJECTS[1];
 	NPCTailsWeldInfo[20].ModelA = MILES_OBJECTS[52];
 	NPCTailsWeldInfo[20].ModelB = MILES_OBJECTS[53];
 	NPCTailsWeldInfo[20].anonymous_5 = 0;
 	NPCTailsWeldInfo[20].VertexBuffer = 0;
-	NPCTailsWeldInfo[20].VertexPairCount = (uint8_t)(LengthOfArray(Tails_ShoeIndices) / 2);
+	NPCTailsWeldInfo[20].VertexPairCount = (uint8_t)(LengthOfArray(Tails_ShoeIndices_DC) / 2);
 	NPCTailsWeldInfo[20].WeldType = 2;
-	NPCTailsWeldInfo[20].VertIndexes = Tails_ShoeIndices;
+	NPCTailsWeldInfo[20].VertIndexes = Tails_ShoeIndices_DC;
 	NPCTailsWeldInfo[21].BaseModel = MILES_OBJECTS[1];
 	NPCTailsWeldInfo[21].ModelA = MILES_OBJECTS[54];
 	v3 = MILES_OBJECTS[55];
 	NPCTailsWeldInfo[21].anonymous_5 = 0;
 	NPCTailsWeldInfo[21].VertexBuffer = 0;
 	NPCTailsWeldInfo[21].ModelB = v3;
-	NPCTailsWeldInfo[21].VertIndexes = Tails_ShoeIndices;
-	NPCTailsWeldInfo[21].VertexPairCount = (uint8_t)(LengthOfArray(Tails_ShoeIndices) / 2);
+	NPCTailsWeldInfo[21].VertIndexes = Tails_ShoeIndices_DC;
+	NPCTailsWeldInfo[21].VertexPairCount = (uint8_t)(LengthOfArray(Tails_ShoeIndices_DC) / 2);
 	NPCTailsWeldInfo[21].WeldType = 2;
 	NPCTailsWeldInfo[22].BaseModel = MILES_OBJECTS[1];
 	NPCTailsWeldInfo[22].ModelA = MILES_OBJECTS[56];
@@ -1280,8 +1271,8 @@ void __cdecl InitNPCTailsWeldInfo_mod()
 	NPCTailsWeldInfo[22].anonymous_5 = 0;
 	NPCTailsWeldInfo[22].VertexBuffer = 0;
 	NPCTailsWeldInfo[22].ModelB = v4;
-	NPCTailsWeldInfo[22].VertIndexes = Tails_HandIndices;
-	NPCTailsWeldInfo[22].VertexPairCount = (uint8_t)(LengthOfArray(Tails_HandIndices) / 2);
+	NPCTailsWeldInfo[22].VertIndexes = Tails_HandIndices_DC;
+	NPCTailsWeldInfo[22].VertexPairCount = (uint8_t)(LengthOfArray(Tails_HandIndices_DC) / 2);
 	NPCTailsWeldInfo[22].WeldType = 2;
 	NPCTailsWeldInfo[23].BaseModel = MILES_OBJECTS[1];
 	NPCTailsWeldInfo[23].ModelA = MILES_OBJECTS[58];
@@ -1290,12 +1281,12 @@ void __cdecl InitNPCTailsWeldInfo_mod()
 	NPCTailsWeldInfo[23].VertexBuffer = 0;
 	NPCTailsWeldInfo[24].BaseModel = 0;
 	NPCTailsWeldInfo[24].ModelA = 0;
-	NPCTailsWeldInfo[23].VertIndexes = Tails_HandIndices;
+	NPCTailsWeldInfo[23].VertIndexes = Tails_HandIndices_DC;
 	NPCTailsWeldInfo[24].ModelB = 0;
 	NPCTailsWeldInfo[24].VertexPairCount = 0;
 	NPCTailsWeldInfo[24].VertexBuffer = 0;
 	NPCTailsWeldInfo[23].ModelB = v5;
-	NPCTailsWeldInfo[23].VertexPairCount = (uint8_t)(LengthOfArray(Tails_HandIndices) / 2);
+	NPCTailsWeldInfo[23].VertexPairCount = (uint8_t)(LengthOfArray(Tails_HandIndices_DC) / 2);
 	NPCTailsWeldInfo[23].WeldType = 2;
 	NPCTailsWeldInfo[24].VertIndexes = 0;
 }
@@ -1314,196 +1305,196 @@ void __cdecl InitKnucklesWeldInfo_mod()
 	KnucklesWeldInfo[0].ModelB = KNUCKLES_OBJECTS[3];
 	KnucklesWeldInfo[0].anonymous_5 = 0;
 	KnucklesWeldInfo[0].VertexBuffer = 0;
-	KnucklesWeldInfo[0].VertexPairCount = (uint8_t)(LengthOfArray(Knuckles_UpperArmIndices) / 2);
+	KnucklesWeldInfo[0].VertexPairCount = (uint8_t)(LengthOfArray(Knuckles_UpperArmIndices_DC) / 2);
 	KnucklesWeldInfo[0].WeldType = 2;
-	KnucklesWeldInfo[0].VertIndexes = Knuckles_UpperArmIndices;
+	KnucklesWeldInfo[0].VertIndexes = Knuckles_UpperArmIndices_DC;
 	KnucklesWeldInfo[1].BaseModel = *KNUCKLES_OBJECTS;
 	KnucklesWeldInfo[1].ModelA = KNUCKLES_OBJECTS[3];
 	KnucklesWeldInfo[1].ModelB = KNUCKLES_OBJECTS[4];
-	KnucklesWeldInfo[1].VertexPairCount = (uint8_t)(LengthOfArray(Knuckles_LowerArmIndices) / 2);
+	KnucklesWeldInfo[1].VertexPairCount = (uint8_t)(LengthOfArray(Knuckles_LowerArmIndices_DC) / 2);
 	KnucklesWeldInfo[1].WeldType = 2;
 	KnucklesWeldInfo[1].anonymous_5 = 0;
 	KnucklesWeldInfo[1].VertexBuffer = 0;
-	KnucklesWeldInfo[1].VertIndexes = Knuckles_LowerArmIndices;
+	KnucklesWeldInfo[1].VertIndexes = Knuckles_LowerArmIndices_DC;
 	KnucklesWeldInfo[2].BaseModel = *KNUCKLES_OBJECTS;
 	KnucklesWeldInfo[2].ModelA = KNUCKLES_OBJECTS[6];
 	v0 = KNUCKLES_OBJECTS[7];
-	KnucklesWeldInfo[2].VertIndexes = Knuckles_UpperArmIndices;
+	KnucklesWeldInfo[2].VertIndexes = Knuckles_UpperArmIndices_DC;
 	KnucklesWeldInfo[2].ModelB = v0;
-	KnucklesWeldInfo[2].VertexPairCount = (uint8_t)(LengthOfArray(Knuckles_UpperArmIndices) / 2);
+	KnucklesWeldInfo[2].VertexPairCount = (uint8_t)(LengthOfArray(Knuckles_UpperArmIndices_DC) / 2);
 	KnucklesWeldInfo[2].WeldType = 2;
 	KnucklesWeldInfo[2].anonymous_5 = 0;
 	KnucklesWeldInfo[2].VertexBuffer = 0;
 	KnucklesWeldInfo[3].BaseModel = *KNUCKLES_OBJECTS;
 	KnucklesWeldInfo[3].ModelA = KNUCKLES_OBJECTS[7];
 	KnucklesWeldInfo[3].ModelB = KNUCKLES_OBJECTS[8];
-	KnucklesWeldInfo[3].VertexPairCount = (uint8_t)(LengthOfArray(Knuckles_LowerArmIndices) / 2);
+	KnucklesWeldInfo[3].VertexPairCount = (uint8_t)(LengthOfArray(Knuckles_LowerArmIndices_DC) / 2);
 	KnucklesWeldInfo[3].WeldType = 2;
 	KnucklesWeldInfo[3].anonymous_5 = 0;
 	KnucklesWeldInfo[3].VertexBuffer = 0;
-	KnucklesWeldInfo[3].VertIndexes = Knuckles_LowerArmIndices;
+	KnucklesWeldInfo[3].VertIndexes = Knuckles_LowerArmIndices_DC;
 	KnucklesWeldInfo[4].BaseModel = *KNUCKLES_OBJECTS;
 	KnucklesWeldInfo[4].ModelA = KNUCKLES_OBJECTS[10];
 	KnucklesWeldInfo[4].ModelB = KNUCKLES_OBJECTS[11];
-	KnucklesWeldInfo[4].VertexPairCount = (uint8_t)(LengthOfArray(Knuckles_LegIndices) / 2);
+	KnucklesWeldInfo[4].VertexPairCount = (uint8_t)(LengthOfArray(Knuckles_LegIndices_DC) / 2);
 	KnucklesWeldInfo[4].WeldType = 2;
 	KnucklesWeldInfo[4].anonymous_5 = 0;
 	KnucklesWeldInfo[4].VertexBuffer = 0;
-	KnucklesWeldInfo[4].VertIndexes = Knuckles_LegIndices;
+	KnucklesWeldInfo[4].VertIndexes = Knuckles_LegIndices_DC;
 	KnucklesWeldInfo[5].BaseModel = *KNUCKLES_OBJECTS;
 	KnucklesWeldInfo[5].ModelA = KNUCKLES_OBJECTS[11];
 	KnucklesWeldInfo[5].ModelB = KNUCKLES_OBJECTS[12];
-	KnucklesWeldInfo[5].VertexPairCount = (uint8_t)(LengthOfArray(Knuckles_LegIndices) / 2);
+	KnucklesWeldInfo[5].VertexPairCount = (uint8_t)(LengthOfArray(Knuckles_LegIndices_DC) / 2);
 	KnucklesWeldInfo[5].WeldType = 2;
 	KnucklesWeldInfo[5].anonymous_5 = 0;
 	KnucklesWeldInfo[5].VertexBuffer = 0;
-	KnucklesWeldInfo[5].VertIndexes = Knuckles_LegIndices;
+	KnucklesWeldInfo[5].VertIndexes = Knuckles_LegIndices_DC;
 	KnucklesWeldInfo[6].BaseModel = *KNUCKLES_OBJECTS;
 	KnucklesWeldInfo[6].ModelA = KNUCKLES_OBJECTS[13];
 	KnucklesWeldInfo[6].ModelB = KNUCKLES_OBJECTS[14];
-	KnucklesWeldInfo[6].VertexPairCount = (uint8_t)(LengthOfArray(Knuckles_LegIndices) / 2);
+	KnucklesWeldInfo[6].VertexPairCount = (uint8_t)(LengthOfArray(Knuckles_LegIndices_DC) / 2);
 	KnucklesWeldInfo[6].WeldType = 2;
 	KnucklesWeldInfo[6].anonymous_5 = 0;
 	KnucklesWeldInfo[6].VertexBuffer = 0;
-	KnucklesWeldInfo[6].VertIndexes = Knuckles_LegIndices;
+	KnucklesWeldInfo[6].VertIndexes = Knuckles_LegIndices_DC;
 	KnucklesWeldInfo[7].BaseModel = *KNUCKLES_OBJECTS;
 	KnucklesWeldInfo[7].ModelA = KNUCKLES_OBJECTS[14];
 	KnucklesWeldInfo[7].ModelB = KNUCKLES_OBJECTS[15];
-	KnucklesWeldInfo[7].VertexPairCount = (uint8_t)(LengthOfArray(Knuckles_LegIndices) / 2);
+	KnucklesWeldInfo[7].VertexPairCount = (uint8_t)(LengthOfArray(Knuckles_LegIndices_DC) / 2);
 	KnucklesWeldInfo[7].WeldType = 2;
 	KnucklesWeldInfo[7].anonymous_5 = 0;
 	KnucklesWeldInfo[7].VertexBuffer = 0;
-	KnucklesWeldInfo[7].VertIndexes = Knuckles_LegIndices;
+	KnucklesWeldInfo[7].VertIndexes = Knuckles_LegIndices_DC;
 	KnucklesWeldInfo[8].BaseModel = *KNUCKLES_OBJECTS;
 	KnucklesWeldInfo[8].ModelA = KNUCKLES_OBJECTS[16];
 	KnucklesWeldInfo[8].ModelB = KNUCKLES_OBJECTS[17];
-	KnucklesWeldInfo[8].VertexPairCount = (uint8_t)(LengthOfArray(Knuckles_ShoeIndices) / 2);
+	KnucklesWeldInfo[8].VertexPairCount = (uint8_t)(LengthOfArray(Knuckles_ShoeIndices_DC) / 2);
 	KnucklesWeldInfo[8].WeldType = 2;
 	KnucklesWeldInfo[8].anonymous_5 = 0;
 	KnucklesWeldInfo[8].VertexBuffer = 0;
-	KnucklesWeldInfo[8].VertIndexes = Knuckles_ShoeIndices;
+	KnucklesWeldInfo[8].VertIndexes = Knuckles_ShoeIndices_DC;
 	KnucklesWeldInfo[9].BaseModel = *KNUCKLES_OBJECTS;
 	KnucklesWeldInfo[9].ModelA = KNUCKLES_OBJECTS[18];
 	v1 = KNUCKLES_OBJECTS[19];
-	KnucklesWeldInfo[9].VertIndexes = Knuckles_ShoeIndices;
+	KnucklesWeldInfo[9].VertIndexes = Knuckles_ShoeIndices_DC;
 	KnucklesWeldInfo[9].ModelB = v1;
-	KnucklesWeldInfo[9].VertexPairCount = (uint8_t)(LengthOfArray(Knuckles_ShoeIndices) / 2);
+	KnucklesWeldInfo[9].VertexPairCount = (uint8_t)(LengthOfArray(Knuckles_ShoeIndices_DC) / 2);
 	KnucklesWeldInfo[9].WeldType = 2;
 	KnucklesWeldInfo[9].anonymous_5 = 0;
 	KnucklesWeldInfo[9].VertexBuffer = 0;
 	KnucklesWeldInfo[10].BaseModel = *KNUCKLES_OBJECTS;
 	KnucklesWeldInfo[10].ModelA = KNUCKLES_OBJECTS[20];
 	KnucklesWeldInfo[10].ModelB = KNUCKLES_OBJECTS[5];
-	KnucklesWeldInfo[10].VertexPairCount = (uint8_t)(LengthOfArray(Knuckles_HandIndices) / 2);
+	KnucklesWeldInfo[10].VertexPairCount = (uint8_t)(LengthOfArray(Knuckles_HandIndices_DC) / 2);
 	KnucklesWeldInfo[10].WeldType = 2;
 	KnucklesWeldInfo[10].anonymous_5 = 0;
 	KnucklesWeldInfo[10].VertexBuffer = 0;
-	KnucklesWeldInfo[10].VertIndexes = Knuckles_HandIndices;
+	KnucklesWeldInfo[10].VertIndexes = Knuckles_HandIndices_DC;
 	KnucklesWeldInfo[11].BaseModel = *KNUCKLES_OBJECTS;
 	KnucklesWeldInfo[11].ModelA = KNUCKLES_OBJECTS[22];
 	KnucklesWeldInfo[11].ModelB = KNUCKLES_OBJECTS[9];
-	KnucklesWeldInfo[11].VertexPairCount = (uint8_t)(LengthOfArray(Knuckles_HandIndices) / 2);
+	KnucklesWeldInfo[11].VertexPairCount = (uint8_t)(LengthOfArray(Knuckles_HandIndices_DC) / 2);
 	KnucklesWeldInfo[11].WeldType = 2;
 	KnucklesWeldInfo[11].anonymous_5 = 0;
 	KnucklesWeldInfo[11].VertexBuffer = 0;
-	KnucklesWeldInfo[11].VertIndexes = Knuckles_HandIndices;
+	KnucklesWeldInfo[11].VertIndexes = Knuckles_HandIndices_DC;
 	KnucklesWeldInfo[12].BaseModel = KNUCKLES_OBJECTS[1];
 	KnucklesWeldInfo[12].ModelA = KNUCKLES_OBJECTS[24];
 	KnucklesWeldInfo[12].ModelB = KNUCKLES_OBJECTS[25];
-	KnucklesWeldInfo[12].VertexPairCount = (uint8_t)(LengthOfArray(Knuckles_UpperArmIndices) / 2);
+	KnucklesWeldInfo[12].VertexPairCount = (uint8_t)(LengthOfArray(Knuckles_UpperArmIndices_DC) / 2);
 	KnucklesWeldInfo[12].WeldType = 2;
 	KnucklesWeldInfo[12].anonymous_5 = 0;
 	KnucklesWeldInfo[12].VertexBuffer = 0;
-	KnucklesWeldInfo[12].VertIndexes = Knuckles_UpperArmIndices;
+	KnucklesWeldInfo[12].VertIndexes = Knuckles_UpperArmIndices_DC;
 	KnucklesWeldInfo[13].BaseModel = KNUCKLES_OBJECTS[1];
 	KnucklesWeldInfo[13].ModelA = KNUCKLES_OBJECTS[25];
 	KnucklesWeldInfo[13].ModelB = KNUCKLES_OBJECTS[26];
-	KnucklesWeldInfo[13].VertexPairCount = (uint8_t)(LengthOfArray(Knuckles_LowerArmIndices) / 2);
+	KnucklesWeldInfo[13].VertexPairCount = (uint8_t)(LengthOfArray(Knuckles_LowerArmIndices_DC) / 2);
 	KnucklesWeldInfo[13].WeldType = 2;
 	KnucklesWeldInfo[13].anonymous_5 = 0;
 	KnucklesWeldInfo[13].VertexBuffer = 0;
-	KnucklesWeldInfo[13].VertIndexes = Knuckles_LowerArmIndices;
+	KnucklesWeldInfo[13].VertIndexes = Knuckles_LowerArmIndices_DC;
 	KnucklesWeldInfo[14].BaseModel = KNUCKLES_OBJECTS[1];
 	KnucklesWeldInfo[14].ModelA = KNUCKLES_OBJECTS[28];
 	KnucklesWeldInfo[14].ModelB = KNUCKLES_OBJECTS[29];
-	KnucklesWeldInfo[14].VertexPairCount = (uint8_t)(LengthOfArray(Knuckles_UpperArmIndices) / 2);
+	KnucklesWeldInfo[14].VertexPairCount = (uint8_t)(LengthOfArray(Knuckles_UpperArmIndices_DC) / 2);
 	KnucklesWeldInfo[14].WeldType = 2;
 	KnucklesWeldInfo[14].anonymous_5 = 0;
 	KnucklesWeldInfo[14].VertexBuffer = 0;
-	KnucklesWeldInfo[14].VertIndexes = Knuckles_UpperArmIndices;
+	KnucklesWeldInfo[14].VertIndexes = Knuckles_UpperArmIndices_DC;
 	KnucklesWeldInfo[15].BaseModel = KNUCKLES_OBJECTS[1];
 	KnucklesWeldInfo[15].ModelA = KNUCKLES_OBJECTS[29];
 	KnucklesWeldInfo[15].ModelB = KNUCKLES_OBJECTS[30];
-	KnucklesWeldInfo[15].VertexPairCount = (uint8_t)(LengthOfArray(Knuckles_LowerArmIndices) / 2);
+	KnucklesWeldInfo[15].VertexPairCount = (uint8_t)(LengthOfArray(Knuckles_LowerArmIndices_DC) / 2);
 	KnucklesWeldInfo[15].WeldType = 2;
 	KnucklesWeldInfo[15].anonymous_5 = 0;
 	KnucklesWeldInfo[15].VertexBuffer = 0;
-	KnucklesWeldInfo[15].VertIndexes = Knuckles_LowerArmIndices;
+	KnucklesWeldInfo[15].VertIndexes = Knuckles_LowerArmIndices_DC;
 	KnucklesWeldInfo[16].BaseModel = KNUCKLES_OBJECTS[1];
 	KnucklesWeldInfo[16].ModelA = KNUCKLES_OBJECTS[32];
 	KnucklesWeldInfo[16].ModelB = KNUCKLES_OBJECTS[33];
-	KnucklesWeldInfo[16].VertexPairCount = (uint8_t)(LengthOfArray(Knuckles_LegIndices) / 2);
+	KnucklesWeldInfo[16].VertexPairCount = (uint8_t)(LengthOfArray(Knuckles_LegIndices_DC) / 2);
 	KnucklesWeldInfo[16].WeldType = 2;
 	KnucklesWeldInfo[16].anonymous_5 = 0;
 	KnucklesWeldInfo[16].VertexBuffer = 0;
-	KnucklesWeldInfo[16].VertIndexes = Knuckles_LegIndices;
+	KnucklesWeldInfo[16].VertIndexes = Knuckles_LegIndices_DC;
 	KnucklesWeldInfo[17].BaseModel = KNUCKLES_OBJECTS[1];
 	KnucklesWeldInfo[17].ModelA = KNUCKLES_OBJECTS[33];
 	KnucklesWeldInfo[17].ModelB = KNUCKLES_OBJECTS[34];
-	KnucklesWeldInfo[17].VertexPairCount = (uint8_t)(LengthOfArray(Knuckles_LegIndices) / 2);
+	KnucklesWeldInfo[17].VertexPairCount = (uint8_t)(LengthOfArray(Knuckles_LegIndices_DC) / 2);
 	KnucklesWeldInfo[17].WeldType = 2;
 	KnucklesWeldInfo[17].anonymous_5 = 0;
 	KnucklesWeldInfo[17].VertexBuffer = 0;
-	KnucklesWeldInfo[17].VertIndexes = Knuckles_LegIndices;
+	KnucklesWeldInfo[17].VertIndexes = Knuckles_LegIndices_DC;
 	KnucklesWeldInfo[18].BaseModel = KNUCKLES_OBJECTS[1];
 	KnucklesWeldInfo[18].ModelA = KNUCKLES_OBJECTS[35];
 	KnucklesWeldInfo[18].ModelB = KNUCKLES_OBJECTS[36];
-	KnucklesWeldInfo[18].VertexPairCount = (uint8_t)(LengthOfArray(Knuckles_LegIndices) / 2);
+	KnucklesWeldInfo[18].VertexPairCount = (uint8_t)(LengthOfArray(Knuckles_LegIndices_DC) / 2);
 	KnucklesWeldInfo[18].WeldType = 2;
 	KnucklesWeldInfo[18].anonymous_5 = 0;
 	KnucklesWeldInfo[18].VertexBuffer = 0;
-	KnucklesWeldInfo[18].VertIndexes = Knuckles_LegIndices;
+	KnucklesWeldInfo[18].VertIndexes = Knuckles_LegIndices_DC;
 	KnucklesWeldInfo[19].BaseModel = KNUCKLES_OBJECTS[1];
 	KnucklesWeldInfo[19].ModelA = KNUCKLES_OBJECTS[36];
 	v2 = KNUCKLES_OBJECTS[37];
-	KnucklesWeldInfo[19].VertIndexes = Knuckles_LegIndices;
+	KnucklesWeldInfo[19].VertIndexes = Knuckles_LegIndices_DC;
 	KnucklesWeldInfo[19].ModelB = v2;
-	KnucklesWeldInfo[19].VertexPairCount = (uint8_t)(LengthOfArray(Knuckles_LegIndices) / 2);
+	KnucklesWeldInfo[19].VertexPairCount = (uint8_t)(LengthOfArray(Knuckles_LegIndices_DC) / 2);
 	KnucklesWeldInfo[19].WeldType = 2;
 	KnucklesWeldInfo[19].anonymous_5 = 0;
 	KnucklesWeldInfo[19].VertexBuffer = 0;
 	KnucklesWeldInfo[20].BaseModel = KNUCKLES_OBJECTS[1];
 	KnucklesWeldInfo[20].ModelA = KNUCKLES_OBJECTS[38];
 	KnucklesWeldInfo[20].ModelB = KNUCKLES_OBJECTS[39];
-	KnucklesWeldInfo[20].VertexPairCount = (uint8_t)(LengthOfArray(Knuckles_ShoeIndices) / 2);
+	KnucklesWeldInfo[20].VertexPairCount = (uint8_t)(LengthOfArray(Knuckles_ShoeIndices_DC) / 2);
 	KnucklesWeldInfo[20].WeldType = 2;
 	KnucklesWeldInfo[20].anonymous_5 = 0;
 	KnucklesWeldInfo[20].VertexBuffer = 0;
-	KnucklesWeldInfo[20].VertIndexes = Knuckles_ShoeIndices;
+	KnucklesWeldInfo[20].VertIndexes = Knuckles_ShoeIndices_DC;
 	KnucklesWeldInfo[21].BaseModel = KNUCKLES_OBJECTS[1];
 	KnucklesWeldInfo[21].ModelA = KNUCKLES_OBJECTS[40];
 	KnucklesWeldInfo[21].ModelB = KNUCKLES_OBJECTS[41];
-	KnucklesWeldInfo[21].VertexPairCount = (uint8_t)(LengthOfArray(Knuckles_ShoeIndices) / 2);
+	KnucklesWeldInfo[21].VertexPairCount = (uint8_t)(LengthOfArray(Knuckles_ShoeIndices_DC) / 2);
 	KnucklesWeldInfo[21].WeldType = 2;
 	KnucklesWeldInfo[21].anonymous_5 = 0;
 	KnucklesWeldInfo[21].VertexBuffer = 0;
-	KnucklesWeldInfo[21].VertIndexes = Knuckles_ShoeIndices;
+	KnucklesWeldInfo[21].VertIndexes = Knuckles_ShoeIndices_DC;
 	KnucklesWeldInfo[22].BaseModel = KNUCKLES_OBJECTS[1];
 	KnucklesWeldInfo[22].ModelA = KNUCKLES_OBJECTS[42];
 	KnucklesWeldInfo[22].ModelB = KNUCKLES_OBJECTS[27];
-	KnucklesWeldInfo[22].VertexPairCount = (uint8_t)(LengthOfArray(Knuckles_HandIndices) / 2);
+	KnucklesWeldInfo[22].VertexPairCount = (uint8_t)(LengthOfArray(Knuckles_HandIndices_DC) / 2);
 	KnucklesWeldInfo[22].WeldType = 2;
 	KnucklesWeldInfo[22].anonymous_5 = 0;
 	KnucklesWeldInfo[22].VertexBuffer = 0;
-	KnucklesWeldInfo[22].VertIndexes = Knuckles_HandIndices;
+	KnucklesWeldInfo[22].VertIndexes = Knuckles_HandIndices_DC;
 	KnucklesWeldInfo[23].BaseModel = KNUCKLES_OBJECTS[1];
 	KnucklesWeldInfo[23].ModelA = KNUCKLES_OBJECTS[44];
 	KnucklesWeldInfo[23].ModelB = KNUCKLES_OBJECTS[31];
-	KnucklesWeldInfo[23].VertexPairCount = (uint8_t)(LengthOfArray(Knuckles_HandIndices) / 2);
+	KnucklesWeldInfo[23].VertexPairCount = (uint8_t)(LengthOfArray(Knuckles_HandIndices_DC) / 2);
 	KnucklesWeldInfo[23].WeldType = 2;
 	KnucklesWeldInfo[23].anonymous_5 = 0;
 	KnucklesWeldInfo[23].VertexBuffer = 0;
-	KnucklesWeldInfo[23].VertIndexes = Knuckles_HandIndices;
+	KnucklesWeldInfo[23].VertIndexes = Knuckles_HandIndices_DC;
 	KnucklesWeldInfo[24].BaseModel = *KNUCKLES_OBJECTS;
 	KnucklesWeldInfo[24].ModelA = KNUCKLES_OBJECTS[5];
 	KnucklesWeldInfo[24].ModelB = 0;
@@ -1569,180 +1560,180 @@ void __cdecl InitNPCKnucklesWeldInfo_mod()
 	NPCKnucklesWeldInfo[0].ModelB = KNUCKLES_OBJECTS[3];
 	NPCKnucklesWeldInfo[0].anonymous_5 = 0;
 	NPCKnucklesWeldInfo[0].VertexBuffer = 0;
-	NPCKnucklesWeldInfo[0].VertexPairCount = (uint8_t)(LengthOfArray(Knuckles_UpperArmIndices) / 2);
+	NPCKnucklesWeldInfo[0].VertexPairCount = (uint8_t)(LengthOfArray(Knuckles_UpperArmIndices_DC) / 2);
 	NPCKnucklesWeldInfo[0].WeldType = 2;
-	NPCKnucklesWeldInfo[0].VertIndexes = Knuckles_UpperArmIndices;
+	NPCKnucklesWeldInfo[0].VertIndexes = Knuckles_UpperArmIndices_DC;
 	NPCKnucklesWeldInfo[1].BaseModel = *KNUCKLES_OBJECTS;
 	NPCKnucklesWeldInfo[1].ModelA = KNUCKLES_OBJECTS[3];
 	NPCKnucklesWeldInfo[1].ModelB = KNUCKLES_OBJECTS[4];
-	NPCKnucklesWeldInfo[1].VertexPairCount = (uint8_t)(LengthOfArray(Knuckles_LowerArmIndices) / 2);
+	NPCKnucklesWeldInfo[1].VertexPairCount = (uint8_t)(LengthOfArray(Knuckles_LowerArmIndices_DC) / 2);
 	NPCKnucklesWeldInfo[1].WeldType = 2;
 	NPCKnucklesWeldInfo[1].anonymous_5 = 0;
 	NPCKnucklesWeldInfo[1].VertexBuffer = 0;
-	NPCKnucklesWeldInfo[1].VertIndexes = Knuckles_LowerArmIndices;
+	NPCKnucklesWeldInfo[1].VertIndexes = Knuckles_LowerArmIndices_DC;
 	NPCKnucklesWeldInfo[2].BaseModel = *KNUCKLES_OBJECTS;
 	NPCKnucklesWeldInfo[2].ModelA = KNUCKLES_OBJECTS[6];
 	v0 = KNUCKLES_OBJECTS[7];
-	NPCKnucklesWeldInfo[2].VertIndexes = Knuckles_UpperArmIndices;
+	NPCKnucklesWeldInfo[2].VertIndexes = Knuckles_UpperArmIndices_DC;
 	NPCKnucklesWeldInfo[2].ModelB = v0;
-	NPCKnucklesWeldInfo[2].VertexPairCount = (uint8_t)(LengthOfArray(Knuckles_UpperArmIndices) / 2);
+	NPCKnucklesWeldInfo[2].VertexPairCount = (uint8_t)(LengthOfArray(Knuckles_UpperArmIndices_DC) / 2);
 	NPCKnucklesWeldInfo[2].WeldType = 2;
 	NPCKnucklesWeldInfo[2].anonymous_5 = 0;
 	NPCKnucklesWeldInfo[2].VertexBuffer = 0;
 	NPCKnucklesWeldInfo[3].BaseModel = *KNUCKLES_OBJECTS;
 	NPCKnucklesWeldInfo[3].ModelA = KNUCKLES_OBJECTS[7];
 	NPCKnucklesWeldInfo[3].ModelB = KNUCKLES_OBJECTS[8];
-	NPCKnucklesWeldInfo[3].VertexPairCount = (uint8_t)(LengthOfArray(Knuckles_LowerArmIndices) / 2);
+	NPCKnucklesWeldInfo[3].VertexPairCount = (uint8_t)(LengthOfArray(Knuckles_LowerArmIndices_DC) / 2);
 	NPCKnucklesWeldInfo[3].WeldType = 2;
 	NPCKnucklesWeldInfo[3].anonymous_5 = 0;
 	NPCKnucklesWeldInfo[3].VertexBuffer = 0;
-	NPCKnucklesWeldInfo[3].VertIndexes = Knuckles_LowerArmIndices;
+	NPCKnucklesWeldInfo[3].VertIndexes = Knuckles_LowerArmIndices_DC;
 	NPCKnucklesWeldInfo[4].BaseModel = *KNUCKLES_OBJECTS;
 	NPCKnucklesWeldInfo[4].ModelA = KNUCKLES_OBJECTS[10];
 	NPCKnucklesWeldInfo[4].ModelB = KNUCKLES_OBJECTS[11];
-	NPCKnucklesWeldInfo[4].VertexPairCount = (uint8_t)(LengthOfArray(Knuckles_LegIndices) / 2);
+	NPCKnucklesWeldInfo[4].VertexPairCount = (uint8_t)(LengthOfArray(Knuckles_LegIndices_DC) / 2);
 	NPCKnucklesWeldInfo[4].WeldType = 2;
 	NPCKnucklesWeldInfo[4].anonymous_5 = 0;
 	NPCKnucklesWeldInfo[4].VertexBuffer = 0;
-	NPCKnucklesWeldInfo[4].VertIndexes = Knuckles_LegIndices;
+	NPCKnucklesWeldInfo[4].VertIndexes = Knuckles_LegIndices_DC;
 	NPCKnucklesWeldInfo[5].BaseModel = *KNUCKLES_OBJECTS;
 	NPCKnucklesWeldInfo[5].ModelA = KNUCKLES_OBJECTS[11];
 	NPCKnucklesWeldInfo[5].ModelB = KNUCKLES_OBJECTS[12];
-	NPCKnucklesWeldInfo[5].VertexPairCount = (uint8_t)(LengthOfArray(Knuckles_LegIndices) / 2);
+	NPCKnucklesWeldInfo[5].VertexPairCount = (uint8_t)(LengthOfArray(Knuckles_LegIndices_DC) / 2);
 	NPCKnucklesWeldInfo[5].WeldType = 2;
 	NPCKnucklesWeldInfo[5].anonymous_5 = 0;
 	NPCKnucklesWeldInfo[5].VertexBuffer = 0;
-	NPCKnucklesWeldInfo[5].VertIndexes = Knuckles_LegIndices;
+	NPCKnucklesWeldInfo[5].VertIndexes = Knuckles_LegIndices_DC;
 	NPCKnucklesWeldInfo[6].BaseModel = *KNUCKLES_OBJECTS;
 	NPCKnucklesWeldInfo[6].ModelA = KNUCKLES_OBJECTS[13];
 	NPCKnucklesWeldInfo[6].ModelB = KNUCKLES_OBJECTS[14];
-	NPCKnucklesWeldInfo[6].VertexPairCount = (uint8_t)(LengthOfArray(Knuckles_LegIndices) / 2);
+	NPCKnucklesWeldInfo[6].VertexPairCount = (uint8_t)(LengthOfArray(Knuckles_LegIndices_DC) / 2);
 	NPCKnucklesWeldInfo[6].WeldType = 2;
 	NPCKnucklesWeldInfo[6].anonymous_5 = 0;
 	NPCKnucklesWeldInfo[6].VertexBuffer = 0;
-	NPCKnucklesWeldInfo[6].VertIndexes = Knuckles_LegIndices;
+	NPCKnucklesWeldInfo[6].VertIndexes = Knuckles_LegIndices_DC;
 	NPCKnucklesWeldInfo[7].BaseModel = *KNUCKLES_OBJECTS;
 	NPCKnucklesWeldInfo[7].ModelA = KNUCKLES_OBJECTS[14];
 	NPCKnucklesWeldInfo[7].ModelB = KNUCKLES_OBJECTS[15];
-	NPCKnucklesWeldInfo[7].VertexPairCount = (uint8_t)(LengthOfArray(Knuckles_LegIndices) / 2);
+	NPCKnucklesWeldInfo[7].VertexPairCount = (uint8_t)(LengthOfArray(Knuckles_LegIndices_DC) / 2);
 	NPCKnucklesWeldInfo[7].WeldType = 2;
 	NPCKnucklesWeldInfo[7].anonymous_5 = 0;
 	NPCKnucklesWeldInfo[7].VertexBuffer = 0;
-	NPCKnucklesWeldInfo[7].VertIndexes = Knuckles_LegIndices;
+	NPCKnucklesWeldInfo[7].VertIndexes = Knuckles_LegIndices_DC;
 	NPCKnucklesWeldInfo[8].BaseModel = *KNUCKLES_OBJECTS;
 	NPCKnucklesWeldInfo[8].ModelA = KNUCKLES_OBJECTS[16];
 	NPCKnucklesWeldInfo[8].ModelB = KNUCKLES_OBJECTS[17];
-	NPCKnucklesWeldInfo[8].VertexPairCount = (uint8_t)(LengthOfArray(Knuckles_ShoeIndices) / 2);
+	NPCKnucklesWeldInfo[8].VertexPairCount = (uint8_t)(LengthOfArray(Knuckles_ShoeIndices_DC) / 2);
 	NPCKnucklesWeldInfo[8].WeldType = 2;
 	NPCKnucklesWeldInfo[8].anonymous_5 = 0;
 	NPCKnucklesWeldInfo[8].VertexBuffer = 0;
-	NPCKnucklesWeldInfo[8].VertIndexes = Knuckles_ShoeIndices;
+	NPCKnucklesWeldInfo[8].VertIndexes = Knuckles_ShoeIndices_DC;
 	NPCKnucklesWeldInfo[9].BaseModel = *KNUCKLES_OBJECTS;
 	NPCKnucklesWeldInfo[9].ModelA = KNUCKLES_OBJECTS[18];
 	v1 = KNUCKLES_OBJECTS[19];
-	NPCKnucklesWeldInfo[9].VertIndexes = Knuckles_ShoeIndices;
+	NPCKnucklesWeldInfo[9].VertIndexes = Knuckles_ShoeIndices_DC;
 	NPCKnucklesWeldInfo[9].ModelB = v1;
-	NPCKnucklesWeldInfo[9].VertexPairCount = (uint8_t)(LengthOfArray(Knuckles_ShoeIndices) / 2);
+	NPCKnucklesWeldInfo[9].VertexPairCount = (uint8_t)(LengthOfArray(Knuckles_ShoeIndices_DC) / 2);
 	NPCKnucklesWeldInfo[9].WeldType = 2;
 	NPCKnucklesWeldInfo[9].anonymous_5 = 0;
 	NPCKnucklesWeldInfo[9].VertexBuffer = 0;
 	NPCKnucklesWeldInfo[10].BaseModel = *KNUCKLES_OBJECTS;
 	NPCKnucklesWeldInfo[10].ModelA = KNUCKLES_OBJECTS[20];
 	NPCKnucklesWeldInfo[10].ModelB = KNUCKLES_OBJECTS[5];
-	NPCKnucklesWeldInfo[10].VertexPairCount = (uint8_t)(LengthOfArray(Knuckles_HandIndices) / 2);
+	NPCKnucklesWeldInfo[10].VertexPairCount = (uint8_t)(LengthOfArray(Knuckles_HandIndices_DC) / 2);
 	NPCKnucklesWeldInfo[10].WeldType = 2;
 	NPCKnucklesWeldInfo[10].anonymous_5 = 0;
 	NPCKnucklesWeldInfo[10].VertexBuffer = 0;
-	NPCKnucklesWeldInfo[10].VertIndexes = Knuckles_HandIndices;
+	NPCKnucklesWeldInfo[10].VertIndexes = Knuckles_HandIndices_DC;
 	NPCKnucklesWeldInfo[11].BaseModel = *KNUCKLES_OBJECTS;
 	NPCKnucklesWeldInfo[11].ModelA = KNUCKLES_OBJECTS[22];
 	NPCKnucklesWeldInfo[11].ModelB = KNUCKLES_OBJECTS[9];
-	NPCKnucklesWeldInfo[11].VertexPairCount = (uint8_t)(LengthOfArray(Knuckles_HandIndices) / 2);
+	NPCKnucklesWeldInfo[11].VertexPairCount = (uint8_t)(LengthOfArray(Knuckles_HandIndices_DC) / 2);
 	NPCKnucklesWeldInfo[11].WeldType = 2;
 	NPCKnucklesWeldInfo[11].anonymous_5 = 0;
 	NPCKnucklesWeldInfo[11].VertexBuffer = 0;
-	NPCKnucklesWeldInfo[11].VertIndexes = Knuckles_HandIndices;
+	NPCKnucklesWeldInfo[11].VertIndexes = Knuckles_HandIndices_DC;
 	NPCKnucklesWeldInfo[12].BaseModel = KNUCKLES_OBJECTS[1];
 	NPCKnucklesWeldInfo[12].ModelA = KNUCKLES_OBJECTS[24];
 	NPCKnucklesWeldInfo[12].ModelB = KNUCKLES_OBJECTS[25];
-	NPCKnucklesWeldInfo[12].VertexPairCount = (uint8_t)(LengthOfArray(Knuckles_UpperArmIndices) / 2);
+	NPCKnucklesWeldInfo[12].VertexPairCount = (uint8_t)(LengthOfArray(Knuckles_UpperArmIndices_DC) / 2);
 	NPCKnucklesWeldInfo[12].WeldType = 2;
 	NPCKnucklesWeldInfo[12].anonymous_5 = 0;
 	NPCKnucklesWeldInfo[12].VertexBuffer = 0;
-	NPCKnucklesWeldInfo[12].VertIndexes = Knuckles_UpperArmIndices;
+	NPCKnucklesWeldInfo[12].VertIndexes = Knuckles_UpperArmIndices_DC;
 	NPCKnucklesWeldInfo[13].BaseModel = KNUCKLES_OBJECTS[1];
 	NPCKnucklesWeldInfo[13].ModelA = KNUCKLES_OBJECTS[25];
 	NPCKnucklesWeldInfo[13].ModelB = KNUCKLES_OBJECTS[26];
-	NPCKnucklesWeldInfo[13].VertexPairCount = (uint8_t)(LengthOfArray(Knuckles_LowerArmIndices) / 2);
+	NPCKnucklesWeldInfo[13].VertexPairCount = (uint8_t)(LengthOfArray(Knuckles_LowerArmIndices_DC) / 2);
 	NPCKnucklesWeldInfo[13].WeldType = 2;
 	NPCKnucklesWeldInfo[13].anonymous_5 = 0;
 	NPCKnucklesWeldInfo[13].VertexBuffer = 0;
-	NPCKnucklesWeldInfo[13].VertIndexes = Knuckles_LowerArmIndices;
+	NPCKnucklesWeldInfo[13].VertIndexes = Knuckles_LowerArmIndices_DC;
 	NPCKnucklesWeldInfo[14].BaseModel = KNUCKLES_OBJECTS[1];
 	NPCKnucklesWeldInfo[14].ModelA = KNUCKLES_OBJECTS[28];
 	NPCKnucklesWeldInfo[14].ModelB = KNUCKLES_OBJECTS[29];
-	NPCKnucklesWeldInfo[14].VertexPairCount = (uint8_t)(LengthOfArray(Knuckles_UpperArmIndices) / 2);
+	NPCKnucklesWeldInfo[14].VertexPairCount = (uint8_t)(LengthOfArray(Knuckles_UpperArmIndices_DC) / 2);
 	NPCKnucklesWeldInfo[14].WeldType = 2;
 	NPCKnucklesWeldInfo[14].anonymous_5 = 0;
 	NPCKnucklesWeldInfo[14].VertexBuffer = 0;
-	NPCKnucklesWeldInfo[14].VertIndexes = Knuckles_UpperArmIndices;
+	NPCKnucklesWeldInfo[14].VertIndexes = Knuckles_UpperArmIndices_DC;
 	NPCKnucklesWeldInfo[15].BaseModel = KNUCKLES_OBJECTS[1];
 	NPCKnucklesWeldInfo[15].ModelA = KNUCKLES_OBJECTS[29];
 	NPCKnucklesWeldInfo[15].ModelB = KNUCKLES_OBJECTS[30];
-	NPCKnucklesWeldInfo[15].VertexPairCount = (uint8_t)(LengthOfArray(Knuckles_LowerArmIndices) / 2);
+	NPCKnucklesWeldInfo[15].VertexPairCount = (uint8_t)(LengthOfArray(Knuckles_LowerArmIndices_DC) / 2);
 	NPCKnucklesWeldInfo[15].WeldType = 2;
 	NPCKnucklesWeldInfo[15].anonymous_5 = 0;
 	NPCKnucklesWeldInfo[15].VertexBuffer = 0;
-	NPCKnucklesWeldInfo[15].VertIndexes = Knuckles_LowerArmIndices;
+	NPCKnucklesWeldInfo[15].VertIndexes = Knuckles_LowerArmIndices_DC;
 	NPCKnucklesWeldInfo[16].BaseModel = KNUCKLES_OBJECTS[1];
 	NPCKnucklesWeldInfo[16].ModelA = KNUCKLES_OBJECTS[32];
 	NPCKnucklesWeldInfo[16].ModelB = KNUCKLES_OBJECTS[33];
-	NPCKnucklesWeldInfo[16].VertexPairCount = (uint8_t)(LengthOfArray(Knuckles_LegIndices) / 2);
+	NPCKnucklesWeldInfo[16].VertexPairCount = (uint8_t)(LengthOfArray(Knuckles_LegIndices_DC) / 2);
 	NPCKnucklesWeldInfo[16].WeldType = 2;
 	NPCKnucklesWeldInfo[16].anonymous_5 = 0;
 	NPCKnucklesWeldInfo[16].VertexBuffer = 0;
-	NPCKnucklesWeldInfo[16].VertIndexes = Knuckles_LegIndices;
+	NPCKnucklesWeldInfo[16].VertIndexes = Knuckles_LegIndices_DC;
 	NPCKnucklesWeldInfo[17].BaseModel = KNUCKLES_OBJECTS[1];
 	NPCKnucklesWeldInfo[17].ModelA = KNUCKLES_OBJECTS[33];
 	NPCKnucklesWeldInfo[17].ModelB = KNUCKLES_OBJECTS[34];
-	NPCKnucklesWeldInfo[17].VertexPairCount = (uint8_t)(LengthOfArray(Knuckles_LegIndices) / 2);
+	NPCKnucklesWeldInfo[17].VertexPairCount = (uint8_t)(LengthOfArray(Knuckles_LegIndices_DC) / 2);
 	NPCKnucklesWeldInfo[17].WeldType = 2;
 	NPCKnucklesWeldInfo[17].anonymous_5 = 0;
 	NPCKnucklesWeldInfo[17].VertexBuffer = 0;
-	NPCKnucklesWeldInfo[17].VertIndexes = Knuckles_LegIndices;
+	NPCKnucklesWeldInfo[17].VertIndexes = Knuckles_LegIndices_DC;
 	NPCKnucklesWeldInfo[18].BaseModel = KNUCKLES_OBJECTS[1];
 	NPCKnucklesWeldInfo[18].ModelA = KNUCKLES_OBJECTS[35];
 	NPCKnucklesWeldInfo[18].ModelB = KNUCKLES_OBJECTS[36];
-	NPCKnucklesWeldInfo[18].VertexPairCount = (uint8_t)(LengthOfArray(Knuckles_LegIndices) / 2);
+	NPCKnucklesWeldInfo[18].VertexPairCount = (uint8_t)(LengthOfArray(Knuckles_LegIndices_DC) / 2);
 	NPCKnucklesWeldInfo[18].WeldType = 2;
 	NPCKnucklesWeldInfo[18].anonymous_5 = 0;
 	NPCKnucklesWeldInfo[18].VertexBuffer = 0;
-	NPCKnucklesWeldInfo[18].VertIndexes = Knuckles_LegIndices;
+	NPCKnucklesWeldInfo[18].VertIndexes = Knuckles_LegIndices_DC;
 	NPCKnucklesWeldInfo[19].BaseModel = KNUCKLES_OBJECTS[1];
 	NPCKnucklesWeldInfo[19].ModelA = KNUCKLES_OBJECTS[36];
 	v2 = KNUCKLES_OBJECTS[37];
 	NPCKnucklesWeldInfo[19].anonymous_5 = 0;
 	NPCKnucklesWeldInfo[19].VertexBuffer = 0;
-	NPCKnucklesWeldInfo[19].VertIndexes = Knuckles_LegIndices;
+	NPCKnucklesWeldInfo[19].VertIndexes = Knuckles_LegIndices_DC;
 	NPCKnucklesWeldInfo[19].ModelB = v2;
-	NPCKnucklesWeldInfo[19].VertexPairCount = (uint8_t)(LengthOfArray(Knuckles_LegIndices) / 2);
+	NPCKnucklesWeldInfo[19].VertexPairCount = (uint8_t)(LengthOfArray(Knuckles_LegIndices_DC) / 2);
 	NPCKnucklesWeldInfo[19].WeldType = 2;
 	NPCKnucklesWeldInfo[20].BaseModel = KNUCKLES_OBJECTS[1];
 	NPCKnucklesWeldInfo[20].ModelA = KNUCKLES_OBJECTS[38];
 	NPCKnucklesWeldInfo[20].ModelB = KNUCKLES_OBJECTS[39];
 	NPCKnucklesWeldInfo[20].anonymous_5 = 0;
 	NPCKnucklesWeldInfo[20].VertexBuffer = 0;
-	NPCKnucklesWeldInfo[20].VertexPairCount = (uint8_t)(LengthOfArray(Knuckles_ShoeIndices) / 2);
+	NPCKnucklesWeldInfo[20].VertexPairCount = (uint8_t)(LengthOfArray(Knuckles_ShoeIndices_DC) / 2);
 	NPCKnucklesWeldInfo[20].WeldType = 2;
-	NPCKnucklesWeldInfo[20].VertIndexes = Knuckles_ShoeIndices;
+	NPCKnucklesWeldInfo[20].VertIndexes = Knuckles_ShoeIndices_DC;
 	NPCKnucklesWeldInfo[21].BaseModel = KNUCKLES_OBJECTS[1];
 	NPCKnucklesWeldInfo[21].ModelA = KNUCKLES_OBJECTS[40];
 	v3 = KNUCKLES_OBJECTS[41];
 	NPCKnucklesWeldInfo[21].anonymous_5 = 0;
 	NPCKnucklesWeldInfo[21].VertexBuffer = 0;
 	NPCKnucklesWeldInfo[21].ModelB = v3;
-	NPCKnucklesWeldInfo[21].VertIndexes = Knuckles_ShoeIndices;
-	NPCKnucklesWeldInfo[21].VertexPairCount = (uint8_t)(LengthOfArray(Knuckles_ShoeIndices) / 2);
+	NPCKnucklesWeldInfo[21].VertIndexes = Knuckles_ShoeIndices_DC;
+	NPCKnucklesWeldInfo[21].VertexPairCount = (uint8_t)(LengthOfArray(Knuckles_ShoeIndices_DC) / 2);
 	NPCKnucklesWeldInfo[21].WeldType = 2;
 	NPCKnucklesWeldInfo[22].BaseModel = KNUCKLES_OBJECTS[1];
 	NPCKnucklesWeldInfo[22].ModelA = KNUCKLES_OBJECTS[42];
@@ -1750,8 +1741,8 @@ void __cdecl InitNPCKnucklesWeldInfo_mod()
 	NPCKnucklesWeldInfo[22].anonymous_5 = 0;
 	NPCKnucklesWeldInfo[22].VertexBuffer = 0;
 	NPCKnucklesWeldInfo[22].ModelB = v4;
-	NPCKnucklesWeldInfo[22].VertIndexes = Knuckles_HandIndices;
-	NPCKnucklesWeldInfo[22].VertexPairCount = (uint8_t)(LengthOfArray(Knuckles_HandIndices) / 2);
+	NPCKnucklesWeldInfo[22].VertIndexes = Knuckles_HandIndices_DC;
+	NPCKnucklesWeldInfo[22].VertexPairCount = (uint8_t)(LengthOfArray(Knuckles_HandIndices_DC) / 2);
 	NPCKnucklesWeldInfo[22].WeldType = 2;
 	NPCKnucklesWeldInfo[23].BaseModel = KNUCKLES_OBJECTS[1];
 	NPCKnucklesWeldInfo[23].ModelA = KNUCKLES_OBJECTS[44];
@@ -1760,12 +1751,12 @@ void __cdecl InitNPCKnucklesWeldInfo_mod()
 	NPCKnucklesWeldInfo[23].VertexBuffer = 0;
 	NPCKnucklesWeldInfo[24].BaseModel = 0;
 	NPCKnucklesWeldInfo[24].ModelA = 0;
-	NPCKnucklesWeldInfo[23].VertIndexes = Knuckles_HandIndices;
+	NPCKnucklesWeldInfo[23].VertIndexes = Knuckles_HandIndices_DC;
 	NPCKnucklesWeldInfo[24].ModelB = 0;
 	NPCKnucklesWeldInfo[24].VertexPairCount = 0;
 	NPCKnucklesWeldInfo[24].VertexBuffer = 0;
 	NPCKnucklesWeldInfo[23].ModelB = v5;
-	NPCKnucklesWeldInfo[23].VertexPairCount = (uint8_t)(LengthOfArray(Knuckles_HandIndices) / 2);
+	NPCKnucklesWeldInfo[23].VertexPairCount = (uint8_t)(LengthOfArray(Knuckles_HandIndices_DC) / 2);
 	NPCKnucklesWeldInfo[23].WeldType = 2;
 	NPCKnucklesWeldInfo[24].VertIndexes = 0;
 }
@@ -1786,101 +1777,101 @@ void __cdecl InitAmyWeldInfo_mod()
 	AmyWeldInfo[0].ModelB = AMY_OBJECTS[7];
 	AmyWeldInfo[0].anonymous_5 = 0;
 	AmyWeldInfo[0].VertexBuffer = 0;
-	AmyWeldInfo[0].VertexPairCount = (uint8_t)(LengthOfArray(Amy_UpperArmIndices) / 2);
+	AmyWeldInfo[0].VertexPairCount = (uint8_t)(LengthOfArray(Amy_UpperArmIndices_DC) / 2);
 	AmyWeldInfo[0].WeldType = 2;
-	AmyWeldInfo[0].VertIndexes = Amy_UpperArmIndices;
+	AmyWeldInfo[0].VertIndexes = Amy_UpperArmIndices_DC;
 	AmyWeldInfo[1].BaseModel = *AMY_OBJECTS;
 	AmyWeldInfo[1].ModelA = AMY_OBJECTS[7];
 	AmyWeldInfo[1].ModelB = AMY_OBJECTS[8];
-	AmyWeldInfo[1].VertexPairCount = (uint8_t)(LengthOfArray(Amy_LowerArmIndices) / 2);
+	AmyWeldInfo[1].VertexPairCount = (uint8_t)(LengthOfArray(Amy_LowerArmIndices_DC) / 2);
 	AmyWeldInfo[1].WeldType = 2;
 	AmyWeldInfo[1].anonymous_5 = 0;
 	AmyWeldInfo[1].VertexBuffer = 0;
-	AmyWeldInfo[1].VertIndexes = Amy_LowerArmIndices;
+	AmyWeldInfo[1].VertIndexes = Amy_LowerArmIndices_DC;
 	AmyWeldInfo[2].BaseModel = *AMY_OBJECTS;
 	AmyWeldInfo[2].ModelA = AMY_OBJECTS[9];
 	AmyWeldInfo[2].ModelB = AMY_OBJECTS[10];
-	AmyWeldInfo[2].VertexPairCount = (uint8_t)(LengthOfArray(Amy_UpperArmIndices) / 2);
+	AmyWeldInfo[2].VertexPairCount = (uint8_t)(LengthOfArray(Amy_UpperArmIndices_DC) / 2);
 	AmyWeldInfo[2].WeldType = 2;
 	AmyWeldInfo[2].anonymous_5 = 0;
 	AmyWeldInfo[2].VertexBuffer = 0;
-	AmyWeldInfo[2].VertIndexes = Amy_UpperArmIndices;
+	AmyWeldInfo[2].VertIndexes = Amy_UpperArmIndices_DC;
 	AmyWeldInfo[3].BaseModel = *AMY_OBJECTS;
 	AmyWeldInfo[3].ModelA = AMY_OBJECTS[10];
 	v0 = AMY_OBJECTS[11];
-	AmyWeldInfo[3].VertIndexes = Amy_LowerArmIndices;
+	AmyWeldInfo[3].VertIndexes = Amy_LowerArmIndices_DC;
 	AmyWeldInfo[3].ModelB = v0;
-	AmyWeldInfo[3].VertexPairCount = (uint8_t)(LengthOfArray(Amy_LowerArmIndices) / 2);
+	AmyWeldInfo[3].VertexPairCount = (uint8_t)(LengthOfArray(Amy_LowerArmIndices_DC) / 2);
 	AmyWeldInfo[3].WeldType = 2;
 	AmyWeldInfo[3].anonymous_5 = 0;
 	AmyWeldInfo[3].VertexBuffer = 0;
 	AmyWeldInfo[4].BaseModel = *AMY_OBJECTS;
 	AmyWeldInfo[4].ModelA = AMY_OBJECTS[12];
 	AmyWeldInfo[4].ModelB = AMY_OBJECTS[13];
-	AmyWeldInfo[4].VertexPairCount = (uint8_t)(LengthOfArray(Amy_LegIndices) / 2);
+	AmyWeldInfo[4].VertexPairCount = (uint8_t)(LengthOfArray(Amy_LegIndices_DC) / 2);
 	AmyWeldInfo[4].WeldType = 2;
 	AmyWeldInfo[4].anonymous_5 = 0;
 	AmyWeldInfo[4].VertexBuffer = 0;
-	AmyWeldInfo[4].VertIndexes = Amy_LegIndices;
+	AmyWeldInfo[4].VertIndexes = Amy_LegIndices_DC;
 	AmyWeldInfo[5].BaseModel = *AMY_OBJECTS;
 	AmyWeldInfo[5].ModelA = AMY_OBJECTS[13];
 	AmyWeldInfo[5].ModelB = AMY_OBJECTS[14];
-	AmyWeldInfo[5].VertexPairCount = (uint8_t)(LengthOfArray(Amy_LegIndices) / 2);
+	AmyWeldInfo[5].VertexPairCount = (uint8_t)(LengthOfArray(Amy_LegIndices_DC) / 2);
 	AmyWeldInfo[5].WeldType = 2;
 	AmyWeldInfo[5].anonymous_5 = 0;
-	AmyWeldInfo[5].VertIndexes = Amy_LegIndices;
+	AmyWeldInfo[5].VertIndexes = Amy_LegIndices_DC;
 	AmyWeldInfo[5].VertexBuffer = 0;
 	AmyWeldInfo[6].BaseModel = *AMY_OBJECTS;
 	AmyWeldInfo[6].ModelA = AMY_OBJECTS[15];
 	v1 = AMY_OBJECTS[16];
-	AmyWeldInfo[6].VertIndexes = Amy_LegIndices;
+	AmyWeldInfo[6].VertIndexes = Amy_LegIndices_DC;
 	AmyWeldInfo[6].ModelB = v1;
-	AmyWeldInfo[6].VertexPairCount = (uint8_t)(LengthOfArray(Amy_LegIndices) / 2);
+	AmyWeldInfo[6].VertexPairCount = (uint8_t)(LengthOfArray(Amy_LegIndices_DC) / 2);
 	AmyWeldInfo[6].WeldType = 2;
 	AmyWeldInfo[6].anonymous_5 = 0;
 	AmyWeldInfo[6].VertexBuffer = 0;
 	AmyWeldInfo[7].BaseModel = *AMY_OBJECTS;
 	AmyWeldInfo[7].ModelA = AMY_OBJECTS[16];
 	v2 = AMY_OBJECTS[17];
-	AmyWeldInfo[7].VertIndexes = Amy_LegIndices;
+	AmyWeldInfo[7].VertIndexes = Amy_LegIndices_DC;
 	AmyWeldInfo[7].ModelB = v2;
-	AmyWeldInfo[7].VertexPairCount = (uint8_t)(LengthOfArray(Amy_LegIndices) / 2);
+	AmyWeldInfo[7].VertexPairCount = (uint8_t)(LengthOfArray(Amy_LegIndices_DC) / 2);
 	AmyWeldInfo[7].WeldType = 2;
 	AmyWeldInfo[7].anonymous_5 = 0;
 	AmyWeldInfo[7].VertexBuffer = 0;
 	AmyWeldInfo[8].BaseModel = *AMY_OBJECTS;
 	AmyWeldInfo[8].ModelA = AMY_OBJECTS[18];
 	AmyWeldInfo[8].ModelB = AMY_OBJECTS[19];
-	AmyWeldInfo[8].VertexPairCount = (uint8_t)(LengthOfArray(Amy_ShoeIndices) / 2);
+	AmyWeldInfo[8].VertexPairCount = (uint8_t)(LengthOfArray(Amy_ShoeIndices_DC) / 2);
 	AmyWeldInfo[8].WeldType = 2;
 	AmyWeldInfo[8].anonymous_5 = 0;
 	AmyWeldInfo[8].VertexBuffer = 0;
-	AmyWeldInfo[8].VertIndexes = Amy_ShoeIndices;
+	AmyWeldInfo[8].VertIndexes = Amy_ShoeIndices_DC;
 	AmyWeldInfo[9].BaseModel = *AMY_OBJECTS;
 	AmyWeldInfo[9].ModelA = AMY_OBJECTS[20];
 	v3 = AMY_OBJECTS[21];
-	AmyWeldInfo[9].VertIndexes = Amy_ShoeIndices;
+	AmyWeldInfo[9].VertIndexes = Amy_ShoeIndices_DC;
 	AmyWeldInfo[9].ModelB = v3;
-	AmyWeldInfo[9].VertexPairCount = (uint8_t)(LengthOfArray(Amy_ShoeIndices) / 2);
+	AmyWeldInfo[9].VertexPairCount = (uint8_t)(LengthOfArray(Amy_ShoeIndices_DC) / 2);
 	AmyWeldInfo[9].WeldType = 2;
 	AmyWeldInfo[9].anonymous_5 = 0;
 	AmyWeldInfo[9].VertexBuffer = 0;
 	AmyWeldInfo[10].BaseModel = *AMY_OBJECTS;
 	AmyWeldInfo[10].ModelA = AMY_OBJECTS[22];
 	AmyWeldInfo[10].ModelB = AMY_OBJECTS[23];
-	AmyWeldInfo[10].VertexPairCount = (uint8_t)(LengthOfArray(Amy_HandIndices) / 2);
+	AmyWeldInfo[10].VertexPairCount = (uint8_t)(LengthOfArray(Amy_HandIndices_DC) / 2);
 	AmyWeldInfo[10].WeldType = 2;
 	AmyWeldInfo[10].anonymous_5 = 0;
 	AmyWeldInfo[10].VertexBuffer = 0;
-	AmyWeldInfo[10].VertIndexes = Amy_HandIndices;
+	AmyWeldInfo[10].VertIndexes = Amy_HandIndices_DC;
 	AmyWeldInfo[11].BaseModel = *AMY_OBJECTS;
 	AmyWeldInfo[11].ModelA = AMY_OBJECTS[24];
 	AmyWeldInfo[11].ModelB = AMY_OBJECTS[25];
-	AmyWeldInfo[11].VertexPairCount = (uint8_t)(LengthOfArray(Amy_HandIndices) / 2);
+	AmyWeldInfo[11].VertexPairCount = (uint8_t)(LengthOfArray(Amy_HandIndices_DC) / 2);
 	AmyWeldInfo[11].WeldType = 2;
 	AmyWeldInfo[11].anonymous_5 = 0;
 	AmyWeldInfo[11].VertexBuffer = 0;
-	AmyWeldInfo[11].VertIndexes = Amy_HandIndices;
+	AmyWeldInfo[11].VertIndexes = Amy_HandIndices_DC;
 	AmyWeldInfo[12].BaseModel = *AMY_OBJECTS;
 	AmyWeldInfo[12].ModelA = AMY_OBJECTS[23];
 	AmyWeldInfo[12].ModelB = 0;
@@ -1946,66 +1937,66 @@ void __cdecl InitNPCAmyWeldInfo_mod()
 	NPCAmyWeldInfo[0].ModelB = AMY_OBJECTS[7];
 	NPCAmyWeldInfo[0].anonymous_5 = 0;
 	NPCAmyWeldInfo[0].VertexBuffer = 0;
-	NPCAmyWeldInfo[0].VertexPairCount = (uint8_t)(LengthOfArray(Amy_UpperArmIndices) / 2);
+	NPCAmyWeldInfo[0].VertexPairCount = (uint8_t)(LengthOfArray(Amy_UpperArmIndices_DC) / 2);
 	NPCAmyWeldInfo[0].WeldType = 2;
-	NPCAmyWeldInfo[0].VertIndexes = Amy_UpperArmIndices;
+	NPCAmyWeldInfo[0].VertIndexes = Amy_UpperArmIndices_DC;
 	NPCAmyWeldInfo[1].BaseModel = *AMY_OBJECTS;
 	NPCAmyWeldInfo[1].ModelA = AMY_OBJECTS[7];
 	NPCAmyWeldInfo[1].ModelB = AMY_OBJECTS[8];
-	NPCAmyWeldInfo[1].VertexPairCount = (uint8_t)(LengthOfArray(Amy_LowerArmIndices) / 2);
+	NPCAmyWeldInfo[1].VertexPairCount = (uint8_t)(LengthOfArray(Amy_LowerArmIndices_DC) / 2);
 	NPCAmyWeldInfo[1].WeldType = 2;
 	NPCAmyWeldInfo[1].anonymous_5 = 0;
 	NPCAmyWeldInfo[1].VertexBuffer = 0;
-	NPCAmyWeldInfo[1].VertIndexes = Amy_LowerArmIndices;
+	NPCAmyWeldInfo[1].VertIndexes = Amy_LowerArmIndices_DC;
 	NPCAmyWeldInfo[2].BaseModel = *AMY_OBJECTS;
 	NPCAmyWeldInfo[2].ModelA = AMY_OBJECTS[9];
 	NPCAmyWeldInfo[2].ModelB = AMY_OBJECTS[10];
-	NPCAmyWeldInfo[2].VertexPairCount = (uint8_t)(LengthOfArray(Amy_UpperArmIndices) / 2);
+	NPCAmyWeldInfo[2].VertexPairCount = (uint8_t)(LengthOfArray(Amy_UpperArmIndices_DC) / 2);
 	NPCAmyWeldInfo[2].WeldType = 2;
 	NPCAmyWeldInfo[2].anonymous_5 = 0;
 	NPCAmyWeldInfo[2].VertexBuffer = 0;
-	NPCAmyWeldInfo[2].VertIndexes = Amy_UpperArmIndices;
+	NPCAmyWeldInfo[2].VertIndexes = Amy_UpperArmIndices_DC;
 	NPCAmyWeldInfo[3].BaseModel = *AMY_OBJECTS;
 	NPCAmyWeldInfo[3].ModelA = AMY_OBJECTS[10];
 	v0 = AMY_OBJECTS[11];
-	NPCAmyWeldInfo[3].VertIndexes = Amy_LowerArmIndices;
+	NPCAmyWeldInfo[3].VertIndexes = Amy_LowerArmIndices_DC;
 	NPCAmyWeldInfo[3].ModelB = v0;
-	NPCAmyWeldInfo[3].VertexPairCount = (uint8_t)(LengthOfArray(Amy_LowerArmIndices) / 2);
+	NPCAmyWeldInfo[3].VertexPairCount = (uint8_t)(LengthOfArray(Amy_LowerArmIndices_DC) / 2);
 	NPCAmyWeldInfo[3].WeldType = 2;
 	NPCAmyWeldInfo[3].anonymous_5 = 0;
 	NPCAmyWeldInfo[3].VertexBuffer = 0;
 	NPCAmyWeldInfo[4].BaseModel = *AMY_OBJECTS;
 	NPCAmyWeldInfo[4].ModelA = AMY_OBJECTS[12];
 	NPCAmyWeldInfo[4].ModelB = AMY_OBJECTS[13];
-	NPCAmyWeldInfo[4].VertexPairCount = (uint8_t)(LengthOfArray(Amy_LegIndices) / 2);
+	NPCAmyWeldInfo[4].VertexPairCount = (uint8_t)(LengthOfArray(Amy_LegIndices_DC) / 2);
 	NPCAmyWeldInfo[4].WeldType = 2;
 	NPCAmyWeldInfo[4].anonymous_5 = 0;
 	NPCAmyWeldInfo[4].VertexBuffer = 0;
-	NPCAmyWeldInfo[4].VertIndexes = Amy_LegIndices;
+	NPCAmyWeldInfo[4].VertIndexes = Amy_LegIndices_DC;
 	NPCAmyWeldInfo[5].BaseModel = *AMY_OBJECTS;
 	NPCAmyWeldInfo[5].ModelA = AMY_OBJECTS[13];
 	NPCAmyWeldInfo[5].ModelB = AMY_OBJECTS[14];
-	NPCAmyWeldInfo[5].VertexPairCount = (uint8_t)(LengthOfArray(Amy_LegIndices) / 2);
+	NPCAmyWeldInfo[5].VertexPairCount = (uint8_t)(LengthOfArray(Amy_LegIndices_DC) / 2);
 	NPCAmyWeldInfo[5].WeldType = 2;
 	NPCAmyWeldInfo[5].anonymous_5 = 0;
 	NPCAmyWeldInfo[5].VertexBuffer = 0;
-	NPCAmyWeldInfo[5].VertIndexes = Amy_LegIndices;
+	NPCAmyWeldInfo[5].VertIndexes = Amy_LegIndices_DC;
 	NPCAmyWeldInfo[6].BaseModel = *AMY_OBJECTS;
 	NPCAmyWeldInfo[6].ModelA = AMY_OBJECTS[15];
 	v1 = AMY_OBJECTS[16];
-	NPCAmyWeldInfo[6].VertexPairCount = (uint8_t)(LengthOfArray(Amy_LegIndices) / 2);
+	NPCAmyWeldInfo[6].VertexPairCount = (uint8_t)(LengthOfArray(Amy_LegIndices_DC) / 2);
 	NPCAmyWeldInfo[6].anonymous_5 = 0;
 	NPCAmyWeldInfo[6].VertexBuffer = 0;
-	NPCAmyWeldInfo[6].VertIndexes = Amy_LegIndices;
+	NPCAmyWeldInfo[6].VertIndexes = Amy_LegIndices_DC;
 	NPCAmyWeldInfo[6].ModelB = v1;
 	NPCAmyWeldInfo[6].WeldType = 2;
 	NPCAmyWeldInfo[7].BaseModel = *AMY_OBJECTS;
 	NPCAmyWeldInfo[7].ModelA = AMY_OBJECTS[16];
 	v2 = AMY_OBJECTS[17];
-	NPCAmyWeldInfo[7].VertexPairCount = (uint8_t)(LengthOfArray(Amy_LegIndices) / 2);
+	NPCAmyWeldInfo[7].VertexPairCount = (uint8_t)(LengthOfArray(Amy_LegIndices_DC) / 2);
 	NPCAmyWeldInfo[7].anonymous_5 = 0;
 	NPCAmyWeldInfo[7].VertexBuffer = 0;
-	NPCAmyWeldInfo[7].VertIndexes = Amy_LegIndices;
+	NPCAmyWeldInfo[7].VertIndexes = Amy_LegIndices_DC;
 	NPCAmyWeldInfo[7].ModelB = v2;
 	NPCAmyWeldInfo[7].WeldType = 2;
 	NPCAmyWeldInfo[8].BaseModel = *AMY_OBJECTS;
@@ -2014,15 +2005,15 @@ void __cdecl InitNPCAmyWeldInfo_mod()
 	NPCAmyWeldInfo[8].anonymous_5 = 0;
 	NPCAmyWeldInfo[8].VertexBuffer = 0;
 	NPCAmyWeldInfo[8].WeldType = 2;
-	NPCAmyWeldInfo[8].VertexPairCount = (uint8_t)(LengthOfArray(Amy_ShoeIndices) / 2);
-	NPCAmyWeldInfo[8].VertIndexes = Amy_ShoeIndices;
+	NPCAmyWeldInfo[8].VertexPairCount = (uint8_t)(LengthOfArray(Amy_ShoeIndices_DC) / 2);
+	NPCAmyWeldInfo[8].VertIndexes = Amy_ShoeIndices_DC;
 	NPCAmyWeldInfo[9].BaseModel = *AMY_OBJECTS;
 	NPCAmyWeldInfo[9].ModelA = AMY_OBJECTS[20];
 	v3 = AMY_OBJECTS[21];
 	NPCAmyWeldInfo[9].anonymous_5 = 0;
 	NPCAmyWeldInfo[9].VertexBuffer = 0;
-	NPCAmyWeldInfo[9].VertexPairCount = (uint8_t)(LengthOfArray(Amy_ShoeIndices) / 2);
-	NPCAmyWeldInfo[9].VertIndexes = Amy_ShoeIndices;
+	NPCAmyWeldInfo[9].VertexPairCount = (uint8_t)(LengthOfArray(Amy_ShoeIndices_DC) / 2);
+	NPCAmyWeldInfo[9].VertIndexes = Amy_ShoeIndices_DC;
 	NPCAmyWeldInfo[9].ModelB = v3;
 	NPCAmyWeldInfo[9].WeldType = 2;
 	NPCAmyWeldInfo[10].BaseModel = *AMY_OBJECTS;
@@ -2030,9 +2021,9 @@ void __cdecl InitNPCAmyWeldInfo_mod()
 	NPCAmyWeldInfo[10].ModelB = AMY_OBJECTS[23];
 	NPCAmyWeldInfo[10].anonymous_5 = 0;
 	NPCAmyWeldInfo[10].VertexBuffer = 0;
-	NPCAmyWeldInfo[10].VertexPairCount = (uint8_t)(LengthOfArray(Amy_HandIndices) / 2);
+	NPCAmyWeldInfo[10].VertexPairCount = (uint8_t)(LengthOfArray(Amy_HandIndices_DC) / 2);
 	NPCAmyWeldInfo[10].WeldType = 2;
-	NPCAmyWeldInfo[10].VertIndexes = Amy_HandIndices;
+	NPCAmyWeldInfo[10].VertIndexes = Amy_HandIndices_DC;
 	NPCAmyWeldInfo[11].BaseModel = *AMY_OBJECTS;
 	NPCAmyWeldInfo[11].ModelA = AMY_OBJECTS[24];
 	v4 = AMY_OBJECTS[25];
@@ -2041,9 +2032,9 @@ void __cdecl InitNPCAmyWeldInfo_mod()
 	NPCAmyWeldInfo[12].BaseModel = 0;
 	NPCAmyWeldInfo[12].ModelA = 0;
 	NPCAmyWeldInfo[11].ModelB = v4;
-	NPCAmyWeldInfo[11].VertexPairCount = (uint8_t)(LengthOfArray(Amy_HandIndices) / 2);
+	NPCAmyWeldInfo[11].VertexPairCount = (uint8_t)(LengthOfArray(Amy_HandIndices_DC) / 2);
 	NPCAmyWeldInfo[11].WeldType = 2;
-	NPCAmyWeldInfo[11].VertIndexes = Amy_HandIndices;
+	NPCAmyWeldInfo[11].VertIndexes = Amy_HandIndices_DC;
 	NPCAmyWeldInfo[12].ModelB = 0;
 	NPCAmyWeldInfo[12].VertexPairCount = 0;
 	NPCAmyWeldInfo[12].VertexBuffer = 0;
@@ -2201,7 +2192,7 @@ void __cdecl InitBigWeldInfo_mod()
 	BigWeldInfo[16].VertIndexes = 0;
 }
 
-void __cdecl InitMetalSonicWeldInfo()
+void __cdecl InitMetalSonicWeldInfo_Fix()
 {
 	NJS_OBJECT *v0; // esi@1
 
@@ -2380,12 +2371,6 @@ static void __declspec(naked) Sonic_Run1Ani_origasm()
 
 //Lantern API Fixes
 NJS_MATERIAL* Specular0[] = {
-	//Part of Gamma's laser scope
-	materials_0020B9B8[0],
-	materials_0020B9B8[1],
-	materials_0020B9B8[2],
-	materials_0020B9B8[3],
-	materials_0020B9B8[4],
 
 	//Birdie Material Fixes
 	&material_8D4CAF2CC2D2CC7B1B5[0],
@@ -2427,22 +2412,6 @@ NJS_MATERIAL* Specular0[] = {
 };
 
 NJS_MATERIAL* Specular1[] = {
-	//Gamma's Jet Booster and Laser Scope
-	materials_0020ABF0[0],
-	materials_0020ABF0[1],
-	materials_0020ABF0[2],
-	materials_0020ABF0[3],
-	materials_0020ABF0[4],
-	materials_0020ABF0[5],
-	materials_0020ABF0[6],
-	materials_0020B70C[0],
-	materials_0020B70C[1],
-	materials_0020B70C[2],
-	materials_0020B1D0[0],
-	materials_0020B1D0[1],
-	materials_0020B1D0[2],
-	materials_0020B1D0[3],
-	materials_0020B1D0[4],
 
 	//Tails Jet Anklet
 	&matlist_001B197C[0],
@@ -2789,16 +2758,11 @@ NJS_MATERIAL* Specular2[] = {
 	&material_8D4CB12950D75E95CA5[1],
 	&material_8D4CB128B96FD40E733[0],
 	&material_8D4CB128B96FD40E733[1],
-	&material_8D4AD90B5033F10C6FA[0],
-	&material_8D4AD90B5033F10C6FA[1],
-	&material_8D4AD90B5033F10C6FA[2],
 	&material_8D4AD91D254FDC1DBD2[0],
 	&material_8D4AD91B2897CD2EB94[0],
 	&material_8D4AD91B2897CD2EB94[1],
 	&material_8D4AD91B2897CD2EB94[2],
 	&material_8D4AD91B2897CD2EB94[3],
-	&material_8D4AD90B888C983F2AF[0],
-	&material_8D4AD90B888C983F2AF[1],
 
 	//Super Sonic Material Fixes
 	&material_8D4559469C00BD8650C[0],
@@ -2971,6 +2935,8 @@ NJS_MATERIAL* Specular3[] = {
 	&matlist_00016068[0],
 	&matlist_00016068[1],
 	&matlist_000159C8[0],
+	&matlist_000159C8[1],
+	&matlist_000159C8[2],
 
 	//Tornado 2 Change
 	&material_8D4714ACE7FAE0BE986[0],
@@ -3229,6 +3195,42 @@ NJS_MATERIAL* TailsShoes[] = {
 	&material_8D473CEEB3CE205889C[1],
 	&matlist_0043F4E8[0], //Jumpball
 };
+
+void ForceIgnoreSpecular_Object(NJS_OBJECT *obj, bool recursive)
+{
+	if (obj)
+	{
+		if (obj->basicdxmodel)
+		{
+			for (int k = 0; k < obj->basicdxmodel->nbMat; ++k)
+			{
+				if (!(obj->basicdxmodel->mats[k].attrflags & NJD_FLAG_IGNORE_SPECULAR)) obj->basicdxmodel->mats[k].attrflags |= NJD_FLAG_IGNORE_SPECULAR;
+			}
+		}
+		if (recursive && obj->child) ForceIgnoreSpecular_Object(obj->child, true);
+		if (recursive && obj->sibling) ForceIgnoreSpecular_Object(obj->sibling, true);
+	}
+}
+
+void ForceSpecular_Object(NJS_OBJECT *obj, bool recursive)
+{
+	if (obj)
+	{
+		if (obj->basicdxmodel)
+		{
+			for (int k = 0; k < obj->basicdxmodel->nbMat; ++k)
+			{
+				obj->basicdxmodel->mats[k].specular.color = 0xFFFFFFFF;
+				if (obj->basicdxmodel->mats[k].attrflags & NJD_FLAG_IGNORE_SPECULAR)
+				{
+					obj->basicdxmodel->mats[k].attrflags &= ~NJD_FLAG_IGNORE_SPECULAR;
+				}
+			}
+		}
+		if (recursive && obj->child) ForceSpecular_Object(obj->child, true);
+		if (recursive && obj->sibling) ForceSpecular_Object(obj->sibling, true);
+	}
+}
 
 bool ForceDiffuse0Specular0(NJS_MATERIAL* material, Uint32 flags)
 {
@@ -3950,9 +3952,9 @@ void Init_Knux()
 	KNUCKLES_MOTIONS[0] = &KnucklesEV;
 	WriteJump((void*)0x007C94D0, InitKnucklesWeldInfo_mod);
 	WriteJump((void*)0x007C9C80, InitNPCKnucklesWeldInfo_mod);
-	WriteData((uint16_t**)0x0472CAC, (uint16_t*)&Knuckles_ShovelClawIndices);
-	WriteData((uint16_t**)0x0472B2C, (uint16_t*)&Knuckles_HandIndices);
-	WriteData((uint16_t**)0x0472835, (uint16_t*)&Knuckles_HandIndices);
+	WriteData((uint16_t**)0x0472CAC, (uint16_t*)&Knuckles_ShovelClawIndices_DC);
+	WriteData((uint16_t**)0x0472B2C, (uint16_t*)&Knuckles_HandIndices_DC);
+	WriteData((uint16_t**)0x0472835, (uint16_t*)&Knuckles_HandIndices_DC);
 }
 
 void Init_Amy()
@@ -4219,11 +4221,11 @@ void Init_Tikal()
 	TikalWeldInfo[0].ModelA = &object_000038CC;
 	TikalWeldInfo[0].ModelB = &object_00003BD8;
 	TikalWeldInfo[0].VertexPairCount = 4;
-	TikalWeldInfo[0].VertIndexes = (unsigned short *)&Tikal_LeftHandIndices;
+	TikalWeldInfo[0].VertIndexes = (unsigned short *)&Tikal_LeftHandIndices_DC;
 	TikalWeldInfo[1].ModelA = &object_00002850;
 	TikalWeldInfo[1].ModelB = &object_00002B38;
 	TikalWeldInfo[1].VertexPairCount = 4;
-	TikalWeldInfo[1].VertIndexes = (unsigned short *)&Tikal_RightHandIndices;
+	TikalWeldInfo[1].VertIndexes = (unsigned short *)&Tikal_RightHandIndices_DC;
 }
 
 void Init_Eggman()
@@ -4257,7 +4259,7 @@ void Init_Eggman()
 	WriteData((NJS_OBJECT**)0x0313EB3C, &Eggman_Object);
 	WriteData((NJS_OBJECT**)0x03141254, &Eggman_Object);
 	WriteData((NJS_OBJECT**)0x03142C4C, &Eggman_Object);
-	WriteData((WeldInfo**)0x007B4FBF, (WeldInfo*)&EggmanWeldList);
+	WriteData((WeldInfo**)0x007B4FBF, (WeldInfo*)&EggmanWeldList_DC);
 
 
 	//Eggman in Eggmobile for cutscenes (EV_EGGMOBLE0)
@@ -4280,7 +4282,7 @@ void Init_Eggman()
 	WriteData((NJS_OBJECT**)0x3021854, &Eggmobile0_Object);
 	WriteData((NJS_OBJECT**)0x30220EC, &Eggmobile0_Object);
 	WriteData((NJS_OBJECT**)0x321A55C, &Eggmobile0_Object);
-	WriteData((WeldInfo**)0x006F08FB, (WeldInfo*)&Eggmobile0WeldList);
+	WriteData((WeldInfo**)0x006F08FB, (WeldInfo*)&Eggmobile0WeldList_DC);
 }
 
 void Init_Metal()
@@ -4288,7 +4290,7 @@ void Init_Metal()
 	SONIC_OBJECTS[68] = &object_00591068;
 	SONIC_OBJECTS[69] = &object_0059C234;
 	SONIC_OBJECTS[70] = &object_0059E254;
-	WriteJump((void*)0x007D18F0, InitMetalSonicWeldInfo);
+	WriteJump((void*)0x7D18F0, InitMetalSonicWeldInfo_Fix);
 	WriteCall((void*)0x491701, PlaySonicIdleVoice_r);
 }
 
@@ -4543,74 +4545,125 @@ extern "C"
 
 	__declspec(dllexport) void __cdecl OnFrame()
 	{
-		//Sonic OnFrame Checks
-		if (EnableSonic && EnableExtras)
+		//Big's rod upgrade lighting - basically make it ignore specular when it's part of Big's model (upgrade attained), otherwise don't (field model)
+		if (BigRodIgnoresSpecular && !(BIG_OBJECTS[19]->child->basicdxmodel->mats[0].attrflags & NJD_FLAG_IGNORE_SPECULAR)) ForceIgnoreSpecular_Object(BIG_OBJECTS[19]->child, true);
+		if (!BigRodIgnoresSpecular && BIG_OBJECTS[19]->child->basicdxmodel->mats[0].attrflags & NJD_FLAG_IGNORE_SPECULAR) ForceSpecular_Object(BIG_OBJECTS[19]->child, true);
+		if (EventFlagArray[EventFlags_Big_PowerRod] == 1) BigRodIgnoresSpecular = true; else BigRodIgnoresSpecular = false;
+		//Consistency additions
+		if (EnableExtras)
 		{
-			if (SONIC_OBJECTS[19]->sibling == SONIC_OBJECTS[58]) //LSShoe Check for Jumpball
+			//Sonic OnFrame Checks
+			if (EnableSonic)
 			{
-				SONIC_OBJECTS[66] = &object_LShoeSpin;
-				SONIC_ACTIONS[14]->object = &object_LShoeSpin;
-				attach_0057BC18.mats->attr_texId = 28;
-				attach_0062FE40.mats->attr_texId = 79;
+				if (SONIC_OBJECTS[19]->sibling == SONIC_OBJECTS[58]) //LSShoe Check for Jumpball
+				{
+					SONIC_OBJECTS[66] = &object_LShoeSpin;
+					SONIC_ACTIONS[14]->object = &object_LShoeSpin;
+					attach_0057BC18.mats->attr_texId = 28;
+					attach_0062FE40.mats->attr_texId = 79;
+				}
+				else
+				{
+					SONIC_OBJECTS[66] = &object_005729CC;
+					SONIC_ACTIONS[14]->object = &object_005729CC;
+					attach_0057BC18.mats->attr_texId = 18;
+					attach_0062FE40.mats->attr_texId = 15;
+				}
+				if (EntityData1Ptrs[0])
+				{
+					if (SONIC_OBJECTS[19]->sibling != SONIC_OBJECTS[58]) //Shoe check for Super Sonic
+					{
+						SONIC_OBJECTS[41]->model = object_SShoeHeelL.model; //Super Sonic Left Heel
+						SONIC_OBJECTS[42]->model = object_SShoeToeL.model; //Super Sonic Left Toe
+						SONIC_OBJECTS[36]->model = object_SShoeHeelR.model; //Super Sonic Right Heel
+						SONIC_OBJECTS[37]->model = object_SShoeToeR.model; //Super Sonic Right Toe
+					}
+					else
+					{
+						SONIC_OBJECTS[41]->model = object_00622970.model; //Super Sonic Left Heel
+						SONIC_OBJECTS[42]->model = object_00622254.model; //Super Sonic Left Toe
+						SONIC_OBJECTS[36]->model = object_00624308.model; //Super Sonic Right Heel
+						SONIC_OBJECTS[37]->model = object_00623C14.model; //Super Sonic Right Toe
+					}
+				}
+				if (SONIC_OBJECTS[62]->sibling == SONIC_OBJECTS[63])
+				{
+					SONIC_OBJECTS[25]->model = object_SSCrystalRing.model;
+					SonicWeldInfo[23].VertIndexes = SS_CrystalRingIndices_DC;
+				}
+				else
+				{
+					SONIC_OBJECTS[25]->model = object_0062840C.model;
+					SonicWeldInfo[23].VertIndexes = Sonic_LowerArmIndices_DC;
+				}
 			}
-			
-			if ((EntityData1Ptrs[0]) && SONIC_OBJECTS[19]->sibling != SONIC_OBJECTS[58])//Shoe check for Super Sonic
+			//Miles OnFrame Checks
+			if (EnableMiles)
 			{
-				SONIC_OBJECTS[41]->model = object_SShoeHeelL.model; //Super Sonic Left Heel
-				SONIC_OBJECTS[42]->model = object_SShoeToeL.model; //Super Sonic Left Toe
-				SONIC_OBJECTS[36]->model = object_SShoeHeelR.model; //Super Sonic Right Heel
-				SONIC_OBJECTS[37]->model = object_SShoeToeR.model; //Super Sonic Right Toe
+				if (MILES_OBJECTS[28]->sibling == MILES_OBJECTS[65])
+				{
+					object_00439824.model = object_0046EE44.model;
+					object_0043A634.model = object_0046FC84.model;
+					attach_00441460.mats->attr_texId = 24;
+				}
+				else
+				{
+					object_00439824.model = &attach_004397F8;
+					object_0043A634.model = &attach_0043A608;
+					attach_00441460.mats->attr_texId = 14;
+				}
 			}
-
-			if (SONIC_OBJECTS[62]->sibling == SONIC_OBJECTS[63])
+			//Knuckles OnFrame Checks
+			if (EnableKnuckles)
 			{
-				SONIC_OBJECTS[25]->model = object_SSCrystalRing.model;
-				SonicWeldInfo[23].VertIndexes = SS_CrystalRingIndices;
-			}
-		}
-
-		//Miles OnFrame Checks
-		if (EnableMiles && EnableExtras)
-		{
-			if (MILES_OBJECTS[28]->sibling == MILES_OBJECTS[65])
-			{
-				object_00439824.model = object_0046EE44.model;
-				object_0043A634.model = object_0046FC84.model;
-				attach_00441460.mats->attr_texId = 24;
-			}
-		}
-
-		//Knuckles OnFrame Checks
-		if (EnableKnuckles && EnableExtras)
-		{
-			if (KNUCKLES_OBJECTS[60]->model == KNUCKLES_MODELS[17]) //Fighting Gloves Check
-			{
-				object_002F70C0.model = KNUCKLES_MODELS[15]; //Left Wrist
-				object_002F6C70.model = KNUCKLES_MODELS[16]; //Left Hand
-				object_002F6A98.model = KNUCKLES_MODELS[17]; //Left Fingers
-				object_002F6634.model = KNUCKLES_MODELS[18]; //Left Thumb
-				object_002F81F0.model = KNUCKLES_MODELS[19]; //Right Wrist
-				object_002F7DB8.model = KNUCKLES_MODELS[20]; //Right Hand
-				object_002F7BE8.model = KNUCKLES_MODELS[21]; //Right Fingers
-				object_002F7774.model = KNUCKLES_MODELS[22]; //Right Thumb
-				attach_002F0DF8.mats->attr_texId = 22;
-			}
-			else if (KNUCKLES_OBJECTS[60]->model == KNUCKLES_MODELS[0]) //Shovel Claw Check
-			{
-				object_002F6A98.model = KNUCKLES_MODELS[0]; //Left Fingers
-				object_002F7BE8.model = KNUCKLES_MODELS[2]; //Right Fingers
-			}
-			else if (KNUCKLES_OBJECTS[60]->model == KNUCKLES_MODELS[1]) //Fighting Claws Check
-			{
-				object_002F70C0.model = KNUCKLES_MODELS[15]; //Left Wrist
-				object_002F6C70.model = KNUCKLES_MODELS[16]; //Left Hand
-				object_002F6A98.model = KNUCKLES_MODELS[1]; //Left Fingers
-				object_002F6634.model = KNUCKLES_MODELS[18]; //Left Thumb
-				object_002F81F0.model = KNUCKLES_MODELS[19]; //Right Wrist
-				object_002F7DB8.model = KNUCKLES_MODELS[20]; //Right Hand
-				object_002F7BE8.model = KNUCKLES_MODELS[3]; //Right Fingers
-				object_002F7774.model = KNUCKLES_MODELS[21]; //Right Thumb
-				attach_002F0DF8.mats->attr_texId = 22;
+				if (KNUCKLES_OBJECTS[60]->model == KNUCKLES_MODELS[17]) //Fighting Gloves Check
+				{
+					object_002F70C0.model = KNUCKLES_MODELS[15]; //Left Wrist
+					object_002F6C70.model = KNUCKLES_MODELS[16]; //Left Hand
+					object_002F6A98.model = KNUCKLES_MODELS[17]; //Left Fingers
+					object_002F6634.model = KNUCKLES_MODELS[18]; //Left Thumb
+					object_002F81F0.model = KNUCKLES_MODELS[19]; //Right Wrist
+					object_002F7DB8.model = KNUCKLES_MODELS[20]; //Right Hand
+					object_002F7BE8.model = KNUCKLES_MODELS[21]; //Right Fingers
+					object_002F7774.model = KNUCKLES_MODELS[22]; //Right Thumb
+					attach_002F0DF8.mats->attr_texId = 22; //Replaced texture
+				}
+				else if (KNUCKLES_OBJECTS[60]->model == KNUCKLES_MODELS[0]) //Shovel Claw Check
+				{
+					object_002F70C0.model = &attach_002F7094; //Left Wrist (original)
+					object_002F6C70.model = &attach_002F6C44; //Left Hand (original)
+					object_002F6634.model = &attach_002F6608; //Left Thumb (original)
+					object_002F6A98.model = KNUCKLES_MODELS[0]; //Left Fingers (replaced)
+					object_002F81F0.model = &attach_002F81C4; //Right Wrist (original)
+					object_002F7DB8.model = &attach_002F7D8C; //Right Hand (original)
+					object_002F7BE8.model = KNUCKLES_MODELS[2]; //Right Fingers (replaced)
+					object_002F7774.model = &attach_002F7748; //Right Thumb (original)
+					attach_002F0DF8.mats->attr_texId = 9; //Original texture
+				}
+				else if (KNUCKLES_OBJECTS[60]->model == KNUCKLES_MODELS[1]) //Fighting Claws Check
+				{
+					object_002F70C0.model = KNUCKLES_MODELS[15]; //Left Wrist
+					object_002F6C70.model = KNUCKLES_MODELS[16]; //Left Hand
+					object_002F6A98.model = KNUCKLES_MODELS[1]; //Left Fingers
+					object_002F6634.model = KNUCKLES_MODELS[18]; //Left Thumb
+					object_002F81F0.model = KNUCKLES_MODELS[19]; //Right Wrist
+					object_002F7DB8.model = KNUCKLES_MODELS[20]; //Right Hand
+					object_002F7BE8.model = KNUCKLES_MODELS[3]; //Right Fingers
+					object_002F7774.model = KNUCKLES_MODELS[21]; //Right Thumb
+					attach_002F0DF8.mats->attr_texId = 22; //Replaced texture
+				}
+				else
+				{
+					object_002F70C0.model = &attach_002F7094; //Left Wrist (original)
+					object_002F6C70.model = &attach_002F6C44; //Left Hand (original)
+					object_002F6A98.model = &attach_002F6A6C; //Left Fingers (original)
+					object_002F6634.model = &attach_002F6608; //Left Thumb (original)
+					object_002F81F0.model = &attach_002F81C4; //Right Wrist (original)
+					object_002F7DB8.model = &attach_002F7D8C; //Right Hand (original)
+					object_002F7BE8.model = &attach_002F7BBC; //Right Fingers (original)
+					object_002F7774.model = &attach_002F7748; //Right Thumb (original)
+					attach_002F0DF8.mats->attr_texId = 9; //Original texture
+				}
 			}
 		}
 	}

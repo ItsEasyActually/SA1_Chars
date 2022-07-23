@@ -1,0 +1,201 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Resource Files\amy">
+      <UniqueIdentifier>{e03ce4c2-7921-449d-b766-b7197b551ff7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\big">
+      <UniqueIdentifier>{a4b6b692-e688-4d40-897f-b36dc1cf9c75}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\e102">
+      <UniqueIdentifier>{05acc1f5-3f5e-4f7a-85d7-994d39deaf84}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\eggman">
+      <UniqueIdentifier>{81e286e0-db97-49bb-b144-578cde6c9abb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\knuckles">
+      <UniqueIdentifier>{11cce0ee-a9c8-421c-90b9-52153dc95a9e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\miles">
+      <UniqueIdentifier>{9a348be1-ce9d-4281-bfac-29c59e9c2965}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\tikal">
+      <UniqueIdentifier>{23f8aaaa-7195-44ce-a6af-c03742a4ffe0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\sonic">
+      <UniqueIdentifier>{de7d53f3-a951-4fc4-b3b6-e849f66610d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\amy">
+      <UniqueIdentifier>{2d72cf9b-56d5-42ae-ae6e-7bfac136d6c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\big">
+      <UniqueIdentifier>{8a947692-c0e0-4780-b8d9-c7c167cb43e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\e102">
+      <UniqueIdentifier>{2d856859-7edb-4362-a0db-a10e63490394}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\eggman">
+      <UniqueIdentifier>{f011306d-4603-44aa-92ab-b2e8612d939e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\knuckles">
+      <UniqueIdentifier>{b770d548-7370-42d6-a21b-bb72c70de935}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\tikal">
+      <UniqueIdentifier>{8773272f-43f4-4c50-998c-1243f9b92260}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\sonic">
+      <UniqueIdentifier>{9a634425-2ccb-4b19-aa63-86002a140df2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\amy">
+      <UniqueIdentifier>{531fdba9-5a12-4f04-972a-7a62b5329b7c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\big">
+      <UniqueIdentifier>{170eb1cd-7bca-4d86-8e23-ba651128977a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\e102">
+      <UniqueIdentifier>{060c7010-89e8-4285-b849-f084cbe8694e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\eggman">
+      <UniqueIdentifier>{3098dd38-8f1e-478e-81aa-af3ed727665a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\miles">
+      <UniqueIdentifier>{d8952bf8-305a-4ae9-b3e0-184c53efaf96}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\knuckles">
+      <UniqueIdentifier>{0a03691c-d2d0-40e7-bf82-99a9473c4019}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\tikal">
+      <UniqueIdentifier>{059dd847-e739-415d-8f57-d642cde9fc22}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\sonic">
+      <UniqueIdentifier>{d4772e6f-8683-433c-97d5-3a4dfb958156}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\miles">
+      <UniqueIdentifier>{d2707fe0-1fae-45c8-8b1b-24a043f4e15e}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="framework.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="amy\amy_decl.h">
+      <Filter>Header Files\amy</Filter>
+    </ClInclude>
+    <ClInclude Include="amy\amy_func.h">
+      <Filter>Header Files\amy</Filter>
+    </ClInclude>
+    <ClInclude Include="big\big_decl.h">
+      <Filter>Header Files\big</Filter>
+    </ClInclude>
+    <ClInclude Include="big\big_func.h">
+      <Filter>Header Files\big</Filter>
+    </ClInclude>
+    <ClInclude Include="e102\gam_decl.h">
+      <Filter>Header Files\e102</Filter>
+    </ClInclude>
+    <ClInclude Include="e102\gam_func.h">
+      <Filter>Header Files\e102</Filter>
+    </ClInclude>
+    <ClInclude Include="eggman\egg_decl.h">
+      <Filter>Header Files\eggman</Filter>
+    </ClInclude>
+    <ClInclude Include="eggman\egg_func.h">
+      <Filter>Header Files\eggman</Filter>
+    </ClInclude>
+    <ClInclude Include="knuckles\knu_decl.h">
+      <Filter>Header Files\knuckles</Filter>
+    </ClInclude>
+    <ClInclude Include="knuckles\knu_func.h">
+      <Filter>Header Files\knuckles</Filter>
+    </ClInclude>
+    <ClInclude Include="miles\mil_decl.h">
+      <Filter>Header Files\miles</Filter>
+    </ClInclude>
+    <ClInclude Include="miles\mil_func.h">
+      <Filter>Header Files\miles</Filter>
+    </ClInclude>
+    <ClInclude Include="sonic\son_decl.h">
+      <Filter>Header Files\sonic</Filter>
+    </ClInclude>
+    <ClInclude Include="sonic\son_func.h">
+      <Filter>Header Files\sonic</Filter>
+    </ClInclude>
+    <ClInclude Include="tikal\tik_decl.h">
+      <Filter>Header Files\tikal</Filter>
+    </ClInclude>
+    <ClInclude Include="tikal\tik_func.h">
+      <Filter>Header Files\tikal</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="dllmain.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sonic\son_object.cpp">
+      <Filter>Source Files\sonic</Filter>
+    </ClCompile>
+    <ClCompile Include="sonic\son_init.cpp">
+      <Filter>Source Files\sonic</Filter>
+    </ClCompile>
+    <ClCompile Include="miles\mil_init.cpp">
+      <Filter>Source Files\miles</Filter>
+    </ClCompile>
+    <ClCompile Include="miles\mil_object.cpp">
+      <Filter>Source Files\miles</Filter>
+    </ClCompile>
+    <ClCompile Include="tikal\tik_init.cpp">
+      <Filter>Source Files\tikal</Filter>
+    </ClCompile>
+    <ClCompile Include="tikal\tik_object.cpp">
+      <Filter>Source Files\tikal</Filter>
+    </ClCompile>
+    <ClCompile Include="knuckles\knu_init.cpp">
+      <Filter>Source Files\knuckles</Filter>
+    </ClCompile>
+    <ClCompile Include="knuckles\knu_object.cpp">
+      <Filter>Source Files\knuckles</Filter>
+    </ClCompile>
+    <ClCompile Include="eggman\egg_object.cpp">
+      <Filter>Source Files\eggman</Filter>
+    </ClCompile>
+    <ClCompile Include="eggman\egg_init.cpp">
+      <Filter>Source Files\eggman</Filter>
+    </ClCompile>
+    <ClCompile Include="e102\gam_object.cpp">
+      <Filter>Source Files\e102</Filter>
+    </ClCompile>
+    <ClCompile Include="e102\gam_init.cpp">
+      <Filter>Source Files\e102</Filter>
+    </ClCompile>
+    <ClCompile Include="big\big_init.cpp">
+      <Filter>Source Files\big</Filter>
+    </ClCompile>
+    <ClCompile Include="big\big_object.cpp">
+      <Filter>Source Files\big</Filter>
+    </ClCompile>
+    <ClCompile Include="amy\amy_init.cpp">
+      <Filter>Source Files\amy</Filter>
+    </ClCompile>
+    <ClCompile Include="amy\amy_object.cpp">
+      <Filter>Source Files\amy</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

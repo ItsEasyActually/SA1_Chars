@@ -13,6 +13,7 @@
 // modloader lib
 #include <SADXModLoader.h>
 #include <ModelInfo.h>
+#include <IniFile.hpp>
 
 // mod
 #include "amy/amy_decl.h"
